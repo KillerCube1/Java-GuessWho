@@ -19,7 +19,7 @@ public class Client {
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {
             System.out.println("Error " + ex.getMessage());
-            new JoinMenu();
+            new ServerListMenu();
         }
     }
 
