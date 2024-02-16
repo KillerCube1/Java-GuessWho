@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import javax.swing.*;
 
@@ -113,23 +115,54 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 	}//constructor
 
 
+
 	public void guessSuspect(Suspect character) {
 		if (character == GuessWhoGame.getGuilty()) {
 			System.out.println("CORRECT!");
+			JFrame winnerFrame = new JFrame("Guess Who");
+			winnerFrame.setSize(300, 300);
+			winnerFrame.setLocationRelativeTo(null);
+
+			JLabel winnerLabel = new JLabel("Game Over you win");
+			winnerLabel.setHorizontalAlignment(JLabel.CENTER);
+			winnerFrame.add(winnerLabel);
+			winnerFrame.setVisible(true);
+
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					winnerFrame.setVisible(false);
+				}
+			}, 3000);
 		} else {
 			guessesLeft -= 1;
-			System.out.print("You have "+guessesLeft+ " guesses left\n");
+			System.out.print("You have " + guessesLeft + " guesses left\n");
 			wrongGuesses += 1;
 			while (wrongGuesses == 3) {
 				System.out.println("You have " + wrongGuesses + " wrong guesses.\n");
-				if(wrongGuesses >= 3){
-					System.out.println("GAME OVER!\n");
+				if (wrongGuesses >= 3) {
+					JFrame loserFrame = new JFrame("Guess Who");
+					loserFrame.setSize(300, 300);
+					loserFrame.setLocationRelativeTo(null);
+
+					JLabel loserLabel = new JLabel("Game Over you lose!");
+					loserLabel.setHorizontalAlignment(JLabel.CENTER);
+					loserFrame.add(loserLabel);
+					loserFrame.setVisible(true);
+
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							loserFrame.setVisible(false);
+						}
+					}, 3000);
 					System.exit(0);
 				}
 			}
 		}
 	}
-
 
 	public JFrame getFrame() {//getFrame
 		return frame;
