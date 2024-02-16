@@ -14,9 +14,10 @@ public class Client {
 
     public Client(String IP, int Port) {
         try {
-            socket = new Socket(IP, Port);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new BufferedOutputStream(socket.getOutputStream());
+            System.out.println("Client started!\nConnecting...");
+            Client.socket = new Socket(IP, Port);
+            Client.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Client.output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {
             System.out.println("Error " + ex.getMessage());
             new ServerListMenu();

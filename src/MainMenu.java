@@ -37,7 +37,7 @@ public class MainMenu {
         // Create Main Menu Button Panel
         JPanel menuButtons = new JPanel();
         menuButtons.setOpaque(false);
-        MainMenuButton button = new MainMenuButton("Single player", 25, 195, 165, 45);
+        MainMenuButton button = new MainMenuButton("Singleplayer", 25, 195, 165, 45);
         MainMenuButton button2 = new MainMenuButton("Multiplayer", 25, 250, 165, 45);
         MainMenuButton button3 = new MainMenuButton("Settings", 25, 305, 165, 45);
         MainMenuButton button4 = new MainMenuButton("About", 25, 360, 165, 45);

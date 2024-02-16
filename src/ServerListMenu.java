@@ -17,7 +17,7 @@ import java.util.Enumeration;
 public class ServerListMenu extends JFrame {
 
     // Main Server IP (Game Servers)
-    private final String listIP = "10.87.132.127";
+    private final String listIP = "10.87.128.169";
 
     private JList<String> serverList;
     private MainMenuButton addButton;
@@ -114,7 +114,7 @@ public class ServerListMenu extends JFrame {
                 }
 
                 output.write((ip[0] + "\r\n").getBytes());
-                output.write((123 + "\r\n").getBytes());
+                output.write((100 + "\r\n").getBytes());
                 output.flush();
 
                 String command = input.readLine();
