@@ -13,10 +13,8 @@ import ClassExtensions.CheckButton;
 /**
  * GuessWhoGUI class represents the graphical user interface for the Guess Who game.
  * It sets up the game board, displays suspect cards, and handles user interactions.
- *
  * This class extends JFrame and includes features such as attribute-checking buttons,
  * a grid of suspect cards, and a guess counter.
- *
  * @author Rylan, Damien
  * @version 1.0
  */
@@ -272,7 +270,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
 		guessCounter.setBounds(1400, 50, 192, 20);
 		frame.getContentPane().add(guessCounter);
-		frame.getContentPane().repaint();
+
 	}
 
 

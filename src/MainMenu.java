@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import Style.MainMenuButton;
 
@@ -239,6 +240,8 @@ public class MainMenu {
         playlist.add(new File("src/Music/No_Rest_Or_Endless_Rest_-_Lisofv.wav"));
         playlist.add(new File("src/Music/From_Here_-_Danielle_Helena.wav"));
         playlist.add(new File("src/Music/Boulvard_X-Audi_-_Game.wav"));
+
+        Collections.shuffle(playlist);
 
         return playlist;
     }
