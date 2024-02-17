@@ -5,8 +5,21 @@ import java.awt.event.ActionListener;
 
 import ClassExtensions.CheckButton;
 
+
+/**
+ * The CheckAction class implements the ActionListener interface and defines actions to be performed
+ * when attribute-checking buttons are clicked.
+ * It checks the attributes of suspects and updates the game board accordingly.
+ */
 public class CheckAction implements ActionListener {
 
+
+	/**
+	 * Performs the action when a button is clicked.
+	 * Checks the attributes of suspects and flips cards based on the comparison results.
+	 *
+	 * @param e The ActionEvent representing the button click.
+	 */
     @Override
     public void actionPerformed(ActionEvent e) {
 

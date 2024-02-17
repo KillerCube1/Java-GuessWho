@@ -32,6 +32,10 @@ public class ServerListMenu extends JFrame {
     private BufferedReader input;
     private BufferedOutputStream output;
 
+
+    /**
+     * Represents a server list menu for selecting or hosting game servers.
+     */
     public ServerListMenu() {
         frame = new JFrame();
 
@@ -88,6 +92,10 @@ public class ServerListMenu extends JFrame {
         refreshServerList();
     }
 
+
+    /**
+     * Method to host a server.
+     */
     private void hostServer() {
         String serverName = JOptionPane.showInputDialog("Enter server name:");
         if (serverName != null && !serverName.isEmpty()) {
@@ -131,6 +139,9 @@ public class ServerListMenu extends JFrame {
         }
     }
 
+    /**
+     * Method to join a server.
+     */
     private void joinServer() {
         String selectedServer = serverList.getSelectedValue();
         if (selectedServer != null) {
@@ -153,6 +164,10 @@ public class ServerListMenu extends JFrame {
 
         }
     }
+
+    /**
+     * Method to refresh the server list.
+     */
 
     private void refreshServerList() {
         try {
@@ -178,6 +193,10 @@ public class ServerListMenu extends JFrame {
         }
     }
 
+
+    /**
+     * Method to return to the main menu.
+     */
     private void backToMainMenu() {
         frame.dispose();
         try {
@@ -188,6 +207,10 @@ public class ServerListMenu extends JFrame {
         MainMenu.getFrame().setVisible(true);
     }
 
+
+    /**
+     * Method to update the server list.
+     */
     private void updateServerList() {
         serverListModel.clear();
         for (String server : servers) {

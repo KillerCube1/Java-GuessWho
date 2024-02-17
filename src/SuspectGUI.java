@@ -9,6 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+
+/**
+ * The SuspectGUI class provides functionality to display detailed information about a selected suspect
+ * in the Guess Who game. It creates a window to show the suspect's attributes and allows the player to make a guess.
+ * It implements the ActionListener interface to handle button actions.
+ */
 public class SuspectGUI implements ActionListener {
 
     // Main Window
@@ -22,6 +28,13 @@ public class SuspectGUI implements ActionListener {
 
     Suspect targetSuspect;
 
+
+
+    /**
+     * Displays the SuspectGUI window with detailed information about the selected suspect.
+     *
+     * @param label The label representing the selected suspect in the main game window.
+     */
     public void ShowSuspectGUI(JLabel label) {
         
         // Get The Suspect From The Deck
@@ -90,19 +103,40 @@ public class SuspectGUI implements ActionListener {
 
     }
 
+
+    /**
+     * Handles button actions performed in the SuspectGUI window.
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancel) {
             suspectBox.dispose();
         } else if (e.getSource() == guess) {
             suspectBox.dispose();
-            mainGUI.guessSuspect(targetSuspect);
+            try {
+                mainGUI.guessSuspect(targetSuspect);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
+
+
+    /**
+     * Retrieves the JFrame of the SuspectGUI window.
+     *
+     * @return The SuspectGUI JFrame.
+     */
     public JFrame getFrame() {
         return suspectBox;
     }
 
+
+
+    /**
+     * Disposes the SuspectGUI window.
+     */
     public void disposeFrame() {
         suspectBox.dispose();
     }

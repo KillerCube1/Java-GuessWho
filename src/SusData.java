@@ -1,10 +1,12 @@
 /**
- * This class represents all the data necessary to create all Suspects for the Guess Who game.  The data is stored in a 
- * lexographic manner based on Suspect names.  All data is stored in Arrays and represents the attributes of each Suspect
- * in the Guess Who game.
- * 
- * @author jbutka
+ * This class represents all the data necessary to create all Suspects for the Guess Who game.
+ * The data is stored in a lexicographic manner based on Suspect names. All data is stored in Arrays
+ * and represents the attributes of each Suspect in the Guess Who game.
  *
+ * Each attribute is stored in a separate array, and getter methods are provided to access individual attributes
+ * based on the index.
+ *
+ * @author Rylan, Damien
  */
 public class SusData {//SusData
 
@@ -79,60 +81,128 @@ public class SusData {//SusData
         };
 
 
-
+    /**
+     * Get the name of the suspect at the specified index.
+     *
+     * @param index the index of the suspect
+     * @return the name of the suspect
+     */
     public String getName(int index)
     {
         return names[index];
     }
-    
 
+
+
+    /**
+     * Get the eye color of the suspect at the specified index.
+     *
+     * @param index the index of the suspect
+     * @return the eye color of the suspect
+     */
     public String getEyeColor(int index)
     { 
     	return eyeColors[index];
     }
-    
 
+
+
+    /**
+     * Check if the suspect at the specified index has a beard.
+     *
+     * @param index the index of the suspect
+     * @return true if the suspect has a beard, false otherwise
+     */
     public boolean getBeard(int index)
     { 
     	return beard[index];
     }
-    
 
+
+
+    /**
+     * Check if the suspect at the specified index wears glasses.
+     *
+     * @param index the index of the suspect
+     * @return true if the suspect wears glasses, false otherwise
+     */
     public boolean getGlasses(int index)
     { 
     	return glasses[index];
     }
-    
 
+
+
+    /**
+     * Check if the suspect at the specified index has a moustache.
+     *
+     * @param index the index of the suspect
+     * @return true if the suspect has a moustache, false otherwise
+     */
     public boolean getMoustache(int index)
     { 
     	return moustache[index];
     }
-    
 
+
+
+    /**
+     * Check if the suspect at the specified index is bald.
+     *
+     * @param index the index of the suspect
+     * @return true if the suspect is bald, false otherwise
+     */
     public boolean getBald(int index)
     { 
     	return bald[index];
     }
-    
 
+
+
+    /**
+     * Check if the suspect at the specified index has rosy cheeks.
+     *
+     * @param index the index of the suspect
+     * @return true if the suspect has rosy cheeks, false otherwise
+     */
     public boolean getRosyCheeks(int index)
     { 
     	return rosyCheeks[index];
     }
-   
 
+
+
+    /**
+     * Get the hair color of the suspect at the specified index.
+     *
+     * @param index the index of the suspect
+     * @return the hair color of the suspect
+     */
     public String getHairColor(int index)
     {
     	return hairColor[index];
     }
-   
 
+
+
+    /**
+     * Check if the suspect at the specified index wears a hat.
+     *
+     * @param index the index of the suspect
+     * @return true if the suspect wears a hat, false otherwise
+     */
     public boolean getHat(int index){
     	return hat[index];
     }
-   
 
+
+
+    /**
+     * Get the gender of the suspect at the specified index.
+     *
+     * @param index the index of the suspect
+     * @return the gender of the suspect
+     */
     public String getGender(int index)
     { 
     	return gender[index];

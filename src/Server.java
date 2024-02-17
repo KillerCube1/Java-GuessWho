@@ -2,8 +2,21 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.*;
 
+
+/**
+ * Represents a server for handling client connections.
+ */
 public class Server {
 
+
+    /**
+     * Constructs a server instance.
+     *
+     * @param UI         The user interface associated with the server.
+     * @param serverName The name of the server.
+     * @param serverList The server list socket for communication.
+     * @param output     The output stream for sending data.
+     */
     public Server(ServerMenu UI, String serverName, Socket serverList, BufferedOutputStream output) {
         new Thread(() -> {
 

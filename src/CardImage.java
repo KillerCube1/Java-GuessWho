@@ -5,12 +5,11 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 /**
- * This class is responsible for maintaining the correct images for each card (back and front of card)
- * The back image is a stand-alone jpeg.
- * The front image is a result of a mathematical algorithm that isolates an area of the image to show a specific face
- * This can be seen in the getFrontImage()   
- * @author jbutka
+ * The CardImage class maintains images for each card (back and front).
+ * It generates the front image using a mathematical algorithm to isolate an area of the image.
+ * This class extends BufferedImage.
  *
+ * @Author: Rylan, Damien
  */
 public class CardImage extends BufferedImage {//CardImage
 	
@@ -20,8 +19,10 @@ public class CardImage extends BufferedImage {//CardImage
 	BufferedImage backCardImage;
 
 	/**
-	 * Constructor to create a CardImage object whose width will be 600 and height 873 
-	 * which are the size of each individual card found on the back.png and various Suspect image files.
+	 * Constructs a CardImage object with the specified card name.
+	 * The width and height of the image are set to match the size of individual cards.
+	 *
+	 * @param cardName The name of the card image file.
 	 */
 	public CardImage(String cardName) {//constructor
 		super(WIDTH, HEIGHT, 3);
@@ -40,6 +41,13 @@ public class CardImage extends BufferedImage {//CardImage
 	}//constructor
 
 
+
+	/**
+	 * Retrieves the front image of the card.
+	 * Uses a graphics object to draw the front image onto a new BufferedImage.
+	 *
+	 * @return The front image of the card.
+	 */
 	public BufferedImage getFrontImage() {//getFrontImage()
 	
 
@@ -50,6 +58,13 @@ public class CardImage extends BufferedImage {//CardImage
 	}//getFrontImage()
 
 
+
+	/**
+	 * Retrieves the back image of the card.
+	 * Uses a graphics object to draw the back image onto a new BufferedImage.
+	 *
+	 * @return The back image of the card.
+	 */
 	public BufferedImage getBackImage() {//getBackImage()
 		
 		Graphics g = backCardImage.createGraphics();

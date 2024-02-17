@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+
+/**
+ * Represents a server connection thread for handling client requests.
+ */
 public class ServerConnection extends Thread {
 
     Socket socket;
@@ -11,6 +15,12 @@ public class ServerConnection extends Thread {
     // Game State
     Suspect test;
 
+
+    /**
+     * Constructs a server connection instance.
+     *
+     * @param socket The socket associated with the connection.
+     */
     public ServerConnection(Socket socket){
         this.socket = socket;
 

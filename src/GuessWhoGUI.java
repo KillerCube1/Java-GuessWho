@@ -11,11 +11,17 @@ import javax.swing.*;
 import ClassExtensions.CheckButton;
 
 /**
- * This class contains the code responsible for displaying the game board for Guess Who.
+ * GuessWhoGUI class represents the graphical user interface for the Guess Who game.
+ * It sets up the game board, displays suspect cards, and handles user interactions.
  *
- * @author jbutka
+ * This class extends JFrame and includes features such as attribute-checking buttons,
+ * a grid of suspect cards, and a guess counter.
  *
+ * @author Rylan, Damien
+ * @version 1.0
  */
+
+
 public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
 	private final JFrame frame;
@@ -27,17 +33,18 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
 
 	/**
-	 * This constructor sets up the UI for Guess Who
+	 * Constructs a GuessWhoGUI object and initializes the graphical user interface.
 	 */
 	public GuessWhoGUI() {//constructor
+		// Set up the game board
+		// Initialize components such as buttons, suspect grid, and guess counter
 
 		// App Set Up
 		frame = new JFrame("Guess Who");
-
 		try {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setLayout(null);
-			frame.setSize(1600, 850);
+			frame.setSize(1920, 870);
 			Color bgd = new Color(40, 40, 40);
 			frame.getContentPane().setBackground(bgd);
 			GuessWhoGame.setTheDeck(new Deck());
@@ -46,7 +53,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
 		int FrameButtonWidth = 200;
 		int FrameButtonHeight = 50;
-		int xFramePosition = 1370;
+		int xFramePosition = 1676;
 		int yFramePosition = 20;
 
 		CheckButton[] buttonList = {
@@ -98,25 +105,38 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		cardIcon = new ImageIcon(newimg);
 
 		// Player Suspect Title Display
-		JLabel cardTitle = new JLabel("Your Character:");
+		JLabel cardTitle = new JLabel("Your Character");
 		cardTitle.setBackground(Color.WHITE);
 		cardTitle.setForeground(Color.WHITE);
 		cardTitle.setFont(new Font("Calibri", Font.BOLD, 25));
-		cardTitle.setBounds(1200, 40, 192, 20);
+		cardTitle.setBounds(1400, 325, 192, 20);
 		frame.getContentPane().add(cardTitle);
+
+
 
 
 		// Player Suspect Card Display
 		JLabel chosenCard = new JLabel("");
-		chosenCard.setBounds(1200, 50, 192, 280);
+		chosenCard.setBounds(1400, 50, 192, 280);
 		frame.getContentPane().add(chosenCard);
 		chosenCard.setIcon(cardIcon);
+
+
+		guessCounterMethod();
 
 	}//constructor
 
 
+	/**
+	 * Handles the process of guessing a suspect.
+	 * Checks if the guessed suspect is correct and updates the game state accordingly.
+	 *
+	 * @param character The suspect being guessed.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
 
-	public void guessSuspect(Suspect character) {
+	public void guessSuspect(Suspect character) throws InterruptedException {
+		// Process the guess and update game state
 		if (character == GuessWhoGame.getGuilty()) {
 			System.out.println("CORRECT!");
 			JFrame winnerFrame = new JFrame("Guess Who");
@@ -133,45 +153,64 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 				@Override
 				public void run() {
 					winnerFrame.setVisible(false);
+					// Exit the game after hiding the frame
+					System.exit(0);
 				}
 			}, 3000);
 		} else {
 			guessesLeft -= 1;
-			System.out.print("You have " + guessesLeft + " guesses left\n");
+			guessCounterMethod();
 			wrongGuesses += 1;
-			while (wrongGuesses == 3) {
-				System.out.println("You have " + wrongGuesses + " wrong guesses.\n");
-				if (wrongGuesses >= 3) {
-					JFrame loserFrame = new JFrame("Guess Who");
-					loserFrame.setSize(300, 300);
-					loserFrame.setLocationRelativeTo(null);
 
-					JLabel loserLabel = new JLabel("Game Over you lose!");
-					loserLabel.setHorizontalAlignment(JLabel.CENTER);
-					loserFrame.add(loserLabel);
-					loserFrame.setVisible(true);
 
-					Timer timer = new Timer();
-					timer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							loserFrame.setVisible(false);
-						}
-					}, 3000);
-					System.exit(0);
-				}
+			if (wrongGuesses >= 3) {
+				JFrame loserFrame = new JFrame("Guess Who");
+				loserFrame.setSize(300, 300);
+				loserFrame.setLocationRelativeTo(null);
+
+				JLabel loserLabel = new JLabel("Game Over you lose!");
+				loserLabel.setHorizontalAlignment(JLabel.CENTER);
+				loserFrame.add(loserLabel);
+				loserFrame.setVisible(true);
+
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						loserFrame.setVisible(false);
+						System.exit(0);
+					}
+				}, 3000);
+
 			}
 		}
 	}
 
+
+	/**
+	 * Retrieves the main frame of the game GUI.
+	 *
+	 * @return The main JFrame object.
+	 */
 	public JFrame getFrame() {//getFrame
 		return frame;
 	}//getFrame
 
+
+	/**
+	 * Retrieves the game deck containing suspect cards.
+	 *
+	 * @return The Deck object representing the game deck.
+	 */
 	public Deck getDeck() {
 		return GuessWhoGame.getTheDeck();
 	}
 
+
+	/**
+	 * Method to create the grid of suspect cards on the game board.
+	 * Displays the suspect cards and sets up mouse listeners for guessing.
+	 */
 	public void createSuspectGrid() {
 		int cardLabelWidth = 180;
 		int cardLabelHeight = 200;
@@ -197,22 +236,45 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 				public void mouseClicked(MouseEvent e) {
 					System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
 
-					guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
 
+					try {
+						guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
+					} catch (InterruptedException ex) {
+						throw new RuntimeException(ex);
+					}
+					cardLabel.removeMouseListener(this);
 				}
 			});
 
-
 			frame.getContentPane().add(cardLabel);
 			susGrid[i] = cardLabel;
-
 		}
 	}
 
+	/**
+	 * Method to flip a suspect card on the game board.
+	 *
+	 * @param index The index of the suspect card to flip.
+	 */
 	public void flipCard(int index) {
 		JLabel cardLabel = susGrid[index];
 		cardLabel.setIcon(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(index).getCard().getBackImage()));
-
 	}
+
+
+	/**
+	 * Method to update and display the guess counter on the game board.
+	 */
+	public void guessCounterMethod(){
+		JLabel guessCounter = new JLabel("Guesses: " + guessesLeft);
+		guessCounter.setBackground(Color.WHITE);
+		guessCounter.setForeground(Color.WHITE);
+		guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
+		guessCounter.setBounds(1400, 50, 192, 20);
+		frame.getContentPane().add(guessCounter);
+		frame.getContentPane().repaint();
+	}
+
+
 
 }//GuessWhoGUI

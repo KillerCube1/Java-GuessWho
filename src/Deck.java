@@ -1,10 +1,10 @@
 import java.util.Random;
 
 /**
- * This class allows for the creation of a Deck object.  A Deck is a collection of Suspects (suspect cards)
- * All decks are - by default- 24 Suspects in length 
- * @author jbutka
+ * The Deck class represents a collection of suspect cards.
+ * It allows for the creation of a deck with default size of 24 suspects.
  *
+ * @Author: Rylan, Damien
  */
 public class Deck {// Deck
 
@@ -13,10 +13,10 @@ public class Deck {// Deck
 	SusData list = new SusData();
 
 	/**
-	 * This constructor allows the user to create a 24-card deck of Suspects, Deck
-	 * object.
-	 * 
+	 * Constructs a Deck object with 24 suspect cards.
+	 * Initializes the deck with suspects and shuffles them.
 	 */
+
 	public Deck() {
 		susDeck = new Suspect[totalCards];
 
@@ -27,14 +27,13 @@ public class Deck {// Deck
 					list.getRosyCheeks(i));
 		}
 
-		//Fisher Yates shuffle Algorithm
 		shuffle();
 	}
 
 	/**
-	 * This method simulates the shuffling of a deck.
-	 * It does so using the Fisher Yates shuffle Algorithm
-     */
+	 * Simulates shuffling of the deck using the Fisher-Yates shuffle algorithm.
+	 */
+
 	public void shuffle() {
 		Random rnd = new Random();
 		for (int i = totalCards - 1; i > 0; i--) {
@@ -46,7 +45,13 @@ public class Deck {// Deck
 	}
 
 
-	
+
+
+	/**
+	 * Retrieves the total number of cards in the deck.
+	 *
+	 * @return The total number of cards in the deck.
+	 */
 
 
 
@@ -55,17 +60,39 @@ public class Deck {// Deck
 	}// getTotalCards
 
 
+	/**
+	 * Retrieves the array of suspect cards in the deck.
+	 *
+	 * @return The array of suspect cards.
+	 */
+
+
 
 	public Suspect[] getSusDeck() {
 		return susDeck;
 	}
 
 
+
+
+	/**
+	 * Retrieves the SusData object associated with the deck.
+	 *
+	 * @return The SusData object.
+	 */
 	public SusData getList() {
 		return list;
 	}
 
-	
+
+
+
+	/**
+	 * Retrieves the suspect card at the specified index in the deck.
+	 *
+	 * @param index The index of the suspect card.
+	 * @return The suspect card at the specified index.
+	 */
 
 	public Suspect getSuspect(int index)
 	{

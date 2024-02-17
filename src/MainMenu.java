@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import Style.MainMenuButton;
 
+
+/**
+ * The MainMenu class represents the main menu of the Guess Who game.
+ * It provides options for singleplayer, multiplayer, settings, about, and exit.
+ */
 public class MainMenu {
 
     static JFrame frame;
@@ -13,6 +18,10 @@ public class MainMenu {
     private static JFrame aboutFrame;
     private static BackgroundMusic backgroundMusic;
 
+
+    /**
+     * Displays the main menu of the game.
+     */
     public static void mainMenu(){
 
         backgroundMusic = new BackgroundMusic(playList());
@@ -76,11 +85,18 @@ public class MainMenu {
     }
 
 
+    /**
+     * Opens the multiplayer menu.
+     */
     static void openMultiplayer() {
         new ServerListMenu();
     }
 
 
+
+    /**
+     * Opens the settings menu.
+     */
     static void openSettings() {
         settingsFrame = new JFrame("Settings");
         settingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,6 +137,9 @@ public class MainMenu {
     }
 
 
+    /**
+     * Opens the about menu.
+     */
 
     private static void openAbout() {
         aboutFrame = new JFrame("About");
@@ -171,12 +190,23 @@ public class MainMenu {
     }
 
 
+    /**
+     * Retrieves the description label for the about menu.
+     *
+     * @return The description label.
+     */
     private static JLabel getjLabel() {
         JLabel descriptionLabel = new JLabel("<html><div style='text-align: center;'><br>Guess Who is a classic board game where each player<br>is assigned a mystery character. Using buttons with questions,<br>they try to figure out the other player's mystery character.<br>When they think they know who their opponent's mystery<br>character is, players can make a guess by clicking on the<br>individual image of the suspect. If the guess is wrong, the<br>player has only two more tries!</div></html>", SwingConstants.CENTER);
         descriptionLabel.setPreferredSize(new Dimension(500, 200));
         return descriptionLabel;
     }
 
+
+    /**
+     * Retrieves the volume slider for the settings menu.
+     *
+     * @return The volume slider.
+     */
     private static JSlider getjSlider() {
         JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         volumeSlider.setMajorTickSpacing(10);
@@ -189,6 +219,10 @@ public class MainMenu {
     }
 
 
+
+    /**
+     * Provides a playlist of music files for the background music in the main menu.
+     */
     static List<File> playList(){
         List<File> playlist = new ArrayList<>();
         playlist.add(new File("src/Music/Ambient-downtempo-music.wav"));
@@ -209,6 +243,11 @@ public class MainMenu {
         return playlist;
     }
 
+    /**
+     * Retrieves the main menu frame.
+     *
+     * @return The main menu frame.
+     */
     public static JFrame getFrame() {
         return frame;
     }
