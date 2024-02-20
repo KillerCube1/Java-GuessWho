@@ -25,7 +25,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 	private final JFrame frame;
 	private int wrongGuesses = 0;
 	private int guessesLeft = 3;
-
+	private JLabel guessCounter;
 	private final JLabel[] susGrid = new JLabel[24];
 
 
@@ -157,9 +157,8 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 			}, 3000);
 		} else {
 			guessesLeft -= 1;
-			guessCounterMethod();
 			wrongGuesses += 1;
-
+			guessCounterMethod();
 
 			if (wrongGuesses >= 3) {
 				JFrame loserFrame = new JFrame("Guess Who");
@@ -263,16 +262,22 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 	/**
 	 * Method to update and display the guess counter on the game board.
 	 */
-	public void guessCounterMethod(){
-		JLabel guessCounter = new JLabel("Guesses: " + guessesLeft);
-		guessCounter.setBackground(Color.WHITE);
-		guessCounter.setForeground(Color.WHITE);
-		guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
-		guessCounter.setBounds(1400, 50, 192, 20);
-		frame.getContentPane().add(guessCounter);
 
+
+
+	public void guessCounterMethod() {
+
+		if (guessCounter == null) {
+			guessCounter = new JLabel();
+			guessCounter.setBackground(Color.WHITE);
+			guessCounter.setForeground(Color.WHITE);
+			guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
+			guessCounter.setBounds(1400, 50, 192, 20);
+			frame.getContentPane().add(guessCounter);
+		}
+
+		guessCounter.setText("Guesses: " + guessesLeft);
 	}
-
 
 
 }//GuessWhoGUI
