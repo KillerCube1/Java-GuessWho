@@ -10,10 +10,10 @@ import java.net.Socket;
  */
 public class ServerConnection extends Thread {
 
-    Socket socket;
+    private Socket socket;
 
     // Game State
-    Suspect test;
+    private Suspect test;
 
 
     /**
