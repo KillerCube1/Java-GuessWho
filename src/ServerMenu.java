@@ -12,8 +12,6 @@ public class ServerMenu {
     private final JLabel label1;
     private final JLabel label2;
 
-
-
     /**
      * Constructs a ServerMenu object.
      */

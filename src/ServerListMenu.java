@@ -17,7 +17,7 @@ import java.util.Enumeration;
 public class ServerListMenu extends JFrame {
 
     // Main Server IP (Game Servers)
-    private final String listIP = "10.87.128.169";
+    private String listIP = "10.87.128.169";
 
     private JList<String> serverList;
     private MainMenuButton addButton;
