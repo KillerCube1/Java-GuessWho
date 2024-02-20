@@ -36,7 +36,6 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 	public GuessWhoGUI() {//constructor
 		// Set up the game board
 		// Initialize components such as buttons, suspect grid, and guess counter
-
 		// App Set Up
 		frame = new JFrame("Guess Who");
 		try {
@@ -88,10 +87,9 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		}
 
 
+		assignGuiltySuspect();
 		playerCardFrameStuff();
 		guessCounterMethod();
-		randomSuspect();
-
 	}//constructor
 
 
@@ -269,7 +267,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		chosenCard.setIcon(cardIcon);
 	}
 
-	private void randomSuspect(){
+	private void assignGuiltySuspect(){
 		// Assign Random Player Suspect (guilty)
 		int x = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
 		System.out.println(GuessWhoGame.getTheDeck().getSuspect(x).getAttribute("name"));
@@ -278,6 +276,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
 		GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
 	}
+
 
 
 
