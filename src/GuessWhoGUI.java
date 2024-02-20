@@ -88,39 +88,9 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		}
 
 
-		// Assign Random Player Suspect (guilty)
-		int x = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
-		System.out.println(GuessWhoGame.getTheDeck().getSuspect(x).getAttribute("name"));
-		GuessWhoGame.setGuilty(GuessWhoGame.getTheDeck().getSuspect(x));
-
-		int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
-		GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
-
-		// Player Suspect Card Image
-		ImageIcon cardIcon = new ImageIcon(GuessWhoGame.getPlayerCharacter().getCard().getFrontImage());
-		Image image = cardIcon.getImage();
-		Image newimg = image.getScaledInstance(153, 224,  Image.SCALE_SMOOTH);
-		cardIcon = new ImageIcon(newimg);
-
-		// Player Suspect Title Display
-		JLabel cardTitle = new JLabel("Your Character");
-		cardTitle.setBackground(Color.WHITE);
-		cardTitle.setForeground(Color.WHITE);
-		cardTitle.setFont(new Font("Calibri", Font.BOLD, 25));
-		cardTitle.setBounds(1400, 325, 192, 20);
-		frame.getContentPane().add(cardTitle);
-
-
-
-
-		// Player Suspect Card Display
-		JLabel chosenCard = new JLabel("");
-		chosenCard.setBounds(1400, 50, 192, 280);
-		frame.getContentPane().add(chosenCard);
-		chosenCard.setIcon(cardIcon);
-
-
+		playerCardFrameStuff();
 		guessCounterMethod();
+		randomSuspect();
 
 	}//constructor
 
@@ -262,10 +232,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 	/**
 	 * Method to update and display the guess counter on the game board.
 	 */
-
-
-
-	public void guessCounterMethod() {
+	private void guessCounterMethod() {
 
 		if (guessCounter == null) {
 			guessCounter = new JLabel();
@@ -278,6 +245,40 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
 		guessCounter.setText("Guesses: " + guessesLeft);
 	}
+
+	private void playerCardFrameStuff(){
+		// Player Suspect Card Image
+		ImageIcon cardIcon = new ImageIcon(GuessWhoGame.getPlayerCharacter().getCard().getFrontImage());
+		Image image = cardIcon.getImage();
+		Image newimg = image.getScaledInstance(153, 224,  Image.SCALE_SMOOTH);
+		cardIcon = new ImageIcon(newimg);
+
+		// Player Suspect Title Display
+		JLabel cardTitle = new JLabel("Your Character");
+		cardTitle.setBackground(Color.WHITE);
+		cardTitle.setForeground(Color.WHITE);
+		cardTitle.setFont(new Font("Calibri", Font.BOLD, 25));
+		cardTitle.setBounds(1400, 325, 192, 20);
+		frame.getContentPane().add(cardTitle);
+
+
+		// Player Suspect Card Display
+		JLabel chosenCard = new JLabel("");
+		chosenCard.setBounds(1400, 50, 192, 280);
+		frame.getContentPane().add(chosenCard);
+		chosenCard.setIcon(cardIcon);
+	}
+
+	private void randomSuspect(){
+		// Assign Random Player Suspect (guilty)
+		int x = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
+		System.out.println(GuessWhoGame.getTheDeck().getSuspect(x).getAttribute("name"));
+		GuessWhoGame.setGuilty(GuessWhoGame.getTheDeck().getSuspect(x));
+
+		int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
+		GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
+	}
+
 
 
 }//GuessWhoGUI
