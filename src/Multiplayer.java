@@ -21,15 +21,19 @@ public class Multiplayer {
 
         // Pre-Game phase
 
+        // --------------
+
         if (isHost) {
 
             // Run on Host game start
-
+            
+            // --------------
 
         } else {
 
             // Run on Client game start
 
+            // --------------
 
         }
 
