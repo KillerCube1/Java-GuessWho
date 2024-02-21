@@ -156,7 +156,7 @@ public class ServerListMenu extends JFrame {
                 int Port = Integer.valueOf(serverInfo[1]);
 
                 frame.dispose();
-                
+
                 new Client(IP, Port);
             } catch (IOException e) {
                 e.printStackTrace();
