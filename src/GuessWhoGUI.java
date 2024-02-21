@@ -105,47 +105,16 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 		// Process the guess and update game state
 		if (character == GuessWhoGame.getGuilty()) {
 			System.out.println("CORRECT!");
-			JFrame winnerFrame = new JFrame("Guess Who");
-			winnerFrame.setSize(300, 300);
-			winnerFrame.setLocationRelativeTo(null);
 
-			JLabel winnerLabel = new JLabel("Game Over you win");
-			winnerLabel.setHorizontalAlignment(JLabel.CENTER);
-			winnerFrame.add(winnerLabel);
-			winnerFrame.setVisible(true);
+			winnerFrame();
 
-			Timer timer = new Timer();
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					winnerFrame.setVisible(false);
-					// Exit the game after hiding the frame
-					System.exit(0);
-				}
-			}, 3000);
 		} else {
 			guessesLeft -= 1;
 			wrongGuesses += 1;
 			guessCounterMethod();
 
 			if (wrongGuesses >= 3) {
-				JFrame loserFrame = new JFrame("Guess Who");
-				loserFrame.setSize(300, 300);
-				loserFrame.setLocationRelativeTo(null);
-
-				JLabel loserLabel = new JLabel("Game Over you lose!");
-				loserLabel.setHorizontalAlignment(JLabel.CENTER);
-				loserFrame.add(loserLabel);
-				loserFrame.setVisible(true);
-
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						loserFrame.setVisible(false);
-						System.exit(0);
-					}
-				}, 3000);
+				loserFrame();
 
 			}
 		}
@@ -275,6 +244,47 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
 		int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
 		GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
+	}
+
+	public void winnerFrame(){
+		JFrame winnerFrame = new JFrame("Guess Who");
+		winnerFrame.setSize(300, 300);
+		winnerFrame.setLocationRelativeTo(null);
+
+		JLabel winnerLabel = new JLabel("Game Over you win");
+		winnerLabel.setHorizontalAlignment(JLabel.CENTER);
+		winnerFrame.add(winnerLabel);
+		winnerFrame.setVisible(true);
+
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				winnerFrame.setVisible(false);
+				// Exit the game after hiding the frame
+				System.exit(0);
+			}
+		}, 3000);
+	}
+
+	public void loserFrame(){
+		JFrame loserFrame = new JFrame("Guess Who");
+		loserFrame.setSize(300, 300);
+		loserFrame.setLocationRelativeTo(null);
+
+		JLabel loserLabel = new JLabel("Game Over you lose!");
+		loserLabel.setHorizontalAlignment(JLabel.CENTER);
+		loserFrame.add(loserLabel);
+		loserFrame.setVisible(true);
+
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				loserFrame.setVisible(false);
+				System.exit(0);
+			}
+		}, 3000);
 	}
 
 

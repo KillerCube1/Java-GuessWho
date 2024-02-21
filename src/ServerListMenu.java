@@ -11,14 +11,14 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
 public class ServerListMenu extends JFrame {
 
     // Main Server IP (Game Servers)
-    private String listIP = "10.87.128.169";
-
+    private String listIP;
     private JList<String> serverList;
     private MainMenuButton addButton;
     private MainMenuButton joinButton;
@@ -38,7 +38,7 @@ public class ServerListMenu extends JFrame {
      */
     public ServerListMenu() {
         frame = new JFrame();
-
+        listIP = resolveDomainToIP("gameservers.wolfhunter1043.com");
         servers = new ArrayList<>();
         serverListModel = new DefaultListModel<>();
 
@@ -82,7 +82,7 @@ public class ServerListMenu extends JFrame {
         frame.setVisible(true);
 
         try {
-            socket = new Socket(listIP, 420);
+            socket = new Socket(listIP, 28040);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {
@@ -215,6 +215,16 @@ public class ServerListMenu extends JFrame {
         serverListModel.clear();
         for (String server : servers) {
             serverListModel.addElement(server);
+        }
+    }
+
+    private String resolveDomainToIP(String domain) {
+        try {
+            InetAddress address = InetAddress.getByName(domain);
+            return address.getHostAddress();
+        } catch (UnknownHostException e) {
+            System.out.println("Error resolving domain to IP: " + e.getMessage());
+            return null; // or handle the error accordingly
         }
     }
 }
