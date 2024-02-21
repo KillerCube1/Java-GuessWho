@@ -1,24 +1,29 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import Style.MainMenuButton;
+
 import java.awt.*;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class ServerListMenu extends JFrame {
 
-    // Main Server IP
-    private static final String SERVER_IP = "208.109.39.185";
-
+    // Main Server IP (Game Servers)
+    private String listIP;
     private JList<String> serverList;
-    private JButton addButton;
-    private JButton joinButton;
-    private JButton refreshButton;
-    private JButton exitButton;
+    private MainMenuButton addButton;
+    private MainMenuButton joinButton;
+    private MainMenuButton refreshButton;
+    private MainMenuButton exitButton;
     private DefaultListModel<String> serverListModel;
     private ArrayList<String> servers;
     private JFrame frame;
@@ -27,11 +32,13 @@ public class ServerListMenu extends JFrame {
     private BufferedReader input;
     private BufferedOutputStream output;
 
+
     /**
      * Represents a server list menu for selecting or hosting game servers.
      */
     public ServerListMenu() {
         frame = new JFrame();
+        listIP = resolveDomainToIP("gameservers.wolfhunter1043.com");
         servers = new ArrayList<>();
         serverListModel = new DefaultListModel<>();
 
@@ -46,15 +53,18 @@ public class ServerListMenu extends JFrame {
         JScrollPane scrollPane = new JScrollPane(serverList);
 
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1));
-        addButton = new JButton("Host");
-        joinButton = new JButton("Join");
-        refreshButton = new JButton("Refresh");
-        exitButton = new JButton("Back");
+        addButton = new MainMenuButton("Host", 25, 20, 165, 45);
+        joinButton = new MainMenuButton("Join", 25, 70, 165, 45);
+        refreshButton = new MainMenuButton("Refresh", 25, 120, 165, 45);
+        exitButton = new MainMenuButton("Back", 25, 170, 165, 45);
 
         // Action Listeners for buttons
         addButton.addActionListener(e -> hostServer());
+
         joinButton.addActionListener(e -> joinServer());
+
         refreshButton.addActionListener(e -> refreshServerList());
+
         exitButton.addActionListener(e -> backToMainMenu());
 
         buttonPanel.add(addButton);
@@ -72,19 +82,16 @@ public class ServerListMenu extends JFrame {
         frame.setVisible(true);
 
         try {
-            // Attempt to initialize socket and input/output streams
-            socket = new Socket(SERVER_IP, 28040);
+            socket = new Socket(listIP, 28040);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
-
-            // If initialization successful, refresh the server list
-            refreshServerList();
         } catch (IOException ex) {
-            // Handle initialization failure
-            System.out.println("Error initializing socket: " + ex.getMessage());
-            ex.printStackTrace();
+            System.out.println("Error " + ex.getMessage());
         }
+
+        refreshServerList();
     }
+
 
     /**
      * Method to host a server.
@@ -96,14 +103,31 @@ public class ServerListMenu extends JFrame {
                 output.write(("SERADD" + "\r\n").getBytes());
                 output.write((serverName + "\r\n").getBytes());
 
-                InetAddress localHost = InetAddress.getLocalHost();
-                output.write((localHost.getHostAddress() + "\r\n").getBytes());
-                output.write(("100\r\n").getBytes());
+                final String[] ip = new String[1];
+                try {
+                    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+                    while (interfaces.hasMoreElements()) {
+                        NetworkInterface networkInterface = interfaces.nextElement();
+                        if (!networkInterface.isLoopback() && networkInterface.isUp()) {
+                            Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+                            while (addresses.hasMoreElements()) {
+                                InetAddress addr = addresses.nextElement();
+                                if (addr.getAddress().length == 4) { // Check for IPv4 addresses
+                                    ip[0] = addr.getHostAddress();
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+
+                output.write((ip[0] + "\r\n").getBytes());
+                output.write((100 + "\r\n").getBytes());
                 output.flush();
 
                 String command = input.readLine();
 
-                if (command != null && command.substring(0, 3).equals("FIN")) {
+                if (command.substring(0, 3).equals("FIN")) {
                     frame.dispose();
                     new Server(new ServerMenu(), serverName, socket, output);
                 } else {
@@ -126,25 +150,25 @@ public class ServerListMenu extends JFrame {
                 output.flush();
 
                 String serverGet = input.readLine();
-                if (serverGet != null) {
-                    String[] serverInfo = serverGet.split(",");
-                    String IP = serverInfo[0];
-                    int Port = Integer.parseInt(serverInfo[1]);
+                String[] serverInfo = serverGet.split(",");
 
-                    frame.dispose();
-                    new Client(IP, Port);
-                } else {
-                    System.out.println("No response from server.");
-                }
+                String IP = serverInfo[0];
+                int Port = Integer.valueOf(serverInfo[1]);
+
+                frame.dispose();
+
+                new Client(IP, Port);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 
     /**
      * Method to refresh the server list.
      */
+
     private void refreshServerList() {
         try {
             output.write(("CLIGSL" + "\r\n").getBytes());
@@ -152,10 +176,10 @@ public class ServerListMenu extends JFrame {
 
             String command = input.readLine();
 
-            if (command != null && command.startsWith("SLL")) {
+            if (command.substring(0, 3).equals("SLL")) {
                 servers.clear();
 
-                int size = Integer.parseInt(command.substring(3));
+                int size = Integer.valueOf(command.substring(3, command.length()));
 
                 for (int i = 0; i < size; i++) {
                     String serverName = input.readLine();
@@ -168,6 +192,7 @@ public class ServerListMenu extends JFrame {
             System.out.println("Error " + ex.getMessage());
         }
     }
+
 
     /**
      * Method to return to the main menu.
@@ -182,16 +207,24 @@ public class ServerListMenu extends JFrame {
         MainMenu.getFrame().setVisible(true);
     }
 
+
     /**
      * Method to update the server list.
      */
     private void updateServerList() {
-        SwingUtilities.invokeLater(() -> {
-            serverListModel.clear();
-            for (String server : servers) {
-                serverListModel.addElement(server);
-            }
-        });
+        serverListModel.clear();
+        for (String server : servers) {
+            serverListModel.addElement(server);
+        }
     }
 
+    private String resolveDomainToIP(String domain) {
+        try {
+            InetAddress address = InetAddress.getByName(domain);
+            return address.getHostAddress();
+        } catch (UnknownHostException e) {
+            System.out.println("Error resolving domain to IP: " + e.getMessage());
+            return null; // or handle the error accordingly
+        }
+    }
 }
