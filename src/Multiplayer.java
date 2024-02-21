@@ -19,16 +19,37 @@ public class Multiplayer {
             Multiplayer.output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {}
 
+        // Pre-Game phase
+
         if (isHost) {
 
             // Run on Host game start
+
 
         } else {
 
             // Run on Client game start
 
+
         }
 
+    }
+
+    // Multiplayer Listener
+    public static void listenResponse() {
+        new Thread(() -> {
+            try {
+                String command = input.readLine();
+                
+                if (command.startsWith("get")) {
+                    if (command.startsWith("SUS", 3)) {
+                        output.write((("Blap") + "\r\n").getBytes());
+                        output.flush();
+                    }
+                }
+
+            } catch (IOException ex) {}
+        }).start();
     }
 
     // Multiplayer Methods
