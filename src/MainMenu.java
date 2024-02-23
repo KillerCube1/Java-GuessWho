@@ -67,7 +67,7 @@ public class MainMenu {
 
 
         button.addActionListener(e -> {
-            new GuessWhoGame();
+            new GuessWhoGame(0);
             frame.dispose();
         });
 

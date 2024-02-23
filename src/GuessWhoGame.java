@@ -16,15 +16,42 @@ public class GuessWhoGame {
     /**
      * Constructs a GuessWhoGame object and initializes the game components.
      */
-    public GuessWhoGame() {
-        EventQueue.invokeLater(() -> {
+    public GuessWhoGame(int gameState) {
+        if (gameState == 0) {
+            EventQueue.invokeLater(() -> {
+                try {
+                    window = new GuessWhoGUI();
+                    window.getFrame().setVisible(true);
+                    suspectWindow = new SuspectGUI();
+                } catch (Exception ignored) {
+                }
+            });
+        } else if (gameState == 1) {
+            Multiplayer.setTurn(Math.random() < 0.5);
+            Multiplayer.listenResponse();
+            EventQueue.invokeLater(() -> {
+                try {
+                    window = new GuessWhoGUI();
+                    window.getFrame().setVisible(true);
+                    suspectWindow = new SuspectGUI();
+                } catch (Exception ignored) {
+                }
+            });
+        } else {
             try {
-                window = new GuessWhoGUI();
-                window.getFrame().setVisible(true);
-                suspectWindow = new SuspectGUI();
-            } catch (Exception ignored) {
-            }
-        });
+                Thread.sleep(500);
+            } catch (InterruptedException e) {}
+            boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
+            System.out.println(isTurn);
+            EventQueue.invokeLater(() -> {
+                try {
+                    window = new GuessWhoGUI();
+                    window.getFrame().setVisible(true);
+                    suspectWindow = new SuspectGUI();
+                } catch (Exception ignored) {
+                }
+            });
+        }
     }
 
 

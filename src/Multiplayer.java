@@ -10,6 +10,9 @@ public class Multiplayer {
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
+    // Multiplayer variables
+    private static boolean clientTurn;
+
     public Multiplayer(Socket socket, boolean isHost){
 
         // Set up multiplayer communication
@@ -26,20 +29,18 @@ public class Multiplayer {
         if (isHost) {
 
             // Run on Host game start
-
+            new GuessWhoGame(1);
             // --------------
 
         } else {
 
             // Run on Client game start
-
+            new GuessWhoGame(2);
             // --------------
 
         }
 
     }
-
-
 
     // Multiplayer Listener
     public static void listenResponse() {
@@ -50,6 +51,9 @@ public class Multiplayer {
                 if (command.startsWith("get")) {
                     if (command.startsWith("SUS", 3)) {
                         output.write((("Blap") + "\r\n").getBytes());
+                        output.flush();
+                    } else if (command.startsWith("TRN", 3)) {
+                        output.write((String.valueOf(clientTurn) + "\r\n").getBytes());
                         output.flush();
                     }
                 }
@@ -74,6 +78,22 @@ public class Multiplayer {
             System.out.println("Error " + ex.getMessage());
             return null;
         }
+    }
+
+    public static String getTurn() {
+        try {
+            output.write("getTRN\r\n".getBytes());
+            output.flush();
+            return input.readLine();
+        } catch (IOException ex) {
+            System.out.println("Error " + ex.getMessage());
+            return null;
+        }
+    }
+
+    // Host Methods
+    public static void setTurn(boolean turn) {
+        clientTurn = turn;
     }
 
 }
