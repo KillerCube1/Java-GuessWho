@@ -53,7 +53,7 @@ public class AdvancedSettings {
     private void updateInfo() {
         if (MainMenu.usingLAN()) {
             info.setText(
-                "[ Connected to LAN " + MainMenu.getIP() + " ]"
+                "<html>[ Connected to LAN " + MainMenu.getIP() + " ]<br/>When hosting on a LAN, make sure the server is running locally.</html>"
             );
         } else {
             info.setText(

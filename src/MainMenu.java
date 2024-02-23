@@ -86,6 +86,10 @@ public class MainMenu {
             openAbout();
             frame.setVisible(false);
         });
+
+        button5.addActionListener(e -> {
+            System.exit(0);
+        });
     }
 
 

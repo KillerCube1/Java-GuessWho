@@ -91,7 +91,9 @@ public class ServerListMenu extends JFrame {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {
-            System.out.println("Error " + ex.getMessage());
+            frame.dispose();
+            MainMenu.getFrame().setVisible(true);
+            JOptionPane.showMessageDialog(null, "There was an issue when connecting to the server");
         }
 
         refreshServerList();
