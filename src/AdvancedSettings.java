@@ -1,4 +1,7 @@
 import java.awt.GridLayout;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,7 +35,10 @@ public class AdvancedSettings {
         JButton playButton = new MainMenuButton("Use Server", 25, 130, 165, 45);
         playButton.addActionListener(e -> hostOnServer());
 
-        JButton stopButton = new MainMenuButton("Use LAN", 25, 180, 165, 45);
+        JButton hostButton = new MainMenuButton("Host LAN", 25, 180, 165, 45);
+        hostButton.addActionListener(e -> runLANServer());
+
+        JButton stopButton = new MainMenuButton("Use LAN", 25, 230, 165, 45);
         stopButton.addActionListener(e -> hostOnLAN());
 
         JButton backButton = new MainMenuButton("Back", 25, 280, 165, 45);
@@ -42,6 +48,7 @@ public class AdvancedSettings {
         });
 
         panel.add(playButton);
+        panel.add(hostButton);
         panel.add(stopButton);
         panel.add(backButton);
 
@@ -66,6 +73,23 @@ public class AdvancedSettings {
         System.out.println("Hosting on main server");
         MainMenu.setLANConnection(false);
         updateInfo();
+    }
+
+    private void runLANServer() {
+        try {
+            // Specify the path to the directory containing LanServer.jar
+            String directoryPath = "src";
+            
+            // Specify the command to run LanServer.jar
+            String[] command = {"java", "-jar", "LanServer.jar"};
+
+            // Create ProcessBuilder instance with directory path
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.directory(new File(directoryPath));
+
+            // Start the process
+            pb.start();
+        } catch (IOException e) {}
     }
 
     private void hostOnLAN() {
