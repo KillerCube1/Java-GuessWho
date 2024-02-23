@@ -10,6 +10,9 @@ public class Multiplayer {
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
+    private static boolean clientTurn = false;
+
+
     public Multiplayer(Socket socket, boolean isHost){
 
         // Set up multiplayer communication
@@ -25,9 +28,6 @@ public class Multiplayer {
 
         if (isHost) {
 
-            // Run on Host game start
-            
-            // --------------
 
         } else {
 
@@ -39,12 +39,14 @@ public class Multiplayer {
 
     }
 
+
+
     // Multiplayer Listener
     public static void listenResponse() {
         new Thread(() -> {
             try {
                 String command = input.readLine();
-                
+
                 if (command.startsWith("get")) {
                     if (command.startsWith("SUS", 3)) {
                         output.write((("Blap") + "\r\n").getBytes());

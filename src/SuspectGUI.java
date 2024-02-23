@@ -9,34 +9,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-
-/**
- * The SuspectGUI class provides functionality to display detailed information about a selected suspect
- * in the Guess Who game. It creates a window to show the suspect's attributes and allows the player to make a guess.
- * It implements the ActionListener interface to handle button actions.
- */
 public class SuspectGUI implements ActionListener {
 
     // Main Window
-    GuessWhoGUI mainGUI = GuessWhoGame.getWindow();
-    JFrame frame = GuessWhoGame.getWindow().getFrame();
+    private SinglePlayerGuessWhoGUI mainGUI;
+    private JFrame frame;
 
     // Suspect Window
     private JFrame suspectBox;
-    JButton cancel;
-    JButton guess;
+    private JButton cancel;
+    private JButton guess;
 
-    Suspect targetSuspect;
+    private Suspect targetSuspect;
 
+    public SuspectGUI() {
+        this.mainGUI = mainGUI;
+        this.frame = mainGUI.getFrame();
+    }
 
-
-    /**
-     * Displays the SuspectGUI window with detailed information about the selected suspect.
-     *
-     * @param label The label representing the selected suspect in the main game window.
-     */
     public void ShowSuspectGUI(JLabel label) {
-        
+
         // Get The Suspect From The Deck
         targetSuspect = null;
         for (Suspect i : mainGUI.getDeck().getSusDeck()) {
@@ -68,16 +60,16 @@ public class SuspectGUI implements ActionListener {
         suspectBox.getContentPane().add(suspectInfoTitle);
 
         String[] suspectDesc = {
-            "Name - " + targetSuspect.getAttribute("name"),
-            "Gender - " + targetSuspect.getAttribute("gender"),
-            "Eye Color - " + targetSuspect.getAttribute("eyeColor"),
-            "Hair Color - " + targetSuspect.getAttribute("hairColor"),
-            "Is Bald: " + (Boolean.parseBoolean(targetSuspect.getAttribute("bald")) ? "yes" : "no"),
-            "Has Beard: " + (Boolean.parseBoolean(targetSuspect.getAttribute("beard")) ? "yes" : "no"),
-            "Has Glasses: " + (Boolean.parseBoolean(targetSuspect.getAttribute("glasses")) ? "yes" : "no"),
-            "Has Hat: " + (Boolean.parseBoolean(targetSuspect.getAttribute("hat")) ? "yes" : "no"),
-            "Has Moustache: " + (Boolean.parseBoolean(targetSuspect.getAttribute("moustache")) ? "yes" : "no"),
-            "Has Rosy Cheeks: " + (Boolean.parseBoolean(targetSuspect.getAttribute("rosyCheeks")) ? "yes" : "no")
+                "Name - " + targetSuspect.getAttribute("name"),
+                "Gender - " + targetSuspect.getAttribute("gender"),
+                "Eye Color - " + targetSuspect.getAttribute("eyeColor"),
+                "Hair Color - " + targetSuspect.getAttribute("hairColor"),
+                "Is Bald: " + (Boolean.parseBoolean(targetSuspect.getAttribute("bald")) ? "yes" : "no"),
+                "Has Beard: " + (Boolean.parseBoolean(targetSuspect.getAttribute("beard")) ? "yes" : "no"),
+                "Has Glasses: " + (Boolean.parseBoolean(targetSuspect.getAttribute("glasses")) ? "yes" : "no"),
+                "Has Hat: " + (Boolean.parseBoolean(targetSuspect.getAttribute("hat")) ? "yes" : "no"),
+                "Has Moustache: " + (Boolean.parseBoolean(targetSuspect.getAttribute("moustache")) ? "yes" : "no"),
+                "Has Rosy Cheeks: " + (Boolean.parseBoolean(targetSuspect.getAttribute("rosyCheeks")) ? "yes" : "no")
         };
 
         JLabel suspectInfo = new JLabel("<html>" + String.join("<br/>", suspectDesc) + "</html>");
@@ -103,10 +95,6 @@ public class SuspectGUI implements ActionListener {
 
     }
 
-
-    /**
-     * Handles button actions performed in the SuspectGUI window.
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancel) {
@@ -121,24 +109,11 @@ public class SuspectGUI implements ActionListener {
         }
     }
 
-
-
-    /**
-     * Retrieves the JFrame of the SuspectGUI window.
-     *
-     * @return The SuspectGUI JFrame.
-     */
     public JFrame getFrame() {
         return suspectBox;
     }
 
-
-
-    /**
-     * Disposes the SuspectGUI window.
-     */
     public void disposeFrame() {
         suspectBox.dispose();
     }
-
 }
