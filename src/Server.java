@@ -23,7 +23,7 @@ public class Server {
             // Update the UI with the server name
             UI.updateUI(serverName);
 
-            try (ServerSocket server = new ServerSocket(28040)) {
+            try (ServerSocket server = new ServerSocket(100)) {
                 
                 // Start host server and begin server list communication (keep the server alive)
                 System.out.println("Server started!");

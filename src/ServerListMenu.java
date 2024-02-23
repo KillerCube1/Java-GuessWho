@@ -162,6 +162,8 @@ public class ServerListMenu extends JFrame {
                 String IP = serverInfo[0];
                 int Port = Integer.valueOf(serverInfo[1]);
 
+                System.out.println(IP + ",  " + Port);
+
                 frame.dispose();
 
                 new Client(IP, Port);
