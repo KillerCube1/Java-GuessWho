@@ -13,11 +13,14 @@ import Style.MainMenuButton;
  */
 public class MainMenu {
 
-    static JFrame frame;
+    private static JFrame frame;
     private static JFrame settingsFrame;
 
     private static JFrame aboutFrame;
     private static BackgroundMusic backgroundMusic;
+
+    private static boolean LAN = false;
+    private static String IP; // Only in use if LAN is used
 
 
     /**
@@ -98,14 +101,14 @@ public class MainMenu {
     /**
      * Opens the settings menu.
      */
-    static void openSettings() {
+    public static void openSettings() {
         settingsFrame = new JFrame("Settings");
         settingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         settingsFrame.setSize(600, 400); // Increase frame size
         settingsFrame.setLocationRelativeTo(null);
         settingsFrame.setResizable(false);
 
-        JPanel panel = new JPanel(new GridLayout(6, 1));
+        JPanel panel = new JPanel(new GridLayout(7, 1));
         panel.add(new JLabel("Settings Menu", SwingConstants.CENTER));
 
         // Volume controls and music buttons
@@ -118,17 +121,24 @@ public class MainMenu {
         JButton nextButton = new MainMenuButton("Next Song", 25, 120, 165, 45);
         nextButton.addActionListener(e -> backgroundMusic.playNextSong());
 
-        JButton backButton = new MainMenuButton("Back", 25, 170, 165, 45);
+        JButton advancedButton = new MainMenuButton("Advanced", 25, 170, 165, 45);
+        advancedButton.addActionListener(e -> {
+            settingsFrame.dispose();
+            new AdvancedSettings();
+        });
+
+        JButton backButton = new MainMenuButton("Back", 25, 220, 165, 45);
         backButton.addActionListener(e -> {
             settingsFrame.dispose();
             frame.setVisible(true);
         });
 
-        JSlider volumeSlider = getjSlider();
+        JPanel volumeSlider = getjSlider(backgroundMusic.getVolume());
 
         panel.add(playButton);
         panel.add(stopButton);
         panel.add(nextButton);
+        panel.add(advancedButton);
         panel.add(backButton);
         panel.add(volumeSlider);
 
@@ -208,15 +218,14 @@ public class MainMenu {
      *
      * @return The volume slider.
      */
-    private static JSlider getjSlider() {
-        JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
-        volumeSlider.setMajorTickSpacing(10);
-        volumeSlider.setMinorTickSpacing(1);
-        volumeSlider.setPaintTicks(true);
-        volumeSlider.setPaintLabels(true);
-        volumeSlider.setBackground(new Color(40, 40, 40));
+    private static JPanel getjSlider(int volume) {
+        JPanel volumeControl = new JPanel(new GridLayout(2, 1));
+        volumeControl.setPreferredSize(new Dimension(165, 45));
+        volumeControl.add(new JLabel("Volume:", SwingConstants.CENTER));
+        JSlider volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, volume);
         volumeSlider.addChangeListener(e -> backgroundMusic.setVolume(volumeSlider.getValue()));
-        return volumeSlider;
+        volumeControl.add(volumeSlider);
+        return volumeControl;
     }
 
 
@@ -249,5 +258,21 @@ public class MainMenu {
      */
     public static JFrame getFrame() {
         return frame;
+    }
+
+    public static void setLANIP(String lanIP) {
+        IP = lanIP;
+    }
+
+    public static void setLANConnection(boolean lanUse) {
+        LAN = lanUse;
+    }
+
+    public static String getIP() {
+        return IP;
+    }
+
+    public static boolean usingLAN() {
+        return LAN;
     }
 }

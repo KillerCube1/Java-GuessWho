@@ -15,6 +15,7 @@ public class BackgroundMusic {
     private int currentSongIndex = 0;
     private Clip clip;
     private FloatControl volumeControl;
+    private int volume;
 
 
     /**
@@ -23,6 +24,7 @@ public class BackgroundMusic {
      * @param playlist The list of audio files to be played.
      */
     public BackgroundMusic(List<File> playlist) {
+        this.volume = 100;
         this.playlist = playlist;
         loadSong(currentSongIndex);
     }
@@ -77,7 +79,17 @@ public class BackgroundMusic {
             // Convert volume from 0-100 range to decibels
             float dB = (float) (Math.log(volume / 100.0) / Math.log(10.0) * 20.0);
             volumeControl.setValue(dB);
+            this.volume = volume;
         }
+    }
+
+    /**
+     * Gets the volume of the audio clip.
+     * 
+     * @return The volume level (0-100).
+     */
+    public int getVolume() {
+        return volume;
     }
 
 

@@ -10,9 +10,6 @@ public class Multiplayer {
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
-    private static boolean clientTurn = false;
-
-
     public Multiplayer(Socket socket, boolean isHost){
 
         // Set up multiplayer communication
@@ -22,12 +19,15 @@ public class Multiplayer {
             Multiplayer.output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {}
 
-        // Pre-Game phase
+        // Pre-Game Init
 
         // --------------
 
         if (isHost) {
 
+            // Run on Host game start
+
+            // --------------
 
         } else {
 

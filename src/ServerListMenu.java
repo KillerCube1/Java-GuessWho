@@ -38,7 +38,12 @@ public class ServerListMenu extends JFrame {
      */
     public ServerListMenu() {
         frame = new JFrame();
-        listIP = resolveDomainToIP("gameservers.wolfhunter1043.com");
+        if (MainMenu.usingLAN()) {
+            listIP = MainMenu.getIP();
+        } else {
+            listIP = resolveDomainToIP("gameservers.wolfhunter1043.com");
+        }
+
         servers = new ArrayList<>();
         serverListModel = new DefaultListModel<>();
 
