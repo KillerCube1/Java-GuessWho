@@ -11,7 +11,7 @@ import ClassExtensions.CheckButton;
  * when attribute-checking buttons are clicked.
  * It checks the attributes of suspects and updates the game board accordingly.
  */
-public class MultiplayerCheckAction implements ActionListener {
+public class CheckAction implements ActionListener {
 
 
     /**
@@ -31,29 +31,29 @@ public class MultiplayerCheckAction implements ActionListener {
 
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {
-                Compare =  String.valueOf(MultiplayerGuessWhoGame.getGuilty().getAttribute("hairColor").equals(value.substring(4)));
+                Compare =  String.valueOf(GuessWhoGame.getGuilty().getAttribute("hairColor").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "hairColor";
             } else if (value.startsWith("eyes")) {
-                Compare = String.valueOf(MultiplayerGuessWhoGame.getGuilty().getAttribute("eyeColor").equals(value.substring(4)));
+                Compare = String.valueOf(GuessWhoGame.getGuilty().getAttribute("eyeColor").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "eyeColor";
             } else if (value.startsWith("gend")) {
-                Compare = String.valueOf(MultiplayerGuessWhoGame.getGuilty().getAttribute("gender").equals(value.substring(4)));
+                Compare = String.valueOf(GuessWhoGame.getGuilty().getAttribute("gender").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "gender";
             } else {
-                Compare = MultiplayerGuessWhoGame.getGuilty().getAttribute(value);
+                Compare = GuessWhoGame.getGuilty().getAttribute(value);
                 trait = "true";
             }
         } else {
-            Compare = MultiplayerGuessWhoGame.getGuilty().getAttribute(value);
+            Compare = GuessWhoGame.getGuilty().getAttribute(value);
             trait = "true";
         }
 
-        for (int i = 0; i < MultiplayerGuessWhoGame.getTheDeck().getTotalCards(); i++) {
-            if (!String.valueOf(MultiplayerGuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
-                MultiplayerGuessWhoGame.getWindow().flipCard(i);
+        for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
+            if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
+                GuessWhoGame.getWindow().flipCard(i);
             }
         }
 

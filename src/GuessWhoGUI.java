@@ -20,7 +20,7 @@ import ClassExtensions.CheckButton;
  */
 
 
-public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
+public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
     private final JFrame frame;
     private int wrongGuesses = 0;
@@ -33,7 +33,7 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
     /**
      * Constructs a GuessWhoGUI object and initializes the graphical user interface.
      */
-    public SinglePlayerGuessWhoGUI() {//constructor
+    public GuessWhoGUI() {//constructor
         // Set up the game board
         // Initialize components such as buttons, suspect grid, and guess counter
         // App Set Up
@@ -44,7 +44,7 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
             frame.setSize(1920, 870);
             Color bgd = new Color(40, 40, 40);
             frame.getContentPane().setBackground(bgd);
-            SinglePlayerGuessWhoGame.setTheDeck(new Deck());
+            GuessWhoGame.setTheDeck(new Deck());
         } catch (Exception ignored) {
         }
 
@@ -81,7 +81,7 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
         createSuspectGrid();
 
         for(CheckButton button : buttonList) {
-            button.addActionListener(new SinglePlayerCheckAction());
+            button.addActionListener(new CheckAction());
             button.setFocusable(false);
             button.setVisible(true);
         }
@@ -103,20 +103,18 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
 
     public void guessSuspect(Suspect character) throws InterruptedException {
         // Process the guess and update game state
-        if (character == SinglePlayerGuessWhoGame.getGuilty()) {
+        if (character == GuessWhoGame.getGuilty()) {
             System.out.println("CORRECT!");
 
-            showResultFrame("Game Over the human race has a chance");
-
+            winnerFrame();
 
         } else {
             guessesLeft -= 1;
             wrongGuesses += 1;
             guessCounterMethod();
 
-
             if (wrongGuesses >= 3) {
-                showResultFrame("Game over AI IS TAKING OVER!");
+                loserFrame();
 
             }
         }
@@ -139,7 +137,7 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
      * @return The Deck object representing the game deck.
      */
     public Deck getDeck() {
-        return SinglePlayerGuessWhoGame.getTheDeck();
+        return GuessWhoGame.getTheDeck();
     }
 
 
@@ -154,27 +152,27 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
         int row;
         int col;
 
-        for (int i = 0; i < SinglePlayerGuessWhoGame.getTheDeck().getTotalCards(); i++) {
+        for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             row = i / cardsPerRow;
             col = i % cardsPerRow;
 
             int xPosition = 20 + col * (cardLabelWidth);
             int yPosition = row * (cardLabelHeight);
 
-            JLabel cardLabel = new JLabel(new ImageIcon(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
+            JLabel cardLabel = new JLabel(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
             cardLabel.setBounds(xPosition, yPosition, cardLabelWidth, cardLabelHeight);
-            cardLabel.setIcon(new ImageIcon(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
+            cardLabel.setIcon(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
 
 
             final int index = i;
             cardLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    System.out.println("Clicked on suspect: " + SinglePlayerGuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
+                    System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
 
 
                     try {
-                        guessSuspect(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(index));
+                        guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -194,7 +192,7 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
      */
     public void flipCard(int index) {
         JLabel cardLabel = susGrid[index];
-        cardLabel.setIcon(new ImageIcon(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(index).getCard().getBackImage()));
+        cardLabel.setIcon(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(index).getCard().getBackImage()));
     }
 
 
@@ -217,7 +215,7 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
 
     private void playerCardFrameStuff(){
         // Player Suspect Card Image
-        ImageIcon cardIcon = new ImageIcon(SinglePlayerGuessWhoGame.getPlayerCharacter().getCard().getFrontImage());
+        ImageIcon cardIcon = new ImageIcon(GuessWhoGame.getPlayerCharacter().getCard().getFrontImage());
         Image image = cardIcon.getImage();
         Image newimg = image.getScaledInstance(153, 224,  Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(newimg);
@@ -240,32 +238,50 @@ public class SinglePlayerGuessWhoGUI extends JFrame {//GuessWhoGUI
 
     private void assignGuiltySuspect(){
         // Assign Random Player Suspect (guilty)
-        int x = (int) (Math.random() * SinglePlayerGuessWhoGame.getTheDeck().getTotalCards());
-        System.out.println(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(x).getAttribute("name"));
-        SinglePlayerGuessWhoGame.setGuilty(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(x));
+        int x = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
+        System.out.println(GuessWhoGame.getTheDeck().getSuspect(x).getAttribute("name"));
+        GuessWhoGame.setGuilty(GuessWhoGame.getTheDeck().getSuspect(x));
 
-        int randomPlayerCharacter = (int) (Math.random() * SinglePlayerGuessWhoGame.getTheDeck().getTotalCards());
-        SinglePlayerGuessWhoGame.setPlayerCharacter(SinglePlayerGuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
+        int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
+        GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
     }
 
+    public void winnerFrame(){
+        JFrame winnerFrame = new JFrame("Guess Who");
+        winnerFrame.setSize(300, 300);
+        winnerFrame.setLocationRelativeTo(null);
 
-
-
-    private void showResultFrame(String message) {
-        JFrame resultFrame = new JFrame("Guess Who");
-        resultFrame.setSize(300, 300);
-        resultFrame.setLocationRelativeTo(null);
-
-        JLabel resultLabel = new JLabel(message);
-        resultLabel.setHorizontalAlignment(JLabel.CENTER);
-        resultFrame.add(resultLabel);
-        resultFrame.setVisible(true);
+        JLabel winnerLabel = new JLabel("Game Over you win");
+        winnerLabel.setHorizontalAlignment(JLabel.CENTER);
+        winnerFrame.add(winnerLabel);
+        winnerFrame.setVisible(true);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                resultFrame.setVisible(false);
+                winnerFrame.setVisible(false);
+                // Exit the game after hiding the frame
+                System.exit(0);
+            }
+        }, 3000);
+    }
+
+    public void loserFrame(){
+        JFrame loserFrame = new JFrame("Guess Who");
+        loserFrame.setSize(300, 300);
+        loserFrame.setLocationRelativeTo(null);
+
+        JLabel loserLabel = new JLabel("Game Over you lose!");
+        loserLabel.setHorizontalAlignment(JLabel.CENTER);
+        loserFrame.add(loserLabel);
+        loserFrame.setVisible(true);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                loserFrame.setVisible(false);
                 System.exit(0);
             }
         }, 3000);

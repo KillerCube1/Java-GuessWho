@@ -5,8 +5,8 @@ import java.awt.EventQueue;
  * The GuessWhoGame class represents the main game logic for Guess Who.
  * It manages the game window, the suspect GUI window, the game deck, and the suspects.
  */
-public class MultiplayerGuessWhoGame {
-    private static MultiplayerGuessWhoGUI window;
+public class GuessWhoGame {
+    private static GuessWhoGUI window;
     private static SuspectGUI suspectWindow;
     private static Deck theDeck;
     private static Suspect guilty;
@@ -16,10 +16,10 @@ public class MultiplayerGuessWhoGame {
     /**
      * Constructs a GuessWhoGame object and initializes the game components.
      */
-    public MultiplayerGuessWhoGame() {
+    public GuessWhoGame() {
         EventQueue.invokeLater(() -> {
             try {
-                window = new MultiplayerGuessWhoGUI();
+                window = new GuessWhoGUI();
                 window.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {
@@ -34,7 +34,7 @@ public class MultiplayerGuessWhoGame {
      * @param theDeck The game deck to set.
      */
     public static void setTheDeck(Deck theDeck) {
-        MultiplayerGuessWhoGame.theDeck = theDeck;
+        GuessWhoGame.theDeck = theDeck;
     }
 
 
@@ -44,7 +44,7 @@ public class MultiplayerGuessWhoGame {
      * @param guilty The guilty suspect to set.
      */
     public static void setGuilty(Suspect guilty) {
-        MultiplayerGuessWhoGame.guilty = guilty;
+        GuessWhoGame.guilty = guilty;
     }
 
 
@@ -54,7 +54,7 @@ public class MultiplayerGuessWhoGame {
      * @param playerCharacter The player's character to set.
      */
     public static void setPlayerCharacter(Suspect playerCharacter) {
-        MultiplayerGuessWhoGame.playerCharacter = playerCharacter;
+        GuessWhoGame.playerCharacter = playerCharacter;
     }
 
 
@@ -63,7 +63,7 @@ public class MultiplayerGuessWhoGame {
      *
      * @return The game window.
      */
-    public static MultiplayerGuessWhoGUI getWindow() {
+    public static GuessWhoGUI getWindow() {
         return window;
     }
 
