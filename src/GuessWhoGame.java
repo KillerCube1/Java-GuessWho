@@ -17,7 +17,7 @@ public class GuessWhoGame {
      * Constructs a GuessWhoGame object and initializes the game components.
      */
     public GuessWhoGame(String gameState) {
-        if (gameState == "Single") {
+        if (gameState.equals("Single")) {
             // SINGLE PLAYER
             EventQueue.invokeLater(() -> {
                 try {
@@ -26,7 +26,7 @@ public class GuessWhoGame {
                     suspectWindow = new SuspectGUI();
                 } catch (Exception ignored) {}
             });
-        } else if (gameState == "Host") {
+        } else if (gameState.equals("Host")) {
             // HOST GAME
             Multiplayer.setTurn(Math.random() < 0.5);
             Multiplayer.setMyMom((float) Math.random());
@@ -41,7 +41,7 @@ public class GuessWhoGame {
                     suspectWindow = new SuspectGUI();
                 } catch (Exception ignored) {}
             });
-        } else if (gameState == "Client") {
+        } else if (gameState.equals("Client")) {
             // CLIENT GAME
             try {
                 Thread.sleep(500);
