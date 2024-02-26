@@ -8,7 +8,6 @@ import java.net.*;
  */
 public class Server {
 
-
     /**
      * Constructs a server instance.
      *

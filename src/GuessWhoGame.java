@@ -18,26 +18,29 @@ public class GuessWhoGame {
      */
     public GuessWhoGame(int gameState) {
         if (gameState == 0) {
+            // SINGLE PLAYER
             EventQueue.invokeLater(() -> {
                 try {
                     window = new GuessWhoGUI();
                     window.getFrame().setVisible(true);
                     suspectWindow = new SuspectGUI();
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
             });
         } else if (gameState == 1) {
+            // HOST GAME
             Multiplayer.setTurn(Math.random() < 0.5);
             Multiplayer.listenResponse();
+            boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
+            System.out.println(isTurn);
             EventQueue.invokeLater(() -> {
                 try {
                     window = new GuessWhoGUI();
                     window.getFrame().setVisible(true);
                     suspectWindow = new SuspectGUI();
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
             });
         } else {
+            // CLIENT GAME
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {}
@@ -48,8 +51,7 @@ public class GuessWhoGame {
                     window = new GuessWhoGUI();
                     window.getFrame().setVisible(true);
                     suspectWindow = new SuspectGUI();
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
             });
         }
     }
