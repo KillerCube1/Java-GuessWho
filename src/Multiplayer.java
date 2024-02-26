@@ -12,6 +12,7 @@ public class Multiplayer {
 
     // Multiplayer variables
     private static boolean clientTurn;
+    private static float myMom;
 
     public Multiplayer(Socket socket, boolean isHost){
 
@@ -29,13 +30,13 @@ public class Multiplayer {
         if (isHost) {
 
             // Run on Host game start
-            new GuessWhoGame(1);
+            new GuessWhoGame("Host");
             // --------------
 
         } else {
 
             // Run on Client game start
-            new GuessWhoGame(2);
+            new GuessWhoGame("Client");
             // --------------
 
         }
@@ -55,8 +56,9 @@ public class Multiplayer {
                     } else if (command.startsWith("TRN", 3)) {
                         output.write((String.valueOf(clientTurn) + "\r\n").getBytes());
                         output.flush();
-
-                        GuessWhoGUI.freezeFrame();
+                    } else if (command.startsWith("MMV", 3)) {
+                        output.write((String.valueOf(myMom) + "\r\n").getBytes());
+                        output.flush();
                     }
                 }
 
@@ -93,10 +95,24 @@ public class Multiplayer {
         }
     }
 
+    public static String getMyMom() {
+        try {
+            output.write("getMMV\r\n".getBytes());
+            output.flush();
+            return input.readLine();
+        } catch (IOException ex) {
+            System.out.println("Error " + ex.getMessage());
+            return null;
+        }
+    }
 
     // Host Methods
     public static void setTurn(boolean turn) {
         clientTurn = turn;
+    }
+
+    public static void setMyMom(float value) {
+        myMom = value;
     }
 
 

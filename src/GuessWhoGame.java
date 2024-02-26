@@ -16,8 +16,8 @@ public class GuessWhoGame {
     /**
      * Constructs a GuessWhoGame object and initializes the game components.
      */
-    public GuessWhoGame(int gameState) {
-        if (gameState == 0) {
+    public GuessWhoGame(String gameState) {
+        if (gameState == "Single") {
             // SINGLE PLAYER
             EventQueue.invokeLater(() -> {
                 try {
@@ -26,12 +26,14 @@ public class GuessWhoGame {
                     suspectWindow = new SuspectGUI();
                 } catch (Exception ignored) {}
             });
-        } else if (gameState == 1) {
+        } else if (gameState == "Host") {
             // HOST GAME
             Multiplayer.setTurn(Math.random() < 0.5);
+            Multiplayer.setMyMom((float) Math.random());
             Multiplayer.listenResponse();
             boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
             System.out.println(isTurn);
+            System.out.println(Multiplayer.getMyMom());
             EventQueue.invokeLater(() -> {
                 try {
                     window = new GuessWhoGUI();
@@ -39,13 +41,14 @@ public class GuessWhoGame {
                     suspectWindow = new SuspectGUI();
                 } catch (Exception ignored) {}
             });
-        } else {
+        } else if (gameState == "Client") {
             // CLIENT GAME
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {}
             boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
             System.out.println(isTurn);
+            System.out.println(Multiplayer.getMyMom());
             EventQueue.invokeLater(() -> {
                 try {
                     window = new GuessWhoGUI();
