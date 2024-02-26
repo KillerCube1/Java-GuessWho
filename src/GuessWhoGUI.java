@@ -267,14 +267,8 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     }
 
     public static void freezeFrame(){
-        boolean isClientTurn = Boolean.parseBoolean(Multiplayer.getTurn());
-        if (!isClientTurn) {
+            Multiplayer.getTurn();
             frame.setEnabled(false);
-
         }
-    }
-
-
-
 
 }//GuessWhoGUI

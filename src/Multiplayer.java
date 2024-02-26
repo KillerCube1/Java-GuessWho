@@ -118,6 +118,9 @@ public class Multiplayer {
     // Host Methods
     public static void setTurn(boolean turn) {
         clientTurn = turn;
+        if(!clientTurn){
+            GuessWhoGUI.freezeFrame();
+        }
     }
 
     public static void setMyMom(float value) {
