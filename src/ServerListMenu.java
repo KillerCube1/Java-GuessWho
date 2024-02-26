@@ -166,7 +166,15 @@ public class ServerListMenu extends JFrame {
 
                 frame.dispose();
 
-                new Client(IP, Port);
+                try {
+                    System.out.println("Client started!\nConnecting...");
+                    Socket client = new Socket(IP, Port);
+                    System.out.println("Connected");
+                    new Client(client);
+                } catch (IOException ex) {
+                    System.out.println("Error " + ex.getMessage());
+                    new ServerListMenu();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

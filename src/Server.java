@@ -44,7 +44,7 @@ public class Server {
                 } catch (IOException e) {}
 
                 // Start server - client direct connection
-                new Multiplayer(socket, true);
+                new Host(socket);
 
             } catch (IOException ex) {}
 

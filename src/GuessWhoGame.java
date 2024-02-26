@@ -12,51 +12,53 @@ public class GuessWhoGame {
     private static Suspect guilty;
     private static Suspect playerCharacter;
 
-
     /**
      * Constructs a GuessWhoGame object and initializes the game components.
      */
     public GuessWhoGame(String gameState) {
-        if (gameState.equals("Single")) {
-            // SINGLE PLAYER
-            EventQueue.invokeLater(() -> {
-                try {
-                    window = new GuessWhoGUI();
-                    window.getFrame().setVisible(true);
-                    suspectWindow = new SuspectGUI();
-                } catch (Exception ignored) {}
-            });
-        } else if (gameState.equals("Host")) {
-            // HOST GAME
-            Multiplayer.setTurn(Math.random() < 0.5);
-            Multiplayer.setMyMom((float) Math.random());
-            Multiplayer.listenResponse();
-            // boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
-            // System.out.println(isTurn);
-            System.out.println(Multiplayer.getMyMom());
-            EventQueue.invokeLater(() -> {
-                try {
-                    window = new GuessWhoGUI();
-                    window.getFrame().setVisible(true);
-                    suspectWindow = new SuspectGUI();
-                } catch (Exception ignored) {}
-            });
-        } else if (gameState.equals("Client")) {
-            // CLIENT GAME
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {}
-            // boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
-            // System.out.println(isTurn);
-            System.out.println(Multiplayer.getMyMom());
-            EventQueue.invokeLater(() -> {
-                try {
-                    window = new GuessWhoGUI();
-                    window.getFrame().setVisible(true);
-                    suspectWindow = new SuspectGUI();
-                } catch (Exception ignored) {}
-            });
+        switch (gameState) {
+            case "Single": initSingleplayerGame(); break;
+            case "Host"  : initHostGame();         break;
+            case "Client": initClientGame();       break;
+            default: initSingleplayerGame();
         }
+    }
+
+
+    private void initClientGame() {
+        Client.initGame();
+
+        EventQueue.invokeLater(() -> {
+            try {
+                window = new GuessWhoGUI();
+                window.getFrame().setVisible(true);
+                suspectWindow = new SuspectGUI();
+            } catch (Exception ignored) {}
+        });
+    }
+
+
+    private void initHostGame() {
+        Host.initGame();
+
+        EventQueue.invokeLater(() -> {
+            try {
+                window = new GuessWhoGUI();
+                window.getFrame().setVisible(true);
+                suspectWindow = new SuspectGUI();
+            } catch (Exception ignored) {}
+        });
+    }
+
+
+    private void initSingleplayerGame() {
+        EventQueue.invokeLater(() -> {
+            try {
+                window = new GuessWhoGUI();
+                window.getFrame().setVisible(true);
+                suspectWindow = new SuspectGUI();
+            } catch (Exception ignored) {}
+        });
     }
 
 

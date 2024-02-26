@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Client {
+public class Host {
 
-    private static Socket host;
+    private static Socket client;
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
-    public Client(Socket socket) {
+    public Host(Socket socket) {
         try {
-            host = socket;
+            client = socket;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {}
 
-        new GuessWhoGame("Client");
+        new GuessWhoGame("Host");
     }
 
     // Game Phases
