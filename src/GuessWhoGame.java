@@ -31,8 +31,8 @@ public class GuessWhoGame {
             Multiplayer.setTurn(Math.random() < 0.5);
             Multiplayer.setMyMom((float) Math.random());
             Multiplayer.listenResponse();
-            boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
-            System.out.println(isTurn);
+            // boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
+            // System.out.println(isTurn);
             System.out.println(Multiplayer.getMyMom());
             EventQueue.invokeLater(() -> {
                 try {
@@ -46,8 +46,8 @@ public class GuessWhoGame {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {}
-            boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
-            System.out.println(isTurn);
+            // boolean isTurn = Boolean.parseBoolean(Multiplayer.getTurn());
+            // System.out.println(isTurn);
             System.out.println(Multiplayer.getMyMom());
             EventQueue.invokeLater(() -> {
                 try {
