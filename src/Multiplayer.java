@@ -55,6 +55,8 @@ public class Multiplayer {
                     } else if (command.startsWith("TRN", 3)) {
                         output.write((String.valueOf(clientTurn) + "\r\n").getBytes());
                         output.flush();
+
+                        GuessWhoGUI.freezeFrame();
                     }
                 }
 
@@ -91,9 +93,11 @@ public class Multiplayer {
         }
     }
 
+
     // Host Methods
     public static void setTurn(boolean turn) {
         clientTurn = turn;
     }
+
 
 }
