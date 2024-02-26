@@ -10,6 +10,8 @@ public class Multiplayer {
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
+    private static boolean listening;
+
     // Multiplayer variables
     private static boolean clientTurn;
     private static float myMom;
@@ -45,25 +47,32 @@ public class Multiplayer {
 
     // Multiplayer Listener
     public static void listenResponse() {
+        listening = true;
         new Thread(() -> {
-            try {
-                String command = input.readLine();
+            while (listening) {
+                try {
+                    String command = input.readLine();
 
-                if (command.startsWith("get")) {
-                    if (command.startsWith("SUS", 3)) {
-                        output.write((("Blap") + "\r\n").getBytes());
-                        output.flush();
-                    } else if (command.startsWith("TRN", 3)) {
-                        output.write((String.valueOf(clientTurn) + "\r\n").getBytes());
-                        output.flush();
-                    } else if (command.startsWith("MMV", 3)) {
-                        output.write((String.valueOf(myMom) + "\r\n").getBytes());
-                        output.flush();
+                    if (command.startsWith("get")) {
+                        if (command.startsWith("SUS", 3)) {
+                            output.write((("Blap") + "\r\n").getBytes());
+                            output.flush();
+                        } else if (command.startsWith("TRN", 3)) {
+                            output.write((String.valueOf(clientTurn) + "\r\n").getBytes());
+                            output.flush();
+                        } else if (command.startsWith("MMV", 3)) {
+                            output.write((String.valueOf(myMom) + "\r\n").getBytes());
+                            output.flush();
+                        }
                     }
-                }
 
-            } catch (IOException ex) {}
+                } catch (IOException ex) {}
+            }
         }).start();
+    }
+
+    public static void breakListener() {
+        listening = false;
     }
 
     // Multiplayer Methods
