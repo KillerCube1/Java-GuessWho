@@ -6,13 +6,13 @@ import java.net.Socket;
 
 public class Host {
 
-    private static Socket client;
+    private static Socket socket;
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
-    public Host(Socket socket) {
+    public Host(Socket connection) {
         try {
-            client = socket;
+            socket = connection;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {}
