@@ -6,13 +6,13 @@ import java.net.Socket;
 
 public class Client {
 
-    private static Socket host;
+    private static Socket socket;
     private static BufferedReader input;
     private static BufferedOutputStream output;
 
-    public Client(Socket socket) {
+    public Client(Socket connection) {
         try {
-            host = socket;
+            socket = connection;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {}
@@ -26,6 +26,23 @@ public class Client {
     }
 
     // Listener
+    public static void listenResponse() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    String command = input.readLine();
+
+                    if (command.startsWith("get")) {
+                        if (command.startsWith("SUS", 3)) {
+                            output.write((("Blap") + "\r\n").getBytes());
+                            output.flush();
+                        }
+                    }
+
+                } catch (IOException ex) {}
+            }
+        }).start();
+    }
 
     // Getters
 
