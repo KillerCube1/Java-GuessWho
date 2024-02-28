@@ -248,7 +248,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
     private void showResultFrame(String message) {
         JFrame resultFrame = new JFrame("Guess Who");
-        resultFrame.setSize(300, 300);
+        resultFrame.setSize(200, 100);
         resultFrame.setLocationRelativeTo(null);
 
         JLabel resultLabel = new JLabel(message);
