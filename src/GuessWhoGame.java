@@ -20,13 +20,12 @@ public class GuessWhoGame {
             case "Single": initSingleplayerGame(); break;
             case "Host"  : initHostGame();         break;
             case "Client": initClientGame();       break;
-            default: initSingleplayerGame();
         }
     }
 
 
     private void initClientGame() {
-        Client.initGame();
+        Client.listenResponse();
 
         EventQueue.invokeLater(() -> {
             try {
@@ -39,7 +38,8 @@ public class GuessWhoGame {
 
 
     private void initHostGame() {
-        Host.initGame();
+        Host.listenResponse();
+        Host.initGame(); // Initialize Host Variables
 
         EventQueue.invokeLater(() -> {
             try {

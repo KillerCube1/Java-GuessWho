@@ -29,19 +29,31 @@ public class Client {
     public static void listenResponse() {
         new Thread(() -> {
             while (true) {
+                String command = "";
                 try {
-                    String command = input.readLine();
+                    command = input.readLine();
+                } catch (IOException e) {}
 
-                    if (command.startsWith("get")) {
-                        if (command.startsWith("SUS", 3)) {
-                            output.write((("Blap") + "\r\n").getBytes());
-                            output.flush();
-                        }
-                    }
+                String[] commandSections = command.split("::");
 
-                } catch (IOException ex) {}
+                switch(commandSections[0]) {
+                    case "getSUS": sendSuspect(); break;
+                    case "hostINIT": hostFinishInit(); break;
+                }
             }
         }).start();
+    }
+
+    // Listener Responses
+    private static void sendSuspect() {
+        try {
+            output.write((("Blap") + "\r\n").getBytes());
+            output.flush();
+        } catch (IOException ex) {}
+    }
+
+    private static void hostFinishInit() {
+        Client.initGame();
     }
 
     // Getters

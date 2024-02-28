@@ -22,7 +22,13 @@ public class Host {
 
     // Game Phases
     public static void initGame() {
+        
 
+        // Sends signal to Client after initialization is complete
+        try {
+            output.write((("fns") + "\r\n").getBytes());
+            output.flush();
+        } catch (IOException e) {}
     }
 
     // Listener
