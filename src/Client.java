@@ -17,47 +17,100 @@ public class Client {
             output = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException ex) {}
 
+        Client.listenResponse();
+    }
+
+    // --------------------------
+    // Game Phases
+    // --------------------------
+
+    public static void initGame() {
+
+        // Init Host Game Variables
+        int x = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
+        GuessWhoGame.setGuilty(GuessWhoGame.getTheDeck().getSuspect(x));
+
+        // Init Complete
+        finishedInit();
+
+    }
+
+    public static void startGame() {
         new GuessWhoGame("Client");
     }
 
-    // Game Phases
-    public static void initGame() {
-
+    // --------------------------
+    // Game Response Methods
+    // --------------------------
+    
+    private static void finishedInit() {
+        try {
+            output.write((("clientINIT") + "\r\n").getBytes());
+            output.flush();
+        } catch (IOException e) {}
     }
 
+    // --------------------------
     // Listener
+    // --------------------------
+
     public static void listenResponse() {
         new Thread(() -> {
             while (true) {
+
+                // Wait for command
                 String command = "";
                 try {
                     command = input.readLine();
                 } catch (IOException e) {}
 
+                // Split command up into command name and arguments
                 String[] commandSections = command.split("::");
+                String commandName = commandSections[0];
+                String commandArgs = "";
+                if (commandSections.length > 1) commandArgs = commandSections[1];
 
-                switch(commandSections[0]) {
-                    case "getSUS": sendSuspect(); break;
-                    case "hostINIT": hostFinishInit(); break;
+                // Execute response based off command name
+                switch(commandName) {
+                    case "getExample": sendExample(commandArgs);    break;
+                    case "hostINIT"  : hostFinishInit(commandArgs); break;
+                    case "gameStart" : startGame();                 break;
+                    case "turn"      : turnValue(commandArgs);      break;
                 }
+
             }
         }).start();
     }
 
+    // --------------------------
     // Listener Responses
-    private static void sendSuspect() {
+    // --------------------------
+
+    private static void sendExample(String args) {
         try {
-            output.write((("Blap") + "\r\n").getBytes());
+            output.write((("Example") + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
 
-    private static void hostFinishInit() {
+    private static void turnValue(String args) {
+
+    }
+
+    private static void hostFinishInit(String args) {
         Client.initGame();
     }
 
-    // Getters
+    // --------------------------
+    // Variable Getters
+    // --------------------------
 
-    // Setters
+    private static boolean getTurn() {
+        try {
+            output.write((("getTurn") + "\r\n").getBytes());
+            output.flush();
+        } catch (IOException ex) {}
+        
+    }
 
 }

@@ -18,18 +18,16 @@ public class GuessWhoGame {
     public GuessWhoGame(String gameState) {
         switch (gameState) {
             case "Single": initSingleplayerGame(); break;
-            case "Host"  : initHostGame();         break;
-            case "Client": initClientGame();       break;
+            case "Host"  : startHostGame();        break;
+            case "Client": startClientGame();      break;
         }
     }
 
 
-    private void initClientGame() {
-        Client.listenResponse();
-
+    private void startClientGame() {
         EventQueue.invokeLater(() -> {
             try {
-                window = new GuessWhoGUI();
+                window = new GuessWhoGUI(Client.getTurn());
                 window.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {}
@@ -37,13 +35,10 @@ public class GuessWhoGame {
     }
 
 
-    private void initHostGame() {
-        Host.listenResponse();
-        Host.initGame(); // Initialize Host Variables
-
+    private void startHostGame() {
         EventQueue.invokeLater(() -> {
             try {
-                window = new GuessWhoGUI();
+                window = new GuessWhoGUI(Host.getTurn());
                 window.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {}
@@ -54,7 +49,7 @@ public class GuessWhoGame {
     private void initSingleplayerGame() {
         EventQueue.invokeLater(() -> {
             try {
-                window = new GuessWhoGUI();
+                window = new GuessWhoGUI(true);
                 window.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {}

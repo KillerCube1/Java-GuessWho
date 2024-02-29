@@ -33,7 +33,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     /**
      * Constructs a GuessWhoGUI object and initializes the graphical user interface.
      */
-    public GuessWhoGUI() {//constructor
+    public GuessWhoGUI(boolean turn) {//constructor
         // Set up the game board
         // Initialize components such as buttons, suspect grid, and guess counter
         // App Set Up
@@ -90,6 +90,10 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         assignGuiltySuspect();
         playerCardFrameStuff();
         guessCounterMethod();
+
+        // Freeze frame if not turn
+        if (!turn) freezeFrame();
+
     }//constructor
 
 
@@ -267,8 +271,11 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     }
 
     public static void freezeFrame(){
-            Multiplayer.getTurn();
-            frame.setEnabled(false);
-        }
+        frame.setEnabled(false);
+    }
+
+    public static void unFreezeFrame(){
+        frame.setEnabled(true);
+    }
 
 }//GuessWhoGUI
