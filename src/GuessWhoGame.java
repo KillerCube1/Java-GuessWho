@@ -8,7 +8,7 @@ import java.awt.EventQueue;
 public class GuessWhoGame {
     private static GuessWhoGUI window;
     private static SuspectGUI suspectWindow;
-    private static Deck theDeck;
+    private static Deck theDeck = new Deck();
     private static Suspect guilty;
     private static Suspect playerCharacter;
 

@@ -44,7 +44,6 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
             frame.setSize(1920, 870);
             Color bgd = new Color(40, 40, 40);
             frame.getContentPane().setBackground(bgd);
-            GuessWhoGame.setTheDeck(new Deck());
         } catch (Exception ignored) {
         }
 
