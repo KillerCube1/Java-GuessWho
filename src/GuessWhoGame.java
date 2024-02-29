@@ -27,7 +27,7 @@ public class GuessWhoGame {
     private void startClientGame() {
         EventQueue.invokeLater(() -> {
             try {
-                window = new GuessWhoGUI(Client.getTurn());
+                window = new GuessWhoGUI(!Client.getTurn());
                 window.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {}

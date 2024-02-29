@@ -63,7 +63,8 @@ public class Host {
 
     public static void listenResponse() {
         new Thread(() -> {
-            while (true) {
+            boolean loop = true;
+            while (loop) {
 
                 // Wait for command
                 String command = "";
@@ -79,9 +80,11 @@ public class Host {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    case "getExample": sendExample(commandArgs);      break;
-                    case "clientINIT": clientFinishInit(commandArgs); break;
-                    case "getTurn"   : sendTurn(commandArgs);         break;
+                    case "getExample" : sendExample(commandArgs);      break;
+                    case "clientINIT" : clientFinishInit(commandArgs); break;
+                    case "getTurn"    : sendTurn(commandArgs);         break;
+                    case "pauseClient": pauseClient(commandArgs);      break;
+                    case "pauseEvent" : loop = false;                  break;
                 }
 
             }
@@ -92,6 +95,13 @@ public class Host {
     // Listener Responses
     // --------------------------
 
+    private static void pauseClient(String commandArgs) {
+        try {
+            output.write((("pauseEvent") + "\r\n").getBytes());
+            output.flush();
+        } catch (IOException ex) {}
+    }
+
     private static void sendExample(String args) {
         try {
             output.write((("Example") + "\r\n").getBytes());
@@ -101,7 +111,7 @@ public class Host {
 
     private static void sendTurn(String args) {
         try {
-            output.write((("turn::" + String.valueOf(hostTurn)) + "\r\n").getBytes());
+            output.write(((String.valueOf(hostTurn)) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
@@ -113,6 +123,14 @@ public class Host {
         } catch (IOException ex) {}
         
         startGame();
+    }
+    
+    // --------------------------
+    // Variable Getters
+    // --------------------------
+
+    public static boolean getTurn() {
+        return hostTurn;
     }
 
 }

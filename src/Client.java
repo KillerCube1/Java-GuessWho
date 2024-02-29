@@ -50,13 +50,19 @@ public class Client {
         } catch (IOException e) {}
     }
 
+    private static void pauseClient() throws IOException {
+        output.write((("pauseClient") + "\r\n").getBytes());
+        output.flush();
+    }
+
     // --------------------------
     // Listener
     // --------------------------
 
     public static void listenResponse() {
         new Thread(() -> {
-            while (true) {
+            boolean loop = true;
+            while (loop) {
 
                 // Wait for command
                 String command = "";
@@ -75,7 +81,8 @@ public class Client {
                     case "getExample": sendExample(commandArgs);    break;
                     case "hostINIT"  : hostFinishInit(commandArgs); break;
                     case "gameStart" : startGame();                 break;
-                    case "turn"      : turnValue(commandArgs);      break;
+                    case "pauseHost" : pauseHost(commandArgs);      break;
+                    case "pauseEvent": loop = false;                break;
                 }
 
             }
@@ -86,15 +93,18 @@ public class Client {
     // Listener Responses
     // --------------------------
 
+    private static void pauseHost(String commandArgs) {
+        try {
+            output.write((("pauseEvent") + "\r\n").getBytes());
+            output.flush();
+        } catch (IOException ex) {}
+    }
+
     private static void sendExample(String args) {
         try {
             output.write((("Example") + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
-    }
-
-    private static void turnValue(String args) {
-
     }
 
     private static void hostFinishInit(String args) {
@@ -105,12 +115,20 @@ public class Client {
     // Variable Getters
     // --------------------------
 
-    private static boolean getTurn() {
+    public static boolean getTurn() {
         try {
+            pauseClient(); // pauses command listener
+
+            // get turn value
             output.write((("getTurn") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
-        
+            boolean value = Boolean.valueOf(input.readLine());
+
+            listenResponse(); // start command listener
+            return value;
+        } catch (IOException ex) {
+            return false;
+        }
     }
 
 }
