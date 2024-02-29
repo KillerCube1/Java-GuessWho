@@ -72,10 +72,10 @@ public class Client {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    case "getExample": sendExample(commandArgs);    break;
-                    case "hostINIT"  : hostFinishInit(commandArgs); break;
-                    case "gameStart" : startGame();                 break;
-                    case "turn"      : turnValue(commandArgs);      break;
+                    case "getExample" -> sendExample(commandArgs);
+                    case "hostINIT"  -> hostFinishInit(commandArgs);
+                    case "gameStart" -> startGame();
+                    case "turn"      -> turnValue(commandArgs);
                 }
 
             }

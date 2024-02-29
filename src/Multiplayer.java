@@ -93,14 +93,13 @@ public class Multiplayer {
         }
     }
 
-    public static String getTurn() {
+    public static void getTurn() {
         try {
             output.write("getTRN\r\n".getBytes());
             output.flush();
-            return input.readLine();
+            input.readLine();
         } catch (IOException ex) {
             System.out.println("Error " + ex.getMessage());
-            return null;
         }
     }
 

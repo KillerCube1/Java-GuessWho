@@ -79,9 +79,9 @@ public class Host {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    case "getExample": sendExample(commandArgs);      break;
-                    case "clientINIT": clientFinishInit(commandArgs); break;
-                    case "getTurn"   : sendTurn(commandArgs);         break;
+                    case "getExample" -> sendExample(commandArgs);
+                    case "clientINIT" -> clientFinishInit(commandArgs);
+                    case "getTurn"   ->  sendTurn(commandArgs);
                 }
 
             }
