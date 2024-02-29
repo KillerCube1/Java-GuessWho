@@ -57,6 +57,11 @@ public class Host {
         } catch (IOException e) {}
     }
 
+    private static void pauseHost() throws IOException {
+        output.write((("pauseHost") + "\r\n").getBytes());
+        output.flush();
+    }
+
     // --------------------------
     // Listener
     // --------------------------
@@ -80,11 +85,21 @@ public class Host {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    case "getExample" : sendExample(commandArgs);      break;
-                    case "clientINIT" : clientFinishInit(commandArgs); break;
-                    case "getTurn"    : sendTurn(commandArgs);         break;
-                    case "pauseClient": pauseClient(commandArgs);      break;
-                    case "pauseEvent" : loop = false;                  break;
+                    // Game initialization
+                    case "clientINIT"    : clientFinishInit(commandArgs); break;
+
+                    // Get commands
+                    case "getTurn"       : sendTurn(commandArgs);         break;
+                    case "getSuspect"    : sendSuspect(commandArgs);      break;
+
+                    // Set commands
+
+
+                    // Stop Client listener
+                    case "pauseClient"   : pauseClient(commandArgs);      break;
+
+                    // Stop listener
+                    case "pauseEvent"    : loop = false;                  break;
                 }
 
             }
@@ -102,16 +117,16 @@ public class Host {
         } catch (IOException ex) {}
     }
 
-    private static void sendExample(String args) {
+    private static void sendTurn(String args) {
         try {
-            output.write((("Example") + "\r\n").getBytes());
+            output.write(((String.valueOf(hostTurn)) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
 
-    private static void sendTurn(String args) {
+    private static void sendSuspect(String args) {
         try {
-            output.write(((String.valueOf(hostTurn)) + "\r\n").getBytes());
+            output.write(((String.valueOf(GuessWhoGame.getPlayerCharacter().getAttribute("name"))) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
@@ -126,11 +141,39 @@ public class Host {
     }
     
     // --------------------------
-    // Variable Getters
+    // Direct Getters
     // --------------------------
 
     public static boolean getTurn() {
         return hostTurn;
+    }
+
+    // --------------------------
+    // Server Getters
+    // --------------------------
+
+    public static Suspect getOpponentSuspect() {
+        try {
+            pauseHost(); // pauses command listener
+
+            // get turn value
+            output.write((("getSuspect") + "\r\n").getBytes());
+            output.flush();
+            String value = input.readLine();
+
+            Suspect suspect = null;
+            for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {
+                if (person.getAttribute("name").equals(value)) {
+                    suspect = person;
+                    break;
+                }
+            }
+
+            listenResponse(); // start command listener
+            return suspect;
+        } catch (IOException ex) {
+            return null;
+        }
     }
 
 }

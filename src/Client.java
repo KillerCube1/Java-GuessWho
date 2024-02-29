@@ -78,11 +78,21 @@ public class Client {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    case "getExample": sendExample(commandArgs);    break;
-                    case "hostINIT"  : hostFinishInit(commandArgs); break;
-                    case "gameStart" : startGame();                 break;
-                    case "pauseHost" : pauseHost(commandArgs);      break;
-                    case "pauseEvent": loop = false;                break;
+                    // Game initialization
+                    case "hostINIT"      : hostFinishInit(commandArgs); break;
+                    case "gameStart"     : startGame();                 break;
+
+                    // Get commands
+                    case "getSuspect"    : sendSuspect(commandArgs);    break;
+
+                    // Set commands
+
+
+                    // Stop Host listener
+                    case "pauseHost"     : pauseHost(commandArgs);      break;
+
+                    // Stop listener
+                    case "pauseEvent"    : loop = false;                break;
                 }
 
             }
@@ -100,9 +110,9 @@ public class Client {
         } catch (IOException ex) {}
     }
 
-    private static void sendExample(String args) {
+    private static void sendSuspect(String args) {
         try {
-            output.write((("Example") + "\r\n").getBytes());
+            output.write(((String.valueOf(GuessWhoGame.getPlayerCharacter().getAttribute("name"))) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
@@ -112,7 +122,7 @@ public class Client {
     }
 
     // --------------------------
-    // Variable Getters
+    // Server Getters
     // --------------------------
 
     public static boolean getTurn() {
@@ -128,6 +138,30 @@ public class Client {
             return value;
         } catch (IOException ex) {
             return false;
+        }
+    }
+
+    public static Suspect getOpponentSuspect() {
+        try {
+            pauseClient(); // pauses command listener
+
+            // get turn value
+            output.write((("getSuspect") + "\r\n").getBytes());
+            output.flush();
+            String value = input.readLine();
+
+            Suspect suspect = null;
+            for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {
+                if (person.getAttribute("name").equals(value)) {
+                    suspect = person;
+                    break;
+                }
+            }
+
+            listenResponse(); // start command listener
+            return suspect;
+        } catch (IOException ex) {
+            return null;
         }
     }
 

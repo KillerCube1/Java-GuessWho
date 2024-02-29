@@ -12,10 +12,13 @@ public class GuessWhoGame {
     private static Suspect guilty;
     private static Suspect playerCharacter;
 
+    private static String gameState;
+
     /**
      * Constructs a GuessWhoGame object and initializes the game components.
      */
-    public GuessWhoGame(String gameState) {
+    public GuessWhoGame(String givenGameState) {
+        gameState = givenGameState;
         switch (gameState) {
             case "Single": initSingleplayerGame(); break;
             case "Host"  : startHostGame();        break;
@@ -116,16 +119,19 @@ public class GuessWhoGame {
         return theDeck;
     }
 
-
     /**
      * Retrieves the guilty suspect.
      *
      * @return The guilty suspect.
      */
     public static Suspect getGuilty() {
-        return guilty;
+        switch (gameState) {
+            case "Single": return guilty;
+            case "Host"  : return Host.getOpponentSuspect();
+            case "Client": return Client.getOpponentSuspect();
+            default: return null;
+        }
     }
-
 
     /**
      * Retrieves the player's character.
@@ -136,31 +142,8 @@ public class GuessWhoGame {
         return playerCharacter;
     }
 
-
-
-    // Ends the turn of the current client
-    public void endTurn(){
-
+    public String getGameState() {
+        return gameState;
     }
-
-    // Start the turn of the current client
-    //
-    // This method will also handle whether the player
-    // lost or not
-    public void startTurn() {
-
-    }
-
-    // Get the opponent suspect attribute
-    public void getOpponentAttribute(String attribute){
-
-    }
-
-    // Guess the suspect and return whether it was correctly guessed
-    public void guessSuspect(){
-
-    }
-
-
 
 }
