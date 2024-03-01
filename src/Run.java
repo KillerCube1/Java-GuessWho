@@ -32,18 +32,18 @@ public class Run {
                         // Fetch settings from file
                         properties.load(new FileInputStream("settings.properties"));
                         String volume = properties.getProperty("volume");
-                        String useMainServer = properties.getProperty("useMainServer");
+                        String useMainServer = properties.getProperty("usingLAN");
                         String serverIP = properties.getProperty("serverListIP");
                         
-                        System.out.println(volume);
-                        System.out.println(useMainServer);
-                        System.out.println(serverIP);
+                        MainMenu.setVolume(Integer.parseInt(volume));
+                        MainMenu.setLANConnection(Boolean.parseBoolean(useMainServer));
+                        MainMenu.setLANIP(serverIP);
 
                 } catch (IOException e) {
 
                         // Reset to default settings
-                        properties.setProperty("volume", "100");
-                        properties.setProperty("useMainServer", "true");
+                        properties.setProperty("volume", "50");
+                        properties.setProperty("usingLAN", "false");
                         properties.setProperty("serverListIP", "null");
 
                         try {

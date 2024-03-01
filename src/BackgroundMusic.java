@@ -23,8 +23,8 @@ public class BackgroundMusic {
      *
      * @param playlist The list of audio files to be played.
      */
-    public BackgroundMusic(List<File> playlist) {
-        this.volume = 100;
+    public BackgroundMusic(List<File> playlist, int volume) {
+        this.volume = volume;
         this.playlist = playlist;
         loadSong(currentSongIndex);
     }
@@ -80,6 +80,7 @@ public class BackgroundMusic {
             float dB = (float) (Math.log(volume / 100.0) / Math.log(10.0) * 20.0);
             volumeControl.setValue(dB);
             this.volume = volume;
+            Settings.updateVolume(volume);
         }
     }
 

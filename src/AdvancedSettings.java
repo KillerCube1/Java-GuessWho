@@ -72,6 +72,7 @@ public class AdvancedSettings {
     private void hostOnServer() {
         System.out.println("Hosting on main server");
         MainMenu.setLANConnection(false);
+        Settings.updateMainServer(false);
         updateInfo();
     }
 
@@ -95,6 +96,7 @@ public class AdvancedSettings {
     private void hostOnLAN() {
         System.out.println("Hosting on a LAN");
         MainMenu.setLANConnection(true);
+        Settings.updateMainServer(true);
 
         frame.setVisible(false);
 
@@ -118,6 +120,7 @@ public class AdvancedSettings {
         submitButton.addActionListener(e -> {
             String ipAddress = ipAddressField.getText();
             MainMenu.setLANIP(ipAddress);
+            Settings.updateLanIP(ipAddress);
             updateInfo();
             IPInput.dispose();
             frame.setVisible(true);

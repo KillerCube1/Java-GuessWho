@@ -23,13 +23,15 @@ public class MainMenu {
     private static boolean LAN = false;
     private static String IP; // Only in use if LAN is used
 
+    // Settings variables
+    private static int volume;
 
     /**
      * Displays the main menu of the game.
      */
     public static void mainMenu(){
 
-        backgroundMusic = new BackgroundMusic(playList());
+        backgroundMusic = new BackgroundMusic(playList(), volume);
         backgroundMusic.play();
 
         frame = new JFrame("Main Menu");
@@ -301,5 +303,9 @@ public class MainMenu {
 
     public static boolean usingLAN() {
         return LAN;
+    }
+
+    public static void setVolume(int value) {
+        volume = value;
     }
 }
