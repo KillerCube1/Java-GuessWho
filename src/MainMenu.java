@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,15 +54,15 @@ public class MainMenu {
         MainMenuButton button = new MainMenuButton("Singleplayer", 25, 195, 165, 45);
         MainMenuButton button2 = new MainMenuButton("Multiplayer", 25, 250, 165, 45);
         MainMenuButton button3 = new MainMenuButton("Settings", 25, 305, 165, 45);
-        MainMenuButton button4 = new MainMenuButton("About", 25, 360, 165, 45);
-        MainMenuButton button5 = new MainMenuButton("Exit", 25, 415, 165, 45);
-        MainMenuButton newButton = new MainMenuButton("New Button", 25, 470, 165, 45); // New button added here
+        MainMenuButton button4 = new MainMenuButton("About", 25, 415, 165, 45);
+        MainMenuButton button5 = new MainMenuButton("Exit", 25, 470, 165, 45);
+        MainMenuButton button6 = new MainMenuButton("Website", 25, 360, 165, 45);
         menuButtons.add(button);
         menuButtons.add(button2);
         menuButtons.add(button3);
         menuButtons.add(button4);
         menuButtons.add(button5);
-        menuButtons.add(newButton);
+        menuButtons.add(button6);
 
         frame.getContentPane().add(logo);
         frame.getContentPane().add(menuButtons);
@@ -92,10 +93,13 @@ public class MainMenu {
         });
 
         // Add action listener for the new button
-        newButton.addActionListener(e -> {
-            // Add your logic here for the action to be performed when the new button is clicked
-            // For example, you can display a message dialog
-            JOptionPane.showMessageDialog(frame, "New button clicked!");
+        button6.addActionListener(e -> {
+            try {
+                URI uri = new URI("https://javaguesswho.wolfhunter1043.com/");
+                openWebpage(uri);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
     }
 
@@ -261,6 +265,18 @@ public class MainMenu {
 
         return playlist;
     }
+
+    public static void openWebpage(URI uri) {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(uri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     /**
      * Retrieves the main menu frame.
