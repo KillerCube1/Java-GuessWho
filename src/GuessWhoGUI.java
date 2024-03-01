@@ -1,10 +1,7 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.TimerTask;
 import java.util.Timer;
 
@@ -271,16 +268,22 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         }, 3000);
     }
 
-    public static void freezeFrame(){
-        frame.setEnabled(false);
-
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                frame.dispose();
+    public static void removeAllActionListeners(Container container) {
+        for (Component component : container.getComponents()) {
+            if (component instanceof AbstractButton button) {
+                for (ActionListener listener : button.getActionListeners()) {
+                    button.removeActionListener(listener);
+                }
+            } else if (component instanceof Container) {
+                removeAllActionListeners((Container) component);
             }
-        });
+        }
     }
+
+    public static void freezeFrame(){
+        removeAllActionListeners(frame.getContentPane());
+    }
+
 
     public static void unFreezeFrame(){
         frame.setEnabled(true);
