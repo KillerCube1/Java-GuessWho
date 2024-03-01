@@ -269,20 +269,20 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
     public static void removeAllActionListeners(Container container) {
         for (Component component : container.getComponents()) {
-            if (component instanceof AbstractButton button) {
+            if (component instanceof AbstractButton) {
+                AbstractButton button = (AbstractButton) component;
                 for (ActionListener listener : button.getActionListeners()) {
                     button.removeActionListener(listener);
                 }
             } else if (component instanceof Container) {
-                removeAllActionListeners((Container) component);
+                removeAllActionListeners((Container) component); // Recursively remove action listeners from nested containers
             }
         }
     }
-
     public static void freezeFrame(){
         removeAllActionListeners(frame.getContentPane());
-    }
 
+    }
 
     public static void unFreezeFrame(){
         frame.setEnabled(true);
