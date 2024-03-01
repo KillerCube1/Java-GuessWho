@@ -41,7 +41,7 @@ public class Server {
                 try {
                 output.write(("SERDEL" + serverName + "\r\n").getBytes());
                 output.flush();
-                } catch (IOException e) {}
+                } catch (IOException ignored) {}
 
                 // Start server - client direct connection
                 new Host(socket);
