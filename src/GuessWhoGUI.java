@@ -246,9 +246,9 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
     }
 
-    private void showResultFrame(String message) {
+    private static void showResultFrame(String message) {
         JFrame resultFrame = new JFrame("Guess Who");
-        resultFrame.setSize(300, 300);
+        resultFrame.setSize(200, 100);
         resultFrame.setLocationRelativeTo(null);
 
         JLabel resultLabel = new JLabel(message);
@@ -278,6 +278,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         }
     }
     public static void freezeFrame(){
+        showResultFrame("Other players turn!");
         removeAllActionListeners(frame.getContentPane());
 
     }

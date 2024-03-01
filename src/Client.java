@@ -68,31 +68,29 @@ public class Client {
                 String command = "";
                 try {
                     command = input.readLine();
-                } catch (IOException e) {}
+                } catch (IOException ignored) {}
 
                 // Split command up into command name and arguments
                 String[] commandSections = command.split("::");
                 String commandName = commandSections[0];
-                String commandArgs = "";
-                if (commandSections.length > 1) commandArgs = commandSections[1];
 
                 // Execute response based off command name
                 switch(commandName) {
                     // Game initialization
-                    case "hostINIT"      : hostFinishInit(commandArgs); break;
-                    case "gameStart"     : startGame();                 break;
+                    case "hostINIT"  -> hostFinishInit();
+                    case "gameStart" -> startGame();
 
                     // Get commands
-                    case "getSuspect"    : sendSuspect(commandArgs);    break;
+                    case "getSuspect" -> sendSuspect();
 
                     // Set commands
 
 
                     // Stop Host listener
-                    case "pauseHost"     : pauseHost(commandArgs);      break;
+                    case "pauseHost" -> pauseHost();
 
                     // Stop listener
-                    case "pauseEvent"    : loop = false;                break;
+                    case "pauseEvent" -> loop = false;
                 }
 
             }
@@ -103,21 +101,21 @@ public class Client {
     // Listener Responses
     // --------------------------
 
-    private static void pauseHost(String commandArgs) {
+    private static void pauseHost() {
         try {
             output.write((("pauseEvent") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
-    private static void sendSuspect(String args) {
+    private static void sendSuspect() {
         try {
-            output.write(((String.valueOf(GuessWhoGame.getPlayerCharacter().getAttribute("name"))) + "\r\n").getBytes());
+            output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
-    private static void hostFinishInit(String args) {
+    private static void hostFinishInit() {
         Client.initGame();
     }
 
@@ -132,7 +130,7 @@ public class Client {
             // get turn value
             output.write((("getTurn") + "\r\n").getBytes());
             output.flush();
-            boolean value = Boolean.valueOf(input.readLine());
+            boolean value = Boolean.parseBoolean(input.readLine());
 
             listenResponse(); // start command listener
             return value;

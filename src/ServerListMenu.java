@@ -17,16 +17,10 @@ import java.util.Enumeration;
 
 public class ServerListMenu extends JFrame {
 
-    // Main Server IP (Game Servers)
-    private String listIP;
-    private JList<String> serverList;
-    private MainMenuButton addButton;
-    private MainMenuButton joinButton;
-    private MainMenuButton refreshButton;
-    private MainMenuButton exitButton;
-    private DefaultListModel<String> serverListModel;
-    private ArrayList<String> servers;
-    private JFrame frame;
+    private final JList<String> serverList;
+    private final DefaultListModel<String> serverListModel;
+    private final ArrayList<String> servers;
+    private final JFrame frame;
 
     private Socket socket;
     private BufferedReader input;
@@ -38,10 +32,12 @@ public class ServerListMenu extends JFrame {
      */
     public ServerListMenu() {
         frame = new JFrame();
+        // Main Server IP (Game Servers)
+        String listIP;
         if (MainMenu.usingLAN()) {
             listIP = MainMenu.getIP();
         } else {
-            listIP = resolveDomainToIP("gameservers.wolfhunter1043.com");
+            listIP = resolveDomainToIP();
         }
 
         servers = new ArrayList<>();
@@ -55,13 +51,32 @@ public class ServerListMenu extends JFrame {
 
         // Initialize components
         serverList = new JList<>(serverListModel);
+        JPanel panel = getjPanel();
+
+        frame.add(panel);
+        frame.setVisible(true);
+
+        try {
+            socket = new Socket(listIP, 28040);
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            output = new BufferedOutputStream(socket.getOutputStream());
+        } catch (IOException ex) {
+            frame.dispose();
+            MainMenu.getFrame().setVisible(true);
+            JOptionPane.showMessageDialog(null, "There was an issue when connecting to the server");
+        }
+
+        refreshServerList();
+    }
+
+    private JPanel getjPanel() {
         JScrollPane scrollPane = new JScrollPane(serverList);
 
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1));
-        addButton = new MainMenuButton("Host", 25, 20, 165, 45);
-        joinButton = new MainMenuButton("Join", 25, 70, 165, 45);
-        refreshButton = new MainMenuButton("Refresh", 25, 120, 165, 45);
-        exitButton = new MainMenuButton("Back", 25, 170, 165, 45);
+        MainMenuButton addButton = new MainMenuButton("Host", 25, 20, 165, 45);
+        MainMenuButton joinButton = new MainMenuButton("Join", 25, 70, 165, 45);
+        MainMenuButton refreshButton = new MainMenuButton("Refresh", 25, 120, 165, 45);
+        MainMenuButton exitButton = new MainMenuButton("Back", 25, 170, 165, 45);
 
         // Action Listeners for buttons
         addButton.addActionListener(e -> hostServer());
@@ -82,21 +97,7 @@ public class ServerListMenu extends JFrame {
         panel.setLayout(new GridLayout(1, 2));
         panel.add(buttonPanel);
         panel.add(scrollPane);
-
-        frame.add(panel);
-        frame.setVisible(true);
-
-        try {
-            socket = new Socket(listIP, 28040);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new BufferedOutputStream(socket.getOutputStream());
-        } catch (IOException ex) {
-            frame.dispose();
-            MainMenu.getFrame().setVisible(true);
-            JOptionPane.showMessageDialog(null, "There was an issue when connecting to the server");
-        }
-
-        refreshServerList();
+        return panel;
     }
 
 
@@ -134,7 +135,7 @@ public class ServerListMenu extends JFrame {
 
                 String command = input.readLine();
 
-                if (command.substring(0, 3).equals("FIN")) {
+                if (command.startsWith("FIN")) {
                     frame.dispose();
                     new Server(new ServerMenu(), serverName, socket, output);
                 } else {
@@ -160,7 +161,7 @@ public class ServerListMenu extends JFrame {
                 String[] serverInfo = serverGet.split(",");
 
                 String IP = serverInfo[0];
-                int Port = Integer.valueOf(serverInfo[1]);
+                int Port = Integer.parseInt(serverInfo[1]);
 
                 System.out.println(IP + ",  " + Port);
 
@@ -193,10 +194,10 @@ public class ServerListMenu extends JFrame {
 
             String command = input.readLine();
 
-            if (command.substring(0, 3).equals("SLL")) {
+            if (command.startsWith("SLL")) {
                 servers.clear();
 
-                int size = Integer.valueOf(command.substring(3, command.length()));
+                int size = Integer.parseInt(command.substring(3));
 
                 for (int i = 0; i < size; i++) {
                     String serverName = input.readLine();
@@ -235,9 +236,9 @@ public class ServerListMenu extends JFrame {
         }
     }
 
-    private String resolveDomainToIP(String domain) {
+    private String resolveDomainToIP() {
         try {
-            InetAddress address = InetAddress.getByName(domain);
+            InetAddress address = InetAddress.getByName("gameservers.wolfhunter1043.com");
             return address.getHostAddress();
         } catch (UnknownHostException e) {
             System.out.println("Error resolving domain to IP: " + e.getMessage());

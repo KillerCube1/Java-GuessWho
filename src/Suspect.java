@@ -77,15 +77,4 @@ public class Suspect {
 	}
 
 
-
-	/**
-	 * Sets the value of the specified attribute.
-	 *
-	 * @param key   the key of the attribute to set
-	 * @param value the value to set
-	 */
-	public void setAttribute(String key, String value) {
-		attributes.replace(key, value);
-	}
-
 }//Suspect

@@ -2,6 +2,7 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import ClassExtensions.CheckButton;
 
@@ -31,23 +32,23 @@ public class CheckAction implements ActionListener {
 
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {
-                Compare =  String.valueOf(GuessWhoGame.getGuilty().getAttribute("hairColor").equals(value.substring(4)));
+                Compare =  String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("hairColor").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "hairColor";
             } else if (value.startsWith("eyes")) {
-                Compare = String.valueOf(GuessWhoGame.getGuilty().getAttribute("eyeColor").equals(value.substring(4)));
+                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("eyeColor").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "eyeColor";
             } else if (value.startsWith("gend")) {
-                Compare = String.valueOf(GuessWhoGame.getGuilty().getAttribute("gender").equals(value.substring(4)));
+                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("gender").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "gender";
             } else {
-                Compare = GuessWhoGame.getGuilty().getAttribute(value);
+                Compare = Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute(value);
                 trait = "true";
             }
         } else {
-            Compare = GuessWhoGame.getGuilty().getAttribute(value);
+            Compare = Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute(value);
             trait = "true";
         }
 
