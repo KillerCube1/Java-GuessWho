@@ -78,49 +78,47 @@ public class AdvancedSettings {
         updateInfo();
     }
 
+    // private void runLANServer() {
+    //     try {
+    //         String directoryPath = "src";
+    //         String jarFilePath = "LanServer.jar";
+
+    //         File jarFile = new File(directoryPath, jarFilePath);
+
+    //         if (!jarFile.exists()) {
+    //             System.err.println("Error: LanServer.jar not found in directory " + directoryPath);
+    //             return;
+    //         }
+
+    //         String[] command = {"java", "-jar", jarFilePath};
+
+    //         ProcessBuilder pb = new ProcessBuilder(command);
+    //         pb.directory(new File(directoryPath));
+
+    //         Process process = pb.start();
+
+    //         // Redirect output and error streams to console
+    //         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    //         BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+    //         String line;
+    //         while ((line = reader.readLine()) != null) {
+    //             System.out.println(line);
+    //         }
+
+    //         while ((line = errorReader.readLine()) != null) {
+    //             System.err.println(line);
+    //         }
+
+    //         // Wait for the process to complete
+    //         int exitCode = process.waitFor();
+    //         System.out.println("LAN Server Process exited with code: " + exitCode);
+    //     } catch (IOException | InterruptedException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
     private void runLANServer() {
-        try {
-            String directoryPath = "src";
-            String jarFilePath = "LanServer.jar";
-
-            File jarFile = new File(directoryPath, jarFilePath);
-
-            if (!jarFile.exists()) {
-                System.err.println("Error: LanServer.jar not found in directory " + directoryPath);
-                return;
-            }
-
-            String[] command = {"java", "-jar", jarFilePath};
-
-            ProcessBuilder pb = new ProcessBuilder(command);
-            pb.directory(new File(directoryPath));
-
-            Process process = pb.start();
-
-            // Redirect output and error streams to console
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-            while ((line = errorReader.readLine()) != null) {
-                System.err.println(line);
-            }
-
-            // Wait for the process to complete
-            int exitCode = process.waitFor();
-            System.out.println("LAN Server Process exited with code: " + exitCode);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    Old one the new one is for testing
-        private void runLANServer() {
         try {
             String directoryPath = "src";
 
@@ -132,9 +130,6 @@ public class AdvancedSettings {
             pb.start();
         } catch (IOException ignored) {}
     }
-
-     */
-
 
     private void hostOnLAN() {
         System.out.println("Hosting on a LAN");
