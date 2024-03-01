@@ -96,7 +96,6 @@ public class AdvancedSettings {
     private void hostOnLAN() {
         System.out.println("Hosting on a LAN");
         MainMenu.setLANConnection(true);
-        Settings.updateMainServer(true);
 
         frame.setVisible(false);
 
@@ -120,6 +119,7 @@ public class AdvancedSettings {
         submitButton.addActionListener(e -> {
             String ipAddress = ipAddressField.getText();
             MainMenu.setLANIP(ipAddress);
+            Settings.updateMainServer(true);
             Settings.updateLanIP(ipAddress);
             updateInfo();
             IPInput.dispose();
