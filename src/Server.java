@@ -46,7 +46,7 @@ public class Server {
                 // Start server - client direct connection
                 new Host(socket);
 
-            } catch (IOException ex) {}
+            } catch (IOException ignored) {}
 
         }).start();
     }

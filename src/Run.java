@@ -52,8 +52,8 @@ public class Run {
                                 new File("settings.properties");
                                 try {
                                         properties.store(new FileOutputStream("settings.properties"), null);
-                                } catch (IOException e2) {}
-                        } catch (IOException e1) {}
+                                } catch (IOException ignored) {}
+                        } catch (IOException ignored) {}
                         
                 }
 

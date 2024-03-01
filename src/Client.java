@@ -73,8 +73,6 @@ public class Client {
                 // Split command up into command name and arguments
                 String[] commandSections = command.split("::");
                 String commandName = commandSections[0];
-                String commandArgs = "";
-                if (commandSections.length > 1) commandArgs = commandSections[1];
 
                 // Execute response based off command name
                 switch(commandName) {
@@ -107,14 +105,14 @@ public class Client {
         try {
             output.write((("pauseEvent") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
     private static void sendSuspect() {
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
     private static void hostFinishInit() {

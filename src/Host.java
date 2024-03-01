@@ -86,17 +86,17 @@ public class Host {
                 // Execute response based off command name
                 switch(commandName) {
                     // Game initialization
-                    case "clientINIT" -> clientFinishInit(commandArgs);
+                    case "clientINIT" -> clientFinishInit();
 
                     // Get commands
-                    case "getTurn" -> sendTurn(commandArgs);
+                    case "getTurn" -> sendTurn();
                     case "getSuspect" -> sendSuspect(commandArgs);
 
                     // Set commands
 
 
                     // Stop Client listener
-                    case "pauseClient" -> pauseClient(commandArgs);
+                    case "pauseClient" -> pauseClient();
 
                     // Stop listener
                     case "pauseEvent" -> loop = false;
@@ -110,28 +110,28 @@ public class Host {
     // Listener Responses
     // --------------------------
 
-    private static void pauseClient(String commandArgs) {
+    private static void pauseClient() {
         try {
             output.write((("pauseEvent") + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
 
-    private static void sendTurn(String args) {
+    private static void sendTurn() {
         try {
-            output.write(((String.valueOf(hostTurn)) + "\r\n").getBytes());
+            output.write(((hostTurn) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
 
     private static void sendSuspect(String args) {
         try {
-            output.write(((String.valueOf(GuessWhoGame.getPlayerCharacter().getAttribute("name"))) + "\r\n").getBytes());
+            output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ex) {}
     }
 
-    private static void clientFinishInit(String args) {
+    private static void clientFinishInit() {
         try {
             output.write((("gameStart") + "\r\n").getBytes());
             output.flush();
