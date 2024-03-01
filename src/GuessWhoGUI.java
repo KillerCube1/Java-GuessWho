@@ -230,7 +230,6 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         cardTitle.setBounds(1400, 325, 192, 20);
         frame.getContentPane().add(cardTitle);
 
-
         // Player Suspect Card Display
         JLabel chosenCard = new JLabel("");
         chosenCard.setBounds(1400, 50, 192, 280);
