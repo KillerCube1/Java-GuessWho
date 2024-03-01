@@ -9,8 +9,8 @@ import java.io.IOException;
 public class Alive extends Thread {
 
     private boolean active = true;
-    private BufferedOutputStream output;
-    private String name;
+    private final BufferedOutputStream output;
+    private final String name;
 
 
     /**
