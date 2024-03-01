@@ -34,7 +34,7 @@ public class MainMenu {
         frame = new JFrame("Main Menu");
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(670, 510);
+        frame.setSize(750, 600);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
@@ -55,16 +55,17 @@ public class MainMenu {
         MainMenuButton button3 = new MainMenuButton("Settings", 25, 305, 165, 45);
         MainMenuButton button4 = new MainMenuButton("About", 25, 360, 165, 45);
         MainMenuButton button5 = new MainMenuButton("Exit", 25, 415, 165, 45);
+        MainMenuButton newButton = new MainMenuButton("New Button", 25, 470, 165, 45); // New button added here
         menuButtons.add(button);
         menuButtons.add(button2);
         menuButtons.add(button3);
         menuButtons.add(button4);
         menuButtons.add(button5);
+        menuButtons.add(newButton);
 
         frame.getContentPane().add(logo);
         frame.getContentPane().add(menuButtons);
         frame.setVisible(true);
-
 
         button.addActionListener(e -> {
             new GuessWhoGame("Single");
@@ -75,7 +76,6 @@ public class MainMenu {
             openMultiplayer();
             frame.setVisible(false);
         });
-
 
         button3.addActionListener(e -> {
             openSettings();
@@ -89,6 +89,13 @@ public class MainMenu {
 
         button5.addActionListener(e -> {
             System.exit(0);
+        });
+
+        // Add action listener for the new button
+        newButton.addActionListener(e -> {
+            // Add your logic here for the action to be performed when the new button is clicked
+            // For example, you can display a message dialog
+            JOptionPane.showMessageDialog(frame, "New button clicked!");
         });
     }
 
