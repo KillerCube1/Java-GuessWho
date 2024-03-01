@@ -14,7 +14,7 @@ import Style.MainMenuButton;
 public class AdvancedSettings {
     
     private static JFrame frame;
-    private static JLabel info = new JLabel("", SwingConstants.CENTER);
+    private static final JLabel info = new JLabel("", SwingConstants.CENTER);
 
     /**
      * Displays the main menu of the game.
@@ -89,7 +89,7 @@ public class AdvancedSettings {
 
             // Start the process
             pb.start();
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
     }
 
     private void hostOnLAN() {
@@ -127,7 +127,8 @@ public class AdvancedSettings {
         IPInput.add(ipAddressField);
         IPInput.add(label);
         IPInput.add(submitButton);
-        
+        frame.getRootPane().setDefaultButton(submitButton);
+
         // Set frame properties
         IPInput.setSize(300, 200);
         IPInput.setLayout(null);
