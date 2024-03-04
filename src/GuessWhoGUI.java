@@ -247,21 +247,25 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     }
 
     private static void showResultFrame(String message) {
-        JFrame resultFrame = new JFrame("Guess Who");
-        resultFrame.setSize(200, 100);
-        resultFrame.setLocationRelativeTo(null);
+        JPanel darken = new JPanel();
+        darken.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+        darken.setOpaque(false);
+        darken.setBackground(new Color(0, 0, 0, 100));
 
-        JLabel resultLabel = new JLabel(message);
-        resultLabel.setHorizontalAlignment(JLabel.CENTER);
-        resultFrame.add(resultLabel);
-        resultFrame.setVisible(true);
+        // Create a JLabel with large text
+        JLabel largeTextLabel = new JLabel("<html><center><font size='5'>This is a large text label</font></center></html>");
+        largeTextLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        largeTextLabel.setForeground(new Color(255,255,255));
+
+        darken.add(largeTextLabel);
+
+        frame.add(darken);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                resultFrame.setVisible(false);
-                System.exit(0);
+                darken.setVisible(false);
             }
         }, 3000);
     }
@@ -280,7 +284,6 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     public static void freezeFrame(){
         showResultFrame("Other players turn!");
         removeAllActionListeners(frame.getContentPane());
-
     }
 
     public static void unFreezeFrame(){
