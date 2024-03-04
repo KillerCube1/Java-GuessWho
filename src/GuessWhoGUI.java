@@ -208,7 +208,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
             guessCounter.setBackground(Color.WHITE);
             guessCounter.setForeground(Color.WHITE);
             guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
-            guessCounter.setBounds(1400, 50, 192, 20);
+            guessCounter.setBounds(1400, 50, 192, 25);
             frame.getContentPane().add(guessCounter);
         }
 
@@ -227,7 +227,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         cardTitle.setBackground(Color.WHITE);
         cardTitle.setForeground(Color.WHITE);
         cardTitle.setFont(new Font("Calibri", Font.BOLD, 25));
-        cardTitle.setBounds(1400, 325, 192, 20);
+        cardTitle.setBounds(1400, 325, 192, 25);
         frame.getContentPane().add(cardTitle);
 
         // Player Suspect Card Display
@@ -247,27 +247,32 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     }
 
     private static void showPlayersTurnNotification() {
-        JPanel darken = new JPanel();
-        darken.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-        darken.setOpaque(false);
-        darken.setBackground(new Color(0, 0, 0, 100));
+        // Create a semi-transparent panel to darken the background
+        JPanel darkenPanel = new JPanel();
+        darkenPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+        darkenPanel.setBackground(new Color(0, 0, 0, 100));
+        darkenPanel.setLayout(new BorderLayout());
 
-        // Create a JLabel with large text
-        JLabel largeTextLabel = new JLabel("<html><center><font size='5'>Clients Turn</font></center></html>");
-        largeTextLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        largeTextLabel.setForeground(new Color(255,255,255));
+        // Create a label for the notification text
+        JLabel notificationLabel = new JLabel("<html><center><font size='800' color='#FFFFFF'>Client's Turn</font></center></html>");
+        notificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        darken.add(largeTextLabel);
+        // Customize font and alignment
+        Font labelFont = notificationLabel.getFont();
+        notificationLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 24)); // Example: Increase font size and set it to bold
 
-        frame.add(darken);
+
+        darkenPanel.add(notificationLabel, BorderLayout.CENTER);
+
+        frame.add(darkenPanel);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                darken.setVisible(false);
+                darkenPanel.setVisible(false);
             }
-        }, 3000);
+        }, 3000); // Adjust the delay as needed
     }
 
     private static void showResultFrame(String message) {
@@ -303,7 +308,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     }
 
     public static void freezeFrame(){
-        showResultFrame("Other players turn!");
+        showPlayersTurnNotification();
         removeAllActionListeners(frame.getContentPane());
     }
 

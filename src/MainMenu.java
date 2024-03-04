@@ -41,6 +41,8 @@ public class MainMenu {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
+
+
         // Create Main Menu Guess Who Logo
         ImageIcon logoIcon = new ImageIcon("src/Images/logo.png");
         Image image = logoIcon.getImage();
@@ -100,7 +102,7 @@ public class MainMenu {
                 URI uri = new URI("https://javaguesswho.wolfhunter1043.com/");
                 openWebpage(uri);
             } catch (Exception exception) {
-                exception.printStackTrace();
+                System.out.println("Something wrong with dns");
             }
         });
     }
