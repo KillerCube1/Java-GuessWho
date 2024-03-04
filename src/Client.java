@@ -15,7 +15,7 @@ public class Client {
             socket = connection;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
 
         Client.listenResponse();
     }
@@ -162,5 +162,4 @@ public class Client {
             return null;
         }
     }
-
 }

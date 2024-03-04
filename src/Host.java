@@ -18,7 +18,7 @@ public class Host {
             socket = connection;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new BufferedOutputStream(socket.getOutputStream());
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
 
         Host.listenResponse();
         Host.initGame();
@@ -54,7 +54,7 @@ public class Host {
         try {
             output.write((("hostINIT") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
     }
 
     private static void pauseHost() throws IOException {
@@ -114,28 +114,28 @@ public class Host {
         try {
             output.write((("pauseEvent") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
     private static void sendTurn() {
         try {
             output.write(((hostTurn) + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
     private static void sendSuspect(String args) {
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
     }
 
     private static void clientFinishInit() {
         try {
             output.write((("gameStart") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ex) {}
+        } catch (IOException ignored) {}
         
         startGame();
     }
