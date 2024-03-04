@@ -1,8 +1,9 @@
 import java.awt.GridLayout;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -78,46 +79,6 @@ public class AdvancedSettings {
         updateInfo();
     }
 
-    // private void runLANServer() {
-    //     try {
-    //         String directoryPath = "src";
-    //         String jarFilePath = "LanServer.jar";
-
-    //         File jarFile = new File(directoryPath, jarFilePath);
-
-    //         if (!jarFile.exists()) {
-    //             System.err.println("Error: LanServer.jar not found in directory " + directoryPath);
-    //             return;
-    //         }
-
-    //         String[] command = {"java", "-jar", jarFilePath};
-
-    //         ProcessBuilder pb = new ProcessBuilder(command);
-    //         pb.directory(new File(directoryPath));
-
-    //         Process process = pb.start();
-
-    //         // Redirect output and error streams to console
-    //         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    //         BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-    //         String line;
-    //         while ((line = reader.readLine()) != null) {
-    //             System.out.println(line);
-    //         }
-
-    //         while ((line = errorReader.readLine()) != null) {
-    //             System.err.println(line);
-    //         }
-
-    //         // Wait for the process to complete
-    //         int exitCode = process.waitFor();
-    //         System.out.println("LAN Server Process exited with code: " + exitCode);
-    //     } catch (IOException | InterruptedException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
-
     private void runLANServer() {
         try {
             String directoryPath = "src";
@@ -142,6 +103,27 @@ public class AdvancedSettings {
 
         JTextField ipAddressField = new JTextField();
         ipAddressField.setBounds(50, 50, 200, 30);
+
+        ipAddressField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+    
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String ipAddress = ipAddressField.getText();
+                    MainMenu.setLANIP(ipAddress);
+                    Settings.updateMainServer(true);
+                    Settings.updateLanIP(ipAddress);
+                    updateInfo();
+                    IPInput.dispose();
+                    frame.setVisible(true);
+                }
+            }
+    
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
 
         JLabel label = new JLabel("Enter IP Address:");
         label.setBounds(50, 20, 150, 30);

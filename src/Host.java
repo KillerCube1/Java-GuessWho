@@ -86,20 +86,20 @@ public class Host {
                 // Execute response based off command name
                 switch(commandName) {
                     // Game initialization
-                    case "clientINIT" -> clientFinishInit();
+                    case "clientINIT" : clientFinishInit(); break;
 
                     // Get commands
-                    case "getTurn" -> sendTurn();
-                    case "getSuspect" -> sendSuspect(commandArgs);
+                    case "getTurn" : sendTurn(); break;
+                    case "getSuspect" : sendSuspect(commandArgs); break;
 
                     // Set commands
 
 
                     // Stop Client listener
-                    case "pauseClient" -> pauseClient();
+                    case "pauseClient" : pauseClient(); break;
 
                     // Stop listener
-                    case "pauseEvent" -> loop = false;
+                    case "pauseEvent" : loop = false; break;
                 }
 
             }
