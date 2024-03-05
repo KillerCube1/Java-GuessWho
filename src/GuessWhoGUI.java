@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.util.TimerTask;
 import java.util.Timer;
 
@@ -40,7 +41,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         try {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(null);
-            frame.setSize(1920, 870);
+            frame.setSize(1920, 890);
             Color bgd = new Color(40, 40, 40);
             frame.getContentPane().setBackground(bgd);
         } catch (Exception ignored) {
@@ -64,7 +65,9 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
                 new CheckButton("RedHair?", "hairred", new Color(0xE65A79)),
                 new CheckButton("BrownHair?", "hairbrown", new Color(0xFFE53A)),
                 new CheckButton("BlondeHair?", "hairblonde", new Color(0x9FDFFF)),
-                new CheckButton("WhiteHair?", "hairwhite", new Color(0x95CC99))
+                new CheckButton("WhiteHair?", "hairwhite", new Color(0x95CC99)),
+                new CheckButton("Blue Eyes?", "eyesblue", new Color(0x789A63)),
+                new CheckButton("Brown Eyes?", "eyesbrown", new Color(0x12B2BF)),
         };
 
         for(int i = 0; i < 12; i++) {
@@ -128,7 +131,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
      *
      * @return The main JFrame object.
      */
-    public JFrame getFrame() {//getFrame
+    public static JFrame getFrame() {//getFrame
         return frame;
     }//getFrame
 
@@ -254,8 +257,8 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         darkenPanel.setLayout(new BorderLayout());
 
         // Create a label for the notification text
-        JLabel notificationLabel = new JLabel("<html><center><font size='800' color='#FFFFFF'>Client's Turn</font></center></html>");
-        notificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel notificationLabel = new JLabel("<html><center><font size='1200' color='#FFFFFF'>Opponent's Turn</font></center></html>");
+        notificationLabel.setBounds(1400, 150, 192, 25);
 
         // Customize font and alignment
         Font labelFont = notificationLabel.getFont();
@@ -266,6 +269,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
         frame.add(darkenPanel);
 
+        // Close the dialog after 3 seconds
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -290,10 +294,12 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
             @Override
             public void run() {
                 resultFrame.setVisible(false);
-                System.exit(0);
+                GuessWhoGUI.getFrame().dispose();
+                MainMenu.mainMenu();
             }
         }, 3000);
     }
+
 
     public static void removeAllActionListeners(Container container) {
         for (Component component : container.getComponents()) {

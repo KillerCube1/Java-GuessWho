@@ -28,9 +28,7 @@ public class MainMenuButton extends JButton {
         Font robotoFont = null;
         try {
             robotoFont = Font.createFont(Font.TRUETYPE_FONT, new File(FONT_PATH)).deriveFont(Font.BOLD, 21);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
 

@@ -41,12 +41,12 @@ public class Alive extends Thread {
         while (active) {
             try {
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
 
             try {
                 output.write(("SERPIN" + name + "\r\n").getBytes());
                 output.flush();
-            } catch (IOException e) {}
+            } catch (IOException ignored) {}
         }
     }
 

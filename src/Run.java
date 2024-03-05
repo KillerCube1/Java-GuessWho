@@ -21,6 +21,7 @@ public class Run {
                 fetchSettings();
                 MainMenu.mainMenu();
 
+
         }
 
         private static void fetchSettings() {
