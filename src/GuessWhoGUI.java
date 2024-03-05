@@ -24,7 +24,7 @@ public class GuessWhoGUI extends JFrame {
     private int wrongGuesses = 0;
     private int guessesLeft = 3;
     private JLabel guessCounter;
-    private final JLabel[] susGrid = new JLabel[24];
+    private static final JLabel[] susGrid = new JLabel[24];
 
 
 
@@ -301,12 +301,26 @@ public class GuessWhoGUI extends JFrame {
 
 
 
-    public static void freezeFrame(){
+    public static void freezeFrame() {
         showPlayersTurnNotification();
+        for (int i = 0; i < susGrid.length; i++) {
+            JLabel label = susGrid[i];
+            for (MouseListener listener : label.getMouseListeners()) {
+                label.removeMouseListener(listener);
+            }
+            label.addMouseListener(new LabelListener(label, i));
+        }
     }
 
-    public static void unFreezeFrame(){
-        frame.setEnabled(true);
+
+    public static void unFreezeFrame() {
+        for (int i = 0; i < susGrid.length; i++) {
+            JLabel label = susGrid[i];
+            for (MouseListener listener : label.getMouseListeners()) {
+                label.removeMouseListener(listener);
+            }
+            label.addMouseListener(new LabelListener(label, i));
+        }
     }
 
     public static void removeLabels(){
