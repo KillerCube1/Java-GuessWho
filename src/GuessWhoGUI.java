@@ -303,11 +303,14 @@ public class GuessWhoGUI extends JFrame {
 
     public static void freezeFrame(){
         showPlayersTurnNotification();
-        //disableAllActionListeners(frame.getContentPane());
     }
 
     public static void unFreezeFrame(){
         frame.setEnabled(true);
+    }
+
+    public static void removeLabels(){
+
     }
 
 
