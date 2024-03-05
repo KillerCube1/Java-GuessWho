@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.TimerTask;
 import java.util.Timer;
 
@@ -20,7 +17,8 @@ import ClassExtensions.CheckButton;
  */
 
 
-public class GuessWhoGUI extends JFrame {//GuessWhoGUI
+//GuessWhoGUI
+public class GuessWhoGUI extends JFrame {
 
     private static JFrame frame = null;
     private int wrongGuesses = 0;
@@ -31,12 +29,14 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
 
 
     /**
-     * Constructs a GuessWhoGUI object and initializes the graphical user interface.
+     * GuessWhoGUI represents the graphical user interface for the Guess Who game.
+     * This class extends JFrame and provides functionality to set up the game board,
+     * initialize components such as buttons and suspect grid, and perform application setup.
+     * It allows players to interact with the game through mouse clicks and button presses.
      */
-    public GuessWhoGUI(boolean turn) {//constructor
-        // Set up the game board
-        // Initialize components such as buttons, suspect grid, and guess counter
-        // App Set Up
+
+    public GuessWhoGUI(boolean turn) {
+
         frame = new JFrame("Guess Who");
         try {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +92,7 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
         playerCardFrameStuff();
         guessCounterMethod();
 
-        // Freeze frame if not turn
+        // Freeze-frame if not turn
         if (!turn) freezeFrame();
 
     }//constructor
@@ -174,8 +174,6 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
-
-
                     try {
                         guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
                     } catch (InterruptedException ex) {
@@ -301,25 +299,16 @@ public class GuessWhoGUI extends JFrame {//GuessWhoGUI
     }
 
 
-    public static void removeAllActionListeners(Container container) {
-        for (Component component : container.getComponents()) {
-            if (component instanceof AbstractButton button) {
-                for (ActionListener listener : button.getActionListeners()) {
-                    button.removeActionListener(listener);
-                }
-            } else if (component instanceof Container) {
-                removeAllActionListeners((Container) component);
-            }
-        }
-    }
+
 
     public static void freezeFrame(){
         showPlayersTurnNotification();
-        removeAllActionListeners(frame.getContentPane());
+        //disableAllActionListeners(frame.getContentPane());
     }
 
     public static void unFreezeFrame(){
         frame.setEnabled(true);
     }
+
 
 }//GuessWhoGUI
