@@ -21,12 +21,13 @@ import ClassExtensions.CheckButton;
 public class GuessWhoGUI extends JFrame {
 
     private static JFrame frame = null;
+
     private int wrongGuesses = 0;
     private int guessesLeft = 3;
     private JLabel guessCounter;
     private static final JLabel[] susGrid = new JLabel[24];
 
-
+    private static CheckButton[] buttonList;
 
     /**
      * GuessWhoGUI represents the graphical user interface for the Guess Who game.
@@ -36,7 +37,6 @@ public class GuessWhoGUI extends JFrame {
      */
 
     public GuessWhoGUI(boolean turn) {
-
         frame = new JFrame("Guess Who");
         try {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +52,7 @@ public class GuessWhoGUI extends JFrame {
         int xFramePosition = 1676;
         int yFramePosition = 20;
 
-        CheckButton[] buttonList = {
+        buttonList = new CheckButton[]{
                 new CheckButton("Male?", "gendmale", new Color(0xFF7F6E)),
                 new CheckButton("Female?", "gendfemale", new Color(0x7A67E2)),
                 new CheckButton("Hat?", "hat", new Color(0x00CCCC)),
@@ -93,10 +93,15 @@ public class GuessWhoGUI extends JFrame {
         guessCounterMethod();
 
         // Freeze-frame if not turn
-        if (!turn) freezeFrame();
+        if (!turn){
+            freezeFrame();
+
+        }
+        else{
+            unFreezeFrame();
+        }
 
     }//constructor
-
 
     /**
      * Handles the process of guessing a suspect.
@@ -248,33 +253,12 @@ public class GuessWhoGUI extends JFrame {
     }
 
     private static void showPlayersTurnNotification() {
-        // Create a semi-transparent panel to darken the background
-        JPanel darkenPanel = new JPanel();
-        darkenPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-        darkenPanel.setBackground(new Color(0, 0, 0, 100));
-        darkenPanel.setLayout(new BorderLayout());
+        JLabel notificationLabel = new JLabel("<html><div align='center'><font size='12' color='#FFFFFF'>Opponent's Turn</font></div></html>");
+        frame.add(notificationLabel);
 
-        // Create a label for the notification text
-        JLabel notificationLabel = new JLabel("<html><center><font size='1200' color='#FFFFFF'>Opponent's Turn</font></center></html>");
-        notificationLabel.setBounds(1400, 150, 192, 25);
-
-        // Customize font and alignment
         Font labelFont = notificationLabel.getFont();
-        notificationLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 24)); // Example: Increase font size and set it to bold
+        notificationLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 24));
 
-
-        darkenPanel.add(notificationLabel, BorderLayout.CENTER);
-
-        frame.add(darkenPanel);
-
-        // Close the dialog after 3 seconds
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                darkenPanel.setVisible(false);
-            }
-        }, 3000); // Adjust the delay as needed
     }
 
     private static void showResultFrame(String message) {
@@ -298,15 +282,15 @@ public class GuessWhoGUI extends JFrame {
         }, 3000);
     }
 
-
-
-
     public static void freezeFrame() {
         showPlayersTurnNotification();
         for (int i = 0; i < susGrid.length; i++) {
             JLabel label = susGrid[i];
             for (MouseListener listener : label.getMouseListeners()) {
                 label.removeMouseListener(listener);
+            }
+            for(CheckButton button : buttonList) {
+                button.setEnabled(false);
             }
             label.addMouseListener(new LabelListener(label, i));
         }
@@ -321,10 +305,6 @@ public class GuessWhoGUI extends JFrame {
             }
             label.addMouseListener(new LabelListener(label, i));
         }
-    }
-
-    public static void removeLabels(){
-
     }
 
 

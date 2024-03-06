@@ -21,6 +21,8 @@ public class LabelListener extends MouseAdapter {
             throw new RuntimeException(ex);
         }
         cardLabel.removeMouseListener(this);
+
+
     }
 
     public void guessSuspect(Suspect character) throws InterruptedException {
