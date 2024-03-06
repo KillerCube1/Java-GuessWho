@@ -55,8 +55,6 @@ public class GuessWhoGame {
                 window = new GuessWhoGUI(true);
                 GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
-                GuessWhoGUI.freezeFrame();
-
             } catch (Exception ignored) {}
         });
     }
@@ -102,15 +100,6 @@ public class GuessWhoGame {
     }
 
 
-    /**
-     * Retrieves the suspect GUI window.
-     *
-     * @return The suspect GUI window.
-     */
-    public static SuspectGUI getSuspectWindow() {
-        return suspectWindow;
-    }
-
 
     /**
      * Retrieves the game deck.
@@ -127,14 +116,13 @@ public class GuessWhoGame {
      * @return The guilty suspect.
      */
     public static Suspect getGuilty() {
-        switch (gameState) {
-            case "Single": return guilty;
-            case "Host"  : return Host.getOpponentSuspect();
-            case "Client": return Client.getOpponentSuspect();
-            default: return null;
-        }
+        return switch (gameState) {
+            case "Single" -> guilty;
+            case "Host" -> Host.getOpponentSuspect();
+            case "Client" -> Client.getOpponentSuspect();
+            default -> null;
+        };
     }
-
     /**
      * Retrieves the player's character.
      *

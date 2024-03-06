@@ -1,8 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.TimerTask;
 import java.util.Timer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import ClassExtensions.CheckButton;
@@ -112,7 +115,6 @@ public class GuessWhoGUI extends JFrame {
      */
 
     public void guessSuspect(Suspect character) throws InterruptedException {
-        // Process the guess and update game state
         if (character == GuessWhoGame.getGuilty()) {
             System.out.println("CORRECT!");
 
@@ -263,8 +265,13 @@ public class GuessWhoGUI extends JFrame {
 
     private static void showResultFrame(String message) {
         JFrame resultFrame = new JFrame("Guess Who");
-        resultFrame.setSize(200, 100);
+        resultFrame.setSize(1920, 1080);
         resultFrame.setLocationRelativeTo(null);
+        try {
+            resultFrame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("src/Images/colorful-confetti-background-with-text-space_1017-32374.jpg")))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         JLabel resultLabel = new JLabel(message);
         resultLabel.setHorizontalAlignment(JLabel.CENTER);

@@ -6,6 +6,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
 import Style.MainMenuButton;
 
 
@@ -32,8 +34,8 @@ public class MainMenu {
      */
     public static void mainMenu() {
 
-        backgroundMusic = new BackgroundMusic(playList(), volume);
-        backgroundMusic.play();
+//        backgroundMusic = new BackgroundMusic(playList(), volume);
+//        backgroundMusic.play();
 
         frame = new JFrame("Main Menu");
 
@@ -43,7 +45,7 @@ public class MainMenu {
         frame.setResizable(false);
 
         // Create Main Menu Guess Who Logo
-        ImageIcon logoIcon = new ImageIcon(Resource.getImageResource("/Images/logo.png").getScaledInstance(320, 167, Image.SCALE_SMOOTH));
+        ImageIcon logoIcon = new ImageIcon(Objects.requireNonNull(Resource.getImageResource("/Images/logo.png")).getScaledInstance(320, 167, Image.SCALE_SMOOTH));
         JLabel logo = new JLabel("");
         logo.setBounds(10, -40, 500, 280);
         logo.setIcon(logoIcon);
@@ -120,7 +122,7 @@ public class MainMenu {
     public static void openSettings() {
         settingsFrame = new JFrame("Settings");
         settingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        settingsFrame.setSize(600, 400); // Increase frame size
+        settingsFrame.setSize(600, 400);
         settingsFrame.setLocationRelativeTo(null);
         settingsFrame.setResizable(false);
 
