@@ -19,7 +19,7 @@ public class SuspectGUI implements ActionListener {
 
     // Main Window
     GuessWhoGUI mainGUI = GuessWhoGame.getWindow();
-    JFrame frame = GuessWhoGame.getWindow().getFrame();
+    JFrame frame = GuessWhoGUI.getFrame();
 
     // Suspect Window
     private JFrame suspectBox;

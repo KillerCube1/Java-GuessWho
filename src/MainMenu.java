@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class MainMenu {
 
 
         // Create Main Menu Guess Who Logo
-        ImageIcon logoIcon = new ImageIcon("src/Images/logo.png");
+        BufferedImage mainLogo = Resource.getImageResource("/Images/logo.png");
+        ImageIcon logoIcon = new ImageIcon(mainLogo);
         Image image = logoIcon.getImage();
         Image newimg = image.getScaledInstance(320, 167, Image.SCALE_SMOOTH);
         logoIcon = new ImageIcon(newimg);

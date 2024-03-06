@@ -31,7 +31,7 @@ public class GuessWhoGame {
         EventQueue.invokeLater(() -> {
             try {
                 window = new GuessWhoGUI(!Client.getTurn());
-                window.getFrame().setVisible(true);
+                GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {}
         });
@@ -42,7 +42,7 @@ public class GuessWhoGame {
         EventQueue.invokeLater(() -> {
             try {
                 window = new GuessWhoGUI(Host.getTurn());
-                window.getFrame().setVisible(true);
+                GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
             } catch (Exception ignored) {}
         });
@@ -53,7 +53,7 @@ public class GuessWhoGame {
         EventQueue.invokeLater(() -> {
             try {
                 window = new GuessWhoGUI(true);
-                window.getFrame().setVisible(true);
+                GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
                 GuessWhoGUI.freezeFrame();
 
