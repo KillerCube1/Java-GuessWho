@@ -13,7 +13,7 @@ import javax.swing.JButton;
 
 public class MainMenuButton extends JButton {
 
-    private static final String FONT_PATH = "src/Style/Roboto-Bold.ttf";
+    private static final String FONT_PATH = "/Style/Roboto-Bold.ttf";
 
     private Color buttonColor = new Color(204, 0, 0);
 
@@ -26,11 +26,7 @@ public class MainMenuButton extends JButton {
 
         // Load Roboto font
         Font robotoFont = null;
-        try {
-            robotoFont = Font.createFont(Font.TRUETYPE_FONT, new File(FONT_PATH)).deriveFont(Font.BOLD, 21);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
+        robotoFont = Resource.getFontResource(FONT_PATH, 21f);
 
         xPos = x;
         yPos = y;

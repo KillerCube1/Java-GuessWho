@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,9 +19,9 @@ public class Run {
          */
         public static void main(String[] args) {
 
+                LoadingScreen.start();
                 fetchSettings();
                 MainMenu.mainMenu();
-
 
         }
 

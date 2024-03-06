@@ -30,7 +30,7 @@ public class MainMenu {
     /**
      * Displays the main menu of the game.
      */
-    public static void mainMenu(){
+    public static void mainMenu() {
 
         backgroundMusic = new BackgroundMusic(playList(), volume);
         backgroundMusic.play();
@@ -42,14 +42,8 @@ public class MainMenu {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
-
-
         // Create Main Menu Guess Who Logo
-        BufferedImage mainLogo = Resource.getImageResource("/Images/logo.png");
-        ImageIcon logoIcon = new ImageIcon(mainLogo);
-        Image image = logoIcon.getImage();
-        Image newimg = image.getScaledInstance(320, 167, Image.SCALE_SMOOTH);
-        logoIcon = new ImageIcon(newimg);
+        ImageIcon logoIcon = new ImageIcon(Resource.getImageResource("/Images/logo.png").getScaledInstance(320, 167, Image.SCALE_SMOOTH));
         JLabel logo = new JLabel("");
         logo.setBounds(10, -40, 500, 280);
         logo.setIcon(logoIcon);
@@ -73,6 +67,7 @@ public class MainMenu {
         frame.getContentPane().add(logo);
         frame.getContentPane().add(menuButtons);
         frame.setVisible(true);
+        LoadingScreen.stop();
 
         button.addActionListener(e -> {
             new GuessWhoGame("Single");
@@ -256,16 +251,26 @@ public class MainMenu {
      */
     static List<File> playList(){
         List<File> playlist = new ArrayList<>();
-        playlist.add(new File("src/Music/Ambient-downtempo-music.wav"));
-        playlist.add(new File("src/Music/livail-oasis-114751.wav"));
-        playlist.add(new File("src/Music/ambient-classical-guitar-144998.wav"));
-        playlist.add(new File("src/Music/better-day-186374.wav"));
-        playlist.add(new File("src/Music/deep-future-garage-royalty-free-music-163081.wav"));
-        playlist.add(new File("src/Music/easy-lifestyle-137766.wav"));
-        playlist.add(new File("src/Music/embrace-12278.wav"));
-        playlist.add(new File("src/Music/once-in-paris-168895.wav"));
-        playlist.add(new File("src/Music/watr-fluid-10149.wav"));
-        playlist.add(new File("src/Music/No_Rest_Or_Endless_Rest_-_Lisofv.wav"));
+        playlist.add(Resource.getAudioResource("/Music/Ambient-downtempo-music.wav"));
+        LoadingScreen.update("Music1");
+        playlist.add(Resource.getAudioResource("/Music/livail-oasis-114751.wav"));
+        LoadingScreen.update("Music2");
+        playlist.add(Resource.getAudioResource("/Music/ambient-classical-guitar-144998.wav"));
+        LoadingScreen.update("Music3");
+        playlist.add(Resource.getAudioResource("/Music/better-day-186374.wav"));
+        LoadingScreen.update("Music4");
+        playlist.add(Resource.getAudioResource("/Music/deep-future-garage-royalty-free-music-163081.wav"));
+        LoadingScreen.update("Music5");
+        playlist.add(Resource.getAudioResource("/Music/easy-lifestyle-137766.wav"));
+        LoadingScreen.update("Music6");
+        playlist.add(Resource.getAudioResource("/Music/embrace-12278.wav"));
+        LoadingScreen.update("Music7");
+        playlist.add(Resource.getAudioResource("/Music/once-in-paris-168895.wav"));
+        LoadingScreen.update("Music8");
+        playlist.add(Resource.getAudioResource("/Music/watr-fluid-10149.wav"));
+        LoadingScreen.update("Music9");
+        playlist.add(Resource.getAudioResource("/Music/No_Rest_Or_Endless_Rest_-_Lisofv.wav"));
+        LoadingScreen.update("Music10");
 
         Collections.shuffle(playlist);
 

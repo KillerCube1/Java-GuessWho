@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,15 +14,9 @@ public class Resource {
         InputStream inputStream = Resource.class.getResourceAsStream(path);
 
         if (inputStream != null) {
-            try {
-                BufferedImage image = ImageIO.read(inputStream);
-                return image;
-            } catch (IOException e) {
-            } finally {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {}
-            }
+            try (inputStream) {
+                return ImageIO.read(inputStream);
+            } catch (IOException ignored) {}
         }
 
         return null;
@@ -33,7 +28,7 @@ public class Resource {
         if (inputStream != null) {
             try {
                 // Create a temporary file
-                File file = File.createTempFile("temp", ".wav");
+                File file = File.createTempFile("tempAudio", ".wav");
 
                 // Copy the contents of the InputStream to the temporary file
                 try (OutputStream outputStream = new FileOutputStream(file)) {
@@ -45,14 +40,10 @@ public class Resource {
                 }
 
                 return file;
-            } catch (IOException e) {}
+            } catch (IOException ignored) {}
         }
 
         return null;
-    }
-
-    public static void getFontResource(String path) {
-        
     }
 
 }
