@@ -46,6 +46,13 @@ public class Host {
         new GuessWhoGame("Host");
     }
 
+    public static void endTurn() throws IOException {
+        GuessWhoGUI.freezeFrame();
+        hostTurn = false;
+        output.write((("endTurn") + "\r\n").getBytes());
+        output.flush();
+    }
+
     // --------------------------
     // Game Response Methods
     // --------------------------
@@ -85,8 +92,9 @@ public class Host {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    // Game initialization
+                    // Game Information
                     case "clientINIT" : clientFinishInit(); break;
+                    case "endTurn" : myTurn(); break;
 
                     // Get commands
                     case "getTurn" : sendTurn(); break;
@@ -115,6 +123,12 @@ public class Host {
             output.write((("pauseEvent") + "\r\n").getBytes());
             output.flush();
         } catch (IOException ignored) {}
+    }
+
+    private static void myTurn() {
+        hostTurn = true;
+        // Start Host Turn
+        GuessWhoGUI.unFreezeFrame();
     }
 
     private static void sendTurn() {

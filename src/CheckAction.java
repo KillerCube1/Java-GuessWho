@@ -2,6 +2,7 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Objects;
 
 import ClassExtensions.CheckButton;
@@ -54,10 +55,36 @@ public class CheckAction implements ActionListener {
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
-                GuessWhoGame.getWindow().flipCard(i);
+                switch (GuessWhoGame.getGameState()) {
+                    case "Single" -> singleplayerTrait(i);
+                    case "Host" -> {
+                        try { hostTrait(i); } catch (IOException ignored) {}
+                    }
+                    case "Client" -> {
+                        try { clientTrait(i); } catch (IOException ignored) {}
+                    }
+                } ;
             }
         }
 
+    }
+
+    private void singleplayerTrait(int i) {
+        GuessWhoGame.getWindow().flipCard(i);
+    }
+
+    private void hostTrait(int i) throws IOException {
+        if (Host.getTurn()) {
+            GuessWhoGame.getWindow().flipCard(i);
+            Host.endTurn();
+        }
+    }
+
+    private void clientTrait(int i) throws IOException {
+        if (!Client.getTurn()) {
+            GuessWhoGame.getWindow().flipCard(i);
+            Client.endTurn();
+        }
     }
 
 }

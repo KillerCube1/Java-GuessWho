@@ -39,6 +39,12 @@ public class Client {
         new GuessWhoGame("Client");
     }
 
+    public static void endTurn() throws IOException {
+        GuessWhoGUI.freezeFrame();
+        output.write((("endTurn") + "\r\n").getBytes());
+        output.flush();
+    }
+
     // --------------------------
     // Game Response Methods
     // --------------------------
@@ -76,9 +82,10 @@ public class Client {
 
                 // Execute response based off command name
                 switch(commandName) {
-                    // Game initialization
+                    // Game Information
                     case "hostINIT" : hostFinishInit(); break;
                     case "gameStart" : startGame(); break;
+                    case "endTurn" : myTurn(); break;
 
                     // Get commands
                     case "getSuspect" : sendSuspect(); break;
@@ -106,6 +113,11 @@ public class Client {
             output.write((("pauseEvent") + "\r\n").getBytes());
             output.flush();
         } catch (IOException ignored) {}
+    }
+
+    private static void myTurn() {
+        // Start Clients Turn
+        GuessWhoGUI.unFreezeFrame();
     }
 
     private static void sendSuspect() {

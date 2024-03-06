@@ -132,7 +132,7 @@ public class GuessWhoGame {
         return playerCharacter;
     }
 
-    public String getGameState() {
+    public static String getGameState() {
         return gameState;
     }
 
