@@ -1,12 +1,9 @@
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
 import ClassExtensions.CheckButton;
-
 
 /**
  * The CheckAction class implements the ActionListener interface and defines actions to be performed
@@ -15,6 +12,11 @@ import ClassExtensions.CheckButton;
  */
 public class CheckAction implements ActionListener {
 
+    private final JsonParser jsonParser;
+
+    public CheckAction(String json) throws IOException {
+        this.jsonParser = new JsonParser(json);
+    }
 
     /**
      * Performs the action when a button is clicked.
@@ -24,7 +26,6 @@ public class CheckAction implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
         CheckButton Suspect = (CheckButton) e.getSource();
 
         String Compare;
@@ -33,28 +34,28 @@ public class CheckAction implements ActionListener {
 
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {
-                Compare =  String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getHairColor());
+                Compare =  jsonParser.getHairColor(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex());
                 trait = value.substring(4);
                 value = "hairColor";
             } else if (value.startsWith("eyes")) {
-                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getEyeColor());
+                Compare = jsonParser.getEyeColor(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex());
                 trait = value.substring(4);
                 value = "eyeColor";
             } else if (value.startsWith("gend")) {
-                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getGender());
+                Compare = jsonParser.getGender(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex());
                 trait = value.substring(4);
                 value = "gender";
             } else {
-                Compare = Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute(value);
+                Compare = jsonParser.getAttribute(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex(), value);
                 trait = "true";
             }
         } else {
-            Compare = Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute(value);
+            Compare = jsonParser.getAttribute(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex(), value);
             trait = "true";
         }
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
-            if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
+            if (!String.valueOf(jsonParser.getAttribute(i, value).equals(trait)).equals(Compare)) {
                 switch (GuessWhoGame.getGameState()) {
                     case "Single" -> singleplayerTrait(i);
                     case "Host" -> {
@@ -66,7 +67,6 @@ public class CheckAction implements ActionListener {
                 } ;
             }
         }
-
     }
 
     private void singleplayerTrait(int i) {
@@ -86,5 +86,4 @@ public class CheckAction implements ActionListener {
             Client.endTurn();
         }
     }
-
 }

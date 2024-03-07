@@ -68,9 +68,9 @@ public class GuessWhoGame {
      * @throws IOException If there is an error reading the JSON data.
      */
     public static void initialize(String jsonData) throws IOException {
-        theDeck = new Deck(jsonData);
+        JsonParser jsonParser = new JsonParser(jsonData);
+        theDeck = new Deck(jsonParser);
     }
-
     /**
      * Sets the game deck.
      *

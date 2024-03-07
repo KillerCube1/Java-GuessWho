@@ -39,7 +39,7 @@ public class GuessWhoGUI extends JFrame {
      * It allows players to interact with the game through mouse clicks and button presses.
      */
 
-    public GuessWhoGUI(boolean turn) {
+    public GuessWhoGUI(boolean turn) throws IOException {
         frame = new JFrame("Guess Who");
         try {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,11 +84,12 @@ public class GuessWhoGUI extends JFrame {
         }
         createSuspectGrid();
 
-        for(CheckButton button : buttonList) {
-            button.addActionListener(new CheckAction());
+        for (CheckButton button : buttonList) {
+            button.addActionListener(new CheckAction(GuessWhoGame.getGameState()));
             button.setFocusable(false);
             button.setVisible(true);
         }
+
 
 
         assignGuiltySuspect();
@@ -290,28 +291,12 @@ public class GuessWhoGUI extends JFrame {
     }
 
     public static void freezeFrame() {
-        showPlayersTurnNotification();
-        for (int i = 0; i < susGrid.length; i++) {
-            JLabel label = susGrid[i];
-            for (MouseListener listener : label.getMouseListeners()) {
-                label.removeMouseListener(listener);
-            }
-            for(CheckButton button : buttonList) {
-                button.setEnabled(false);
-            }
-            label.addMouseListener(new LabelListener(label, i));
-        }
+        
     }
 
 
     public static void unFreezeFrame() {
-        for (int i = 0; i < susGrid.length; i++) {
-            JLabel label = susGrid[i];
-            for (MouseListener listener : label.getMouseListeners()) {
-                label.removeMouseListener(listener);
-            }
-            label.addMouseListener(new LabelListener(label, i));
-        }
+
     }
 
 

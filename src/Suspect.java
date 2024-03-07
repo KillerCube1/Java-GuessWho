@@ -9,10 +9,12 @@ public class Suspect {
 	private final String hairColor;
 	private final boolean hat;
 	private final String gender;
+	private final int index;
 
 	private final CardImage card;
 
-	public Suspect(String name, String hairColor, boolean bald, String eyeColor, String gender, boolean hat, boolean glasses, boolean moustache, boolean beard, boolean rosyCheeks) {
+	public Suspect(int index, String name, String hairColor, boolean bald, String eyeColor, String gender, boolean hat, boolean glasses, boolean moustache, boolean beard, boolean rosyCheeks) {
+		this.index = index;
 		this.name = name;
 		this.eyeColor = eyeColor;
 		this.beard = beard;
@@ -84,5 +86,9 @@ public class Suspect {
 
 	public CardImage getCard() {
 		return card;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 }

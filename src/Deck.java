@@ -5,22 +5,22 @@ public class Deck {
 	private final int totalCards = 24;
 	private final Suspect[] susDeck = new Suspect[totalCards];
 
-	public Deck(String json) throws IOException {
-		SuspectData suspectData = new SuspectData(json);
+	public Deck(JsonParser jsonParser) throws IOException {
 
 		// Initialize the deck with suspects
 		for (int i = 0; i < totalCards; i++) {
 			susDeck[i] = new Suspect(
-					suspectData.getName(i),
-					suspectData.getHairColor(i),
-					suspectData.isBald(i),
-					suspectData.getEyeColor(i),
-					suspectData.getGender(i),
-					suspectData.hasHat(i),
-					suspectData.hasGlasses(i),
-					suspectData.hasMoustache(i),
-					suspectData.hasBeard(i),
-					suspectData.hasRosyCheeks(i)
+					i,
+					jsonParser.getName(i),
+					jsonParser.getHairColor(i),
+					jsonParser.isBald(i),
+					jsonParser.getEyeColor(i),
+					jsonParser.getGender(i),
+					jsonParser.hasHat(i),
+					jsonParser.hasGlasses(i),
+					jsonParser.hasMoustache(i),
+					jsonParser.hasBeard(i),
+					jsonParser.hasRosyCheeks(i)
 			);
 		}
 

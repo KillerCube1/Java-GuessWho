@@ -176,7 +176,7 @@ public class Host {
             String value = input.readLine();
 
             Suspect suspect = null;
-            for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {
+            for(Suspect person : GuessWhoGame.getTheDeck().getSusDeck()) {
                 if (person.getName().equals(value)) {
                     suspect = person;
                     break;
