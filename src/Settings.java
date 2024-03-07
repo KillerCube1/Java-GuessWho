@@ -82,14 +82,11 @@ public class Settings {
         OutputStream outputStream = null;
 
         try {
-            // Load the properties file
             inputStream = new FileInputStream("settings.properties");
             properties.load(inputStream);
 
-            // Set the property
             properties.setProperty("serverListIP", IP);
 
-            // Save the updated properties file
             outputStream = new FileOutputStream("settings.properties");
             properties.store(outputStream, null);
         } catch (IOException io) {

@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
@@ -8,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import ClassExtensions.CheckButton;
 import Style.MainMenuButton;
 
 
@@ -29,13 +31,15 @@ public class MainMenu {
     // Settings variables
     private static int volume;
 
+
+
     /**
      * Displays the main menu of the game.
      */
     public static void mainMenu() {
 
-//        backgroundMusic = new BackgroundMusic(playList(), volume);
-//        backgroundMusic.play();
+        backgroundMusic = new BackgroundMusic(playList(), volume);
+        backgroundMusic.play();
 
         frame = new JFrame("Main Menu");
 
@@ -105,7 +109,6 @@ public class MainMenu {
             }
         });
     }
-
 
     /**
      * Opens the multiplayer menu.
@@ -251,7 +254,7 @@ public class MainMenu {
     /**
      * Provides a playlist of music files for the background music in the main menu.
      */
-    static List<File> playList(){
+    public static List<File> playList(){
         List<File> playlist = new ArrayList<>();
         playlist.add(Resource.getAudioResource("/Music/Ambient-downtempo-music.wav"));
         LoadingScreen.update("Music1");
@@ -318,5 +321,8 @@ public class MainMenu {
 
     public static void setVolume(int value) {
         volume = value;
+    }
+    public static void muteMusic() {
+        backgroundMusic.setVolume(0);
     }
 }

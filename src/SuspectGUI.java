@@ -115,7 +115,7 @@ public class SuspectGUI implements ActionListener {
         } else if (e.getSource() == guess) {
             suspectBox.dispose();
             try {
-                LabelListener.guessSuspect(targetSuspect);
+                SuspectGuessMouseListener.guessSuspect(targetSuspect);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }

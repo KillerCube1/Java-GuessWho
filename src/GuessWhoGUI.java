@@ -85,7 +85,7 @@ public class GuessWhoGUI extends JFrame {
 
         assignGuiltySuspect();
         playerCardFrameStuff();
-        LabelListener.guessCounterMethod();
+        SuspectGuessMouseListener.guessCounterMethod();
 
         // Freeze-frame if not turn
         if (!turn){
@@ -144,7 +144,7 @@ public class GuessWhoGUI extends JFrame {
             cardLabel.setBounds(xPosition, yPosition, cardLabelWidth, cardLabelHeight);
             cardLabel.setIcon(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
 
-            LabelListener labelListener = new LabelListener(cardLabel, i);
+            SuspectGuessMouseListener labelListener = new SuspectGuessMouseListener(cardLabel, i);
             cardLabel.addMouseListener(labelListener);
 
             frame.getContentPane().add(cardLabel);
@@ -194,6 +194,8 @@ public class GuessWhoGUI extends JFrame {
 
         int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
         GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
+
+        System.out.println(GuessWhoGame.getGuilty().getAttribute("name"));
     }
 
     private static void showPlayersTurnNotification() {
@@ -209,17 +211,18 @@ public class GuessWhoGUI extends JFrame {
 
     public static void freezeFrame() {
         showPlayersTurnNotification();
-        LabelListener.setListenerEnabled(false);
+        SuspectGuessMouseListener.setListenerEnabled(false);
         for(CheckButton button : buttonList) {
             button.setEnabled(false);
         }
     }
 
     public static void unFreezeFrame() {
-        LabelListener.setListenerEnabled(true);
+        SuspectGuessMouseListener.setListenerEnabled(true);
         for(CheckButton button : buttonList) {
             button.setEnabled(true);
         }
     }
+
 
 }//GuessWhoGUI
