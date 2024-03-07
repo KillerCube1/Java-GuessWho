@@ -53,7 +53,7 @@ public class Client {
         try {
             output.write((("clientINIT") + "\r\n").getBytes());
             output.flush();
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
     }
 
     private static void pauseClient() throws IOException {

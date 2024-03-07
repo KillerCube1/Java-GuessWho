@@ -82,7 +82,7 @@ public class Host {
                 String command = "";
                 try {
                     command = input.readLine();
-                } catch (IOException e) {}
+                } catch (IOException ignored) {}
 
                 // Split command up into command name and arguments
                 String[] commandSections = command.split("::");

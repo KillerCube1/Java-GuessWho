@@ -53,38 +53,50 @@ public class CheckAction implements ActionListener {
             trait = "true";
         }
 
+        switch (GuessWhoGame.getGameState()) {
+            case "Single" -> singleplayerTrait(value, trait, Compare);
+            case "Host" -> {
+                try { hostTrait(value, trait, Compare); } catch (IOException ignored) {}
+            }
+            case "Client" -> {
+                try { clientTrait(value, trait, Compare); } catch (IOException ignored) {}
+            }
+        }
+    }
+
+    private void singleplayerTrait(String value, String trait, String Compare) {
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
-                switch (GuessWhoGame.getGameState()) {
-                    case "Single" -> singleplayerTrait(i);
-                    case "Host" -> {
-                        try { hostTrait(i); } catch (IOException ignored) {}
-                    }
-                    case "Client" -> {
-                        try { clientTrait(i); } catch (IOException ignored) {}
-                    }
-                } ;
+                GuessWhoGame.getWindow().flipCard(i);
+            }
+        }
+    }
+
+    private void hostTrait(String value, String trait, String Compare) throws IOException {
+        if (Host.getTurn()) return;
+
+        for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
+            if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
+                GuessWhoGame.getWindow().flipCard(i);
             }
         }
 
+        Host.endTurn();
     }
 
-    private void singleplayerTrait(int i) {
-        GuessWhoGame.getWindow().flipCard(i);
-    }
+    private void clientTrait(String value, String trait, String Compare) throws IOException {
+        boolean storeTest = !Client.getTurn();
+        System.out.println(storeTest);
+        if (storeTest) return;
 
-    private void hostTrait(int i) throws IOException {
-        if (Host.getTurn()) {
-            GuessWhoGame.getWindow().flipCard(i);
-            Host.endTurn();
+        for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
+            if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
+                GuessWhoGame.getWindow().flipCard(i);
+            }
         }
-    }
 
-    private void clientTrait(int i) throws IOException {
-        if (!Client.getTurn()) {
-            GuessWhoGame.getWindow().flipCard(i);
-            Client.endTurn();
-        }
+        System.out.println("ending turn...");
+        Client.endTurn();
     }
 
 }

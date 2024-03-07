@@ -56,21 +56,21 @@ public class GuessWhoGUI extends JFrame {
         int yFramePosition = 20;
 
         buttonList = new CheckButton[]{
-                new CheckButton("Male?", "gendmale", new Color(0xFF7F6E)),
-                new CheckButton("Female?", "gendfemale", new Color(0x7A67E2)),
-                new CheckButton("Hat?", "hat", new Color(0x00CCCC)),
-                new CheckButton("Bald?", "bald", new Color(0x6BB536)),
-                new CheckButton("Beard?", "beard", new Color(0x4E93CC)),
-                new CheckButton("Moustache?", "moustache", new Color(0xFFE7B5)),
-                new CheckButton("RosyCheeks?", "rosyCheeks", new Color(0x9D37E1)),
-                new CheckButton("Glasses?", "glasses", new Color(0x7EFF8B)),
-                new CheckButton("BlackHair?", "hairblack", new Color(0xFF824D)),
-                new CheckButton("RedHair?", "hairred", new Color(0xE65A79)),
-                new CheckButton("BrownHair?", "hairbrown", new Color(0xFFE53A)),
-                new CheckButton("BlondeHair?", "hairblonde", new Color(0x9FDFFF)),
-                new CheckButton("WhiteHair?", "hairwhite", new Color(0x95CC99)),
-                new CheckButton("Blue Eyes?", "eyesblue", new Color(0x789A63)),
-                new CheckButton("Brown Eyes?", "eyesbrown", new Color(0x12B2BF)),
+                new CheckButton("Male?", "gendmale", new Color(0xFF4343)),
+                new CheckButton("Female?", "gendfemale", new Color(0xFF8100)),
+                new CheckButton("Hat?", "hat", new Color(0xFFD300)),
+                new CheckButton("Bald?", "bald", new Color(0x61FF13)),
+                new CheckButton("Beard?", "beard", new Color(0x0FFF93)),
+                new CheckButton("Moustache?", "moustache", new Color(0x00D8FF)),
+                new CheckButton("RosyCheeks?", "rosyCheeks", new Color(0x0095FF)),
+                new CheckButton("Glasses?", "glasses", new Color(0x0066FF)),
+                new CheckButton("BlackHair?", "hairblack", new Color(0x3000FF)),
+                new CheckButton("RedHair?", "hairred", new Color(0x7C58FF)),
+                new CheckButton("BrownHair?", "hairbrown", new Color(0xD41CFF)),
+                new CheckButton("BlondeHair?", "hairblonde", new Color(0xFF049B)),
+                new CheckButton("WhiteHair?", "hairwhite", new Color(0xFF65B2)),
+                new CheckButton("Blue Eyes?", "eyesblue", new Color(0xFF9393)),
+                new CheckButton("Brown Eyes?", "eyesbrown", new Color(0xFFB7B7)),
         };
 
         for(int i = 0; i < 12; i++) {
@@ -119,7 +119,6 @@ public class GuessWhoGUI extends JFrame {
             System.out.println("CORRECT!");
 
             showResultFrame("CONGRATS YOU WIN!");
-
         } else {
             guessesLeft -= 1;
             wrongGuesses += 1;
@@ -127,7 +126,6 @@ public class GuessWhoGUI extends JFrame {
 
             if (wrongGuesses >= 3) {
                 showResultFrame("YOU LOSE WHAT A BOT!");
-
             }
         }
     }

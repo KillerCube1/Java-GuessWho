@@ -151,14 +151,14 @@ public class MainMenu {
             frame.setVisible(true);
         });
 
-        JPanel volumeSlider = getjSlider(backgroundMusic.getVolume());
+//        JPanel volumeSlider = getjSlider(backgroundMusic.getVolume());
 
         panel.add(playButton);
         panel.add(stopButton);
         panel.add(nextButton);
         panel.add(advancedButton);
         panel.add(backButton);
-        panel.add(volumeSlider);
+//        panel.add(volumeSlider);
 
         settingsFrame.getContentPane().add(panel);
 
