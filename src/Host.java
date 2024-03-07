@@ -140,7 +140,7 @@ public class Host {
 
     private static void sendSuspect(String args) {
         try {
-            output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
+            output.write(((GuessWhoGame.getPlayerCharacter().getName()) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ignored) {}
     }
@@ -177,7 +177,7 @@ public class Host {
 
             Suspect suspect = null;
             for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {
-                if (person.getAttribute("name").equals(value)) {
+                if (person.getName().equals(value)) {
                     suspect = person;
                     break;
                 }

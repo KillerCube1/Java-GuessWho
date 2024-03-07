@@ -14,7 +14,7 @@ public class LabelListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
+        System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getName());
         try {
             guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
         } catch (InterruptedException ex) {

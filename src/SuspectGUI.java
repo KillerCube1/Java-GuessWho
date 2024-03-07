@@ -40,7 +40,7 @@ public class SuspectGUI implements ActionListener {
         // Get The Suspect From The Deck
         targetSuspect = null;
         for (Suspect i : mainGUI.getDeck().getSusDeck()) {
-            if (Objects.equals(i.getAttribute("name"), label.getText())) {
+            if (Objects.equals(i.getName(), label.getText())) {
                 targetSuspect = i;
                 break;
             }
@@ -68,16 +68,16 @@ public class SuspectGUI implements ActionListener {
         suspectBox.getContentPane().add(suspectInfoTitle);
 
         String[] suspectDesc = {
-                "Name - " + targetSuspect.getAttribute("name"),
-                "Gender - " + targetSuspect.getAttribute("gender"),
-                "Eye Color - " + targetSuspect.getAttribute("eyeColor"),
-                "Hair Color - " + targetSuspect.getAttribute("hairColor"),
-                "Is Bald: " + (Boolean.parseBoolean(targetSuspect.getAttribute("bald")) ? "yes" : "no"),
-                "Has Beard: " + (Boolean.parseBoolean(targetSuspect.getAttribute("beard")) ? "yes" : "no"),
-                "Has Glasses: " + (Boolean.parseBoolean(targetSuspect.getAttribute("glasses")) ? "yes" : "no"),
-                "Has Hat: " + (Boolean.parseBoolean(targetSuspect.getAttribute("hat")) ? "yes" : "no"),
-                "Has Moustache: " + (Boolean.parseBoolean(targetSuspect.getAttribute("moustache")) ? "yes" : "no"),
-                "Has Rosy Cheeks: " + (Boolean.parseBoolean(targetSuspect.getAttribute("rosyCheeks")) ? "yes" : "no")
+                "Name - " + targetSuspect.getName(),
+                "Gender - " + targetSuspect.getGender(),
+                "Eye Color - " + targetSuspect.getEyeColor(),
+                "Hair Color - " + targetSuspect.getHairColor(),
+                "Is Bald: " + false,
+                "Has Beard: " + (targetSuspect.hasBeard() ? "yes" : "no"),
+                "Has Glasses: " + (targetSuspect.hasGlasses() ? "yes" : "no"),
+                "Has Hat: " + (targetSuspect.hasHat() ? "yes" : "no"),
+                "Has Moustache: " + (targetSuspect.hasMoustache() ? "yes" : "no"),
+                "Has Rosy Cheeks: " + (targetSuspect.hasRosyCheeks() ? "yes" : "no")
         };
 
         JLabel suspectInfo = new JLabel("<html>" + String.join("<br/>", suspectDesc) + "</html>");

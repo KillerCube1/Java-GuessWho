@@ -122,7 +122,7 @@ public class Client {
 
     private static void sendSuspect() {
         try {
-            output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
+            output.write(((GuessWhoGame.getPlayerCharacter().getName()) + "\r\n").getBytes());
             output.flush();
         } catch (IOException ignored) {}
     }
@@ -161,8 +161,8 @@ public class Client {
             String value = input.readLine();
 
             Suspect suspect = null;
-            for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {
-                if (person.getAttribute("name").equals(value)) {
+            for(Suspect person : GuessWhoGame.getTheDeck().getSusDeck()) {
+                if (person.getName().equals(value)) {
                     suspect = person;
                     break;
                 }

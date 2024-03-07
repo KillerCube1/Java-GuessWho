@@ -1,5 +1,5 @@
 import java.awt.EventQueue;
-
+import java.io.IOException;
 
 /**
  * The GuessWhoGame class represents the main game logic for Guess Who.
@@ -8,10 +8,9 @@ import java.awt.EventQueue;
 public class GuessWhoGame {
     private static GuessWhoGUI window;
     private static SuspectGUI suspectWindow;
-    private static Deck theDeck = new Deck();
+    private static Deck theDeck;
     private static Suspect guilty;
     private static Suspect playerCharacter;
-
     private static String gameState;
 
     /**
@@ -21,11 +20,16 @@ public class GuessWhoGame {
         gameState = givenGameState;
         switch (gameState) {
             case "Single": initSingleplayerGame(); break;
-            case "Host"  : startHostGame();        break;
-            case "Client": startClientGame();      break;
+            case "Host": startHostGame(); break;
+            case "Client": startClientGame(); break;
         }
     }
 
+    public static void setGuilty(Suspect suspect) {
+    }
+
+    public static void setPlayerCharacter(Suspect suspect) {
+    }
 
     private void startClientGame() {
         EventQueue.invokeLater(() -> {
@@ -37,7 +41,6 @@ public class GuessWhoGame {
         });
     }
 
-
     private void startHostGame() {
         EventQueue.invokeLater(() -> {
             try {
@@ -47,7 +50,6 @@ public class GuessWhoGame {
             } catch (Exception ignored) {}
         });
     }
-
 
     private void initSingleplayerGame() {
         EventQueue.invokeLater(() -> {
@@ -59,6 +61,15 @@ public class GuessWhoGame {
         });
     }
 
+    /**
+     * Initializes the game components including the game deck with the provided JSON data.
+     *
+     * @param jsonData The JSON data representing the game deck.
+     * @throws IOException If there is an error reading the JSON data.
+     */
+    public static void initialize(String jsonData) throws IOException {
+        theDeck = new Deck(jsonData);
+    }
 
     /**
      * Sets the game deck.
@@ -69,27 +80,6 @@ public class GuessWhoGame {
         GuessWhoGame.theDeck = theDeck;
     }
 
-
-    /**
-     * Sets the guilty suspect.
-     *
-     * @param guilty The guilty suspect to set.
-     */
-    public static void setGuilty(Suspect guilty) {
-        GuessWhoGame.guilty = guilty;
-    }
-
-
-    /**
-     * Sets the player's character.
-     *
-     * @param playerCharacter The player's character to set.
-     */
-    public static void setPlayerCharacter(Suspect playerCharacter) {
-        GuessWhoGame.playerCharacter = playerCharacter;
-    }
-
-
     /**
      * Retrieves the game window.
      *
@@ -98,8 +88,6 @@ public class GuessWhoGame {
     public static GuessWhoGUI getWindow() {
         return window;
     }
-
-
 
     /**
      * Retrieves the game deck.
@@ -111,7 +99,7 @@ public class GuessWhoGame {
     }
 
     /**
-     * Retrieves the guilty suspect.
+     * Retrieves the guilty suspect based on the game state.
      *
      * @return The guilty suspect.
      */
@@ -123,6 +111,7 @@ public class GuessWhoGame {
             default -> null;
         };
     }
+
     /**
      * Retrieves the player's character.
      *
@@ -132,8 +121,12 @@ public class GuessWhoGame {
         return playerCharacter;
     }
 
+    /**
+     * Retrieves the game state.
+     *
+     * @return The game state.
+     */
     public static String getGameState() {
         return gameState;
     }
-
 }

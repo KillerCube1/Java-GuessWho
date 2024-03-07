@@ -33,15 +33,15 @@ public class CheckAction implements ActionListener {
 
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {
-                Compare =  String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("hairColor").equals(value.substring(4)));
+                Compare =  String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getHairColor());
                 trait = value.substring(4);
                 value = "hairColor";
             } else if (value.startsWith("eyes")) {
-                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("eyeColor").equals(value.substring(4)));
+                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getEyeColor());
                 trait = value.substring(4);
                 value = "eyeColor";
             } else if (value.startsWith("gend")) {
-                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("gender").equals(value.substring(4)));
+                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getGender());
                 trait = value.substring(4);
                 value = "gender";
             } else {
