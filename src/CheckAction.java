@@ -87,7 +87,7 @@ public class CheckAction implements ActionListener {
     private void clientTrait(String value, String trait, String Compare) throws IOException {
         boolean storeTest = !Client.getTurn();
         System.out.println(storeTest);
-        if (storeTest) return;
+        if (!storeTest) return;
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
