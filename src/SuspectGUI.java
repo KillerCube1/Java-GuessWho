@@ -40,7 +40,7 @@ public class SuspectGUI implements ActionListener {
         // Get The Suspect From The Deck
         targetSuspect = null;
         for (Suspect i : mainGUI.getDeck().getSusDeck()) {
-            if (Objects.equals(i.getName(), label.getText())) {
+            if (Objects.equals(i.getData().getName(), label.getText())) {
                 targetSuspect = i;
                 break;
             }
@@ -68,16 +68,16 @@ public class SuspectGUI implements ActionListener {
         suspectBox.getContentPane().add(suspectInfoTitle);
 
         String[] suspectDesc = {
-                "Name - " + targetSuspect.getName(),
-                "Gender - " + targetSuspect.getGender(),
-                "Eye Color - " + targetSuspect.getEyeColor(),
-                "Hair Color - " + targetSuspect.getHairColor(),
+                "Name - " + targetSuspect.getData().getName(),
+                "Gender - " + targetSuspect.getData().getGender(),
+                "Eye Color - " + targetSuspect.getData().getEyeColor(),
+                "Hair Color - " + targetSuspect.getData().getHairColor(),
                 "Is Bald: " + false,
-                "Has Beard: " + (targetSuspect.hasBeard() ? "yes" : "no"),
-                "Has Glasses: " + (targetSuspect.hasGlasses() ? "yes" : "no"),
-                "Has Hat: " + (targetSuspect.hasHat() ? "yes" : "no"),
-                "Has Moustache: " + (targetSuspect.hasMoustache() ? "yes" : "no"),
-                "Has Rosy Cheeks: " + (targetSuspect.hasRosyCheeks() ? "yes" : "no")
+                "Has Beard: " + (targetSuspect.getData().isBeard() ? "yes" : "no"),
+                "Has Glasses: " + (targetSuspect.getData().isGlasses() ? "yes" : "no"),
+                "Has Hat: " + (targetSuspect.getData().isHat() ? "yes" : "no"),
+                "Has Moustache: " + (targetSuspect.getData().isMoustache() ? "yes" : "no"),
+                "Has Rosy Cheeks: " + (targetSuspect.getData().isRosyCheeks() ? "yes" : "no")
         };
 
         JLabel suspectInfo = new JLabel("<html>" + String.join("<br/>", suspectDesc) + "</html>");

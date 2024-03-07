@@ -181,7 +181,7 @@ public class GuessWhoGUI extends JFrame {
             cardLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getName());
+                    System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getData().getName());
                     try {
                         guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
                     } catch (InterruptedException ex) {

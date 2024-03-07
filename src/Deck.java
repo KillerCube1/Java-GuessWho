@@ -10,7 +10,6 @@ public class Deck {
 		// Initialize the deck with suspects
 		for (int i = 0; i < totalCards; i++) {
 			susDeck[i] = new Suspect(
-					i,
 					jsonParser.getName(i),
 					jsonParser.getHairColor(i),
 					jsonParser.isBald(i),
@@ -20,8 +19,8 @@ public class Deck {
 					jsonParser.hasGlasses(i),
 					jsonParser.hasMoustache(i),
 					jsonParser.hasBeard(i),
-					jsonParser.hasRosyCheeks(i)
-			);
+					jsonParser.hasRosyCheeks(i),
+					jsonParser.index);
 		}
 
 		shuffle();

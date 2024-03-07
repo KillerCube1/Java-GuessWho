@@ -13,6 +13,7 @@ public class GuessWhoGame {
     private static Suspect playerCharacter;
     private static String gameState;
 
+
     /**
      * Constructs a GuessWhoGame object and initializes the game components.
      */
@@ -57,6 +58,8 @@ public class GuessWhoGame {
                 window = new GuessWhoGUI(true);
                 GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
+
+
             } catch (Exception ignored) {}
         });
     }
