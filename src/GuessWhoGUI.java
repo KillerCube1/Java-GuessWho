@@ -1,11 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.TimerTask;
-import java.util.Timer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import ClassExtensions.CheckButton;
@@ -25,9 +20,6 @@ public class GuessWhoGUI extends JFrame {
 
     private static JFrame frame = null;
 
-    private int wrongGuesses = 0;
-    private int guessesLeft = 3;
-    private JLabel guessCounter;
     private static final JLabel[] susGrid = new JLabel[24];
 
     private static CheckButton[] buttonList;
@@ -93,7 +85,7 @@ public class GuessWhoGUI extends JFrame {
 
         assignGuiltySuspect();
         playerCardFrameStuff();
-        guessCounterMethod();
+        LabelListener.guessCounterMethod();
 
         // Freeze-frame if not turn
         if (!turn){
@@ -106,29 +98,8 @@ public class GuessWhoGUI extends JFrame {
 
     }//constructor
 
-    /**
-     * Handles the process of guessing a suspect.
-     * Checks if the guessed suspect is correct and updates the game state accordingly.
-     *
-     * @param character The suspect being guessed.
-     * @throws InterruptedException If the thread is interrupted.
-     */
 
-    public void guessSuspect(Suspect character) throws InterruptedException {
-        if (character == GuessWhoGame.getGuilty()) {
-            System.out.println("CORRECT!");
 
-            showResultFrame("CONGRATS YOU WIN!");
-        } else {
-            guessesLeft -= 1;
-            wrongGuesses += 1;
-            guessCounterMethod();
-
-            if (wrongGuesses >= 3) {
-                showResultFrame("YOU LOSE WHAT A BOT!");
-            }
-        }
-    }
 
 
     /**
@@ -173,25 +144,14 @@ public class GuessWhoGUI extends JFrame {
             cardLabel.setBounds(xPosition, yPosition, cardLabelWidth, cardLabelHeight);
             cardLabel.setIcon(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
 
-
-            final int index = i;
-            cardLabel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
-                    try {
-                        guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    cardLabel.removeMouseListener(this);
-                }
-            });
+            LabelListener labelListener = new LabelListener(cardLabel, i);
+            cardLabel.addMouseListener(labelListener);
 
             frame.getContentPane().add(cardLabel);
             susGrid[i] = cardLabel;
         }
     }
+
 
     /**
      * Method to flip a suspect card on the game board.
@@ -204,22 +164,6 @@ public class GuessWhoGUI extends JFrame {
     }
 
 
-    /**
-     * Method to update and display the guess counter on the game board.
-     */
-    private void guessCounterMethod() {
-
-        if (guessCounter == null) {
-            guessCounter = new JLabel();
-            guessCounter.setBackground(Color.WHITE);
-            guessCounter.setForeground(Color.WHITE);
-            guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
-            guessCounter.setBounds(1400, 50, 192, 25);
-            frame.getContentPane().add(guessCounter);
-        }
-
-        guessCounter.setText("Guesses: " + guessesLeft);
-    }
 
     private void playerCardFrameStuff(){
         // Player Suspect Card Image
@@ -261,56 +205,21 @@ public class GuessWhoGUI extends JFrame {
 
     }
 
-    private static void showResultFrame(String message) {
-        JFrame resultFrame = new JFrame("Guess Who");
-        resultFrame.setSize(1920, 1080);
-        resultFrame.setLocationRelativeTo(null);
-        try {
-            resultFrame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("src/Images/colorful-confetti-background-with-text-space_1017-32374.jpg")))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        JLabel resultLabel = new JLabel(message);
-        resultLabel.setHorizontalAlignment(JLabel.CENTER);
-        resultFrame.add(resultLabel);
-        resultFrame.setVisible(true);
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                resultFrame.setVisible(false);
-                GuessWhoGUI.getFrame().dispose();
-                MainMenu.mainMenu();
-            }
-        }, 3000);
-    }
 
     public static void freezeFrame() {
         showPlayersTurnNotification();
-        for (int i = 0; i < susGrid.length; i++) {
-            JLabel label = susGrid[i];
-            for (MouseListener listener : label.getMouseListeners()) {
-                label.removeMouseListener(listener);
-            }
-            for(CheckButton button : buttonList) {
-                button.setEnabled(false);
-            }
-            label.addMouseListener(new LabelListener(label, i));
+        LabelListener.setListenerEnabled(false);
+        for(CheckButton button : buttonList) {
+            button.setEnabled(false);
         }
     }
-
 
     public static void unFreezeFrame() {
-        for (int i = 0; i < susGrid.length; i++) {
-            JLabel label = susGrid[i];
-            for (MouseListener listener : label.getMouseListeners()) {
-                label.removeMouseListener(listener);
-            }
-            label.addMouseListener(new LabelListener(label, i));
+        LabelListener.setListenerEnabled(true);
+        for(CheckButton button : buttonList) {
+            button.setEnabled(true);
         }
     }
-
 
 }//GuessWhoGUI

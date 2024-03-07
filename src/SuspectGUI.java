@@ -21,6 +21,7 @@ public class SuspectGUI implements ActionListener {
     GuessWhoGUI mainGUI = GuessWhoGame.getWindow();
     JFrame frame = GuessWhoGUI.getFrame();
 
+
     // Suspect Window
     private JFrame suspectBox;
     JButton cancel;
@@ -114,7 +115,7 @@ public class SuspectGUI implements ActionListener {
         } else if (e.getSource() == guess) {
             suspectBox.dispose();
             try {
-                mainGUI.guessSuspect(targetSuspect);
+                LabelListener.guessSuspect(targetSuspect);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
