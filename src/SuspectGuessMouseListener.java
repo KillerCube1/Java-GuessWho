@@ -76,6 +76,7 @@ public class SuspectGuessMouseListener extends MouseAdapter {
 
     private static void showResultFrame() {
         if(wrongGuesses >= 3) {
+            GuessWhoGUI.getFrame().dispose();
             SwingUtilities.invokeLater(() -> {
                 MainMenu.muteMusic();
                 JFrame frame = new JFrame("Loser Screen");
@@ -86,6 +87,7 @@ public class SuspectGuessMouseListener extends MouseAdapter {
                 frame.setVisible(true);
             });
         } else {
+            GuessWhoGUI.getFrame().dispose();
             SwingUtilities.invokeLater(() -> {
                 MainMenu.muteMusic();
                 JFrame frame = new JFrame("Confetti Winner");
