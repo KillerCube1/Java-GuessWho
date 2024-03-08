@@ -1,26 +1,26 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 public class Deck {
 	private final int totalCards = 24;
 	private final Suspect[] susDeck = new Suspect[totalCards];
 
-	public Deck(JsonParser jsonParser) throws IOException {
-
+	public Deck(JsonParser jsonParser, List<SuspectData> suspectDataList) throws IOException {
 		// Initialize the deck with suspects
 		for (int i = 0; i < totalCards; i++) {
+			SuspectData suspectData = suspectDataList.get(i);
 			susDeck[i] = new Suspect(
-					jsonParser.getName(i),
-					jsonParser.getHairColor(i),
-					jsonParser.isBald(i),
-					jsonParser.getEyeColor(i),
-					jsonParser.getGender(i),
-					jsonParser.hasHat(i),
-					jsonParser.hasGlasses(i),
-					jsonParser.hasMoustache(i),
-					jsonParser.hasBeard(i),
-					jsonParser.hasRosyCheeks(i),
-					jsonParser.index);
+					suspectData.getName(),
+					suspectData.getHairColor(),
+					suspectData.isBald(),
+					suspectData.getEyeColor(),
+					suspectData.getGender(),
+					suspectData.isHat(),
+					suspectData.isGlasses(),
+					suspectData.isMoustache(),
+					suspectData.isBeard(),
+					suspectData.isRosyCheeks());
 		}
 
 		shuffle();

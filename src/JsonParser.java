@@ -32,6 +32,10 @@ public class JsonParser {
         };
     }
 
+    public List<SuspectData> getSuspects() {
+        return suspects;
+    }
+
 
     public String getName(int i){
         return suspects.get(i).getName();

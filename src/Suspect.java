@@ -1,11 +1,12 @@
 public class Suspect {
 	SuspectData data;
 	CardImage card;
-	private final int index;
 
-	public Suspect(SuspectData data, int index) {
+	public Suspect(SuspectData data) {
 		this.data = data;
-		this.index = index;
+	}
+
+	public Suspect(String name, String hairColor, boolean bald, String eyeColor, String gender, boolean hat, boolean glasses, boolean moustache, boolean beard, boolean rosyCheeks) {
 	}
 
 	public SuspectData getData() {
@@ -16,10 +17,7 @@ public class Suspect {
 		this.data = data;
 	}
 
-	public int getIndex() {
-		return index;
 
-	}
 
 	public CardImage getCard() {
 		return card;

@@ -34,23 +34,23 @@ public class CheckAction implements ActionListener {
 
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {
-                Compare =  jsonParser.getHairColor(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex());
+                Compare = GuessWhoGame.getGuilty().getData().getHairColor();
                 trait = value.substring(4);
                 value = "hairColor";
             } else if (value.startsWith("eyes")) {
-                Compare = jsonParser.getEyeColor(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex());
+                Compare = GuessWhoGame.getGuilty().getData().getEyeColor();
                 trait = value.substring(4);
                 value = "eyeColor";
             } else if (value.startsWith("gend")) {
-                Compare = jsonParser.getGender(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex());
+                Compare = GuessWhoGame.getGuilty().getData().getGender();
                 trait = value.substring(4);
                 value = "gender";
             } else {
-                Compare = jsonParser.getAttribute(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex(), value);
+                Compare = jsonParser.getAttribute(GuessWhoGame.getGuilty(), value);
                 trait = "true";
             }
         } else {
-            Compare = jsonParser.getAttribute(Objects.requireNonNull(GuessWhoGame.getGuilty()).getIndex(), value);
+            Compare = jsonParser.getAttribute(GuessWhoGame.getGuilty(), value);
             trait = "true";
         }
 

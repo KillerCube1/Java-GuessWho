@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The GuessWhoGame class represents the main game logic for Guess Who.
@@ -72,7 +73,8 @@ public class GuessWhoGame {
      */
     public static void initialize(String jsonData) throws IOException {
         JsonParser jsonParser = new JsonParser(jsonData);
-        theDeck = new Deck(jsonParser);
+        List<SuspectData> suspectDataList = jsonParser.getSuspects();
+        theDeck = new Deck(jsonParser, suspectDataList);
     }
     /**
      * Sets the game deck.
