@@ -81,12 +81,12 @@ public class CheckAction implements ActionListener {
             }
         }
 
+        System.out.println("Host End Turn");
         Host.endTurn();
     }
 
     private void clientTrait(String value, String trait, String Compare) throws IOException {
         boolean storeTest = !Client.getTurn();
-        System.out.println(storeTest);
         if (!storeTest) return;
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
@@ -95,7 +95,7 @@ public class CheckAction implements ActionListener {
             }
         }
 
-        System.out.println("ending turn...");
+        System.out.println("Client End Turn");
         Client.endTurn();
     }
 

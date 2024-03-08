@@ -47,7 +47,9 @@ public class Host {
     }
 
     public static void endTurn() throws IOException {
+        System.out.println("Freezing Frame");
         GuessWhoGUI.freezeFrame();
+        System.out.println("Sending Turn...");
         hostTurn = false;
         output.write((("endTurn") + "\r\n").getBytes());
         output.flush();
@@ -126,6 +128,7 @@ public class Host {
     }
 
     private static void myTurn() {
+        System.out.println("Received! Unfreezing the frame!");
         hostTurn = true;
         // Start Host Turn
         GuessWhoGUI.unFreezeFrame();

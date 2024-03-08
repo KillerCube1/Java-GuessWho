@@ -40,7 +40,9 @@ public class Client {
     }
 
     public static void endTurn() throws IOException {
+        System.out.println("Freezing Frame");
         GuessWhoGUI.freezeFrame();
+        System.out.println("Sending Turn...");
         output.write((("endTurn") + "\r\n").getBytes());
         output.flush();
     }
@@ -116,6 +118,7 @@ public class Client {
     }
 
     private static void myTurn() {
+        System.out.println("Received! Unfreezing the frame!");
         // Start Clients Turn
         GuessWhoGUI.unFreezeFrame();
     }
