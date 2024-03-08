@@ -135,13 +135,22 @@ public class MainMenu {
 
         // Volume controls and music buttons
         JButton playButton = new MainMenuButton("Play", 25, 20, 165, 45);
-        playButton.addActionListener(e -> backgroundMusic.play());
+        playButton.addActionListener(e -> {
+            backgroundMusic.play();
+            backgroundMusic.setVolume(volume);
+        });
 
         JButton stopButton = new MainMenuButton("Stop", 25, 70, 165, 45);
-        stopButton.addActionListener(e -> backgroundMusic.stop());
+        stopButton.addActionListener(e -> {
+            backgroundMusic.stop();
+            backgroundMusic.setVolume(volume);
+        });
 
         JButton nextButton = new MainMenuButton("Next Song", 25, 120, 165, 45);
-        nextButton.addActionListener(e -> backgroundMusic.playNextSong());
+        nextButton.addActionListener(e -> {
+            backgroundMusic.playNextSong();
+            backgroundMusic.setVolume(volume);
+        });
 
         JButton advancedButton = new MainMenuButton("Advanced", 25, 170, 165, 45);
         advancedButton.addActionListener(e -> {
