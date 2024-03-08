@@ -23,8 +23,7 @@ public class BackgroundMusic {
      *
      * @param playlist The list of audio files to be played.
      */
-    public BackgroundMusic(List<File> playlist, int volume) {
-        this.volume = volume;
+    public BackgroundMusic(List<File> playlist) {
         this.playlist = playlist;
         loadSong(currentSongIndex);
     }
