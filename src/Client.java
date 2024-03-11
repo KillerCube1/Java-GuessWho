@@ -126,7 +126,6 @@ public class Client {
     }
 
     private static void sendSuspect() {
-        System.out.println("SENDING PUNK!");
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
