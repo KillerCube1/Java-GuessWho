@@ -31,25 +31,27 @@ public class CheckAction implements ActionListener {
         String value = Suspect.getCompareValue();
         String trait;
 
+        Suspect guilty = Objects.requireNonNull(GuessWhoGame.getGuilty());
+
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {
-                Compare =  String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("hairColor").equals(value.substring(4)));
+                Compare =  String.valueOf(guilty.getAttribute("hairColor").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "hairColor";
             } else if (value.startsWith("eyes")) {
-                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("eyeColor").equals(value.substring(4)));
+                Compare = String.valueOf(guilty.getAttribute("eyeColor").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "eyeColor";
             } else if (value.startsWith("gend")) {
-                Compare = String.valueOf(Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute("gender").equals(value.substring(4)));
+                Compare = String.valueOf(guilty.getAttribute("gender").equals(value.substring(4)));
                 trait = value.substring(4);
                 value = "gender";
             } else {
-                Compare = Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute(value);
+                Compare = guilty.getAttribute(value);
                 trait = "true";
             }
         } else {
-            Compare = Objects.requireNonNull(GuessWhoGame.getGuilty()).getAttribute(value);
+            Compare = guilty.getAttribute(value);
             trait = "true";
         }
 
@@ -75,7 +77,7 @@ public class CheckAction implements ActionListener {
     private void hostTrait(String value, String trait, String Compare) throws IOException {
         boolean storeTest = Host.getTurn();
         System.out.println(storeTest);
-        if (storeTest) return;
+        if (!storeTest) return;
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             if (!String.valueOf(GuessWhoGame.getTheDeck().getSuspect(i).getAttribute(value).equals(trait)).equals(Compare)) {
