@@ -194,8 +194,6 @@ public class GuessWhoGUI extends JFrame {
 
         int randomPlayerCharacter = (int) (Math.random() * GuessWhoGame.getTheDeck().getTotalCards());
         GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
-
-        System.out.println(GuessWhoGame.getGuilty().getAttribute("name"));
     }
 
     private static void showPlayersTurnNotification() {

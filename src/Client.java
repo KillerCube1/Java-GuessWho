@@ -81,6 +81,8 @@ public class Client {
                 // Split command up into command name and arguments
                 String[] commandSections = command.split("::");
                 String commandName = commandSections[0];
+//                String commandArgs = "";
+//                if (commandSections.length > 1) commandArgs = commandSections[1];
 
                 // Execute response based off command name
                 switch(commandName) {
@@ -124,6 +126,7 @@ public class Client {
     }
 
     private static void sendSuspect() {
+        System.out.println("SENDING PUNK!");
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
@@ -161,7 +164,9 @@ public class Client {
             // get turn value
             output.write((("getSuspect") + "\r\n").getBytes());
             output.flush();
+            System.out.println("Sent, awaiting response...");
             String value = input.readLine();
+            System.out.println("Response gotten!");
 
             Suspect suspect = null;
             for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {

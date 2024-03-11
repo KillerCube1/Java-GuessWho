@@ -31,7 +31,7 @@ public class CheckAction implements ActionListener {
         String value = Suspect.getCompareValue();
         String trait;
 
-        Suspect guilty = Objects.requireNonNull(GuessWhoGame.getGuilty());
+        Suspect guilty = GuessWhoGame.getGuilty();
 
         if (value.length() >= 4) {
             if (value.startsWith("hair")) {

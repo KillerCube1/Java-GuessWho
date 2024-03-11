@@ -89,8 +89,8 @@ public class Host {
                 // Split command up into command name and arguments
                 String[] commandSections = command.split("::");
                 String commandName = commandSections[0];
-                String commandArgs = "";
-                if (commandSections.length > 1) commandArgs = commandSections[1];
+//                String commandArgs = "";
+//                if (commandSections.length > 1) commandArgs = commandSections[1];
 
                 // Execute response based off command name
                 switch(commandName) {
@@ -100,7 +100,7 @@ public class Host {
 
                     // Get commands
                     case "getTurn" : sendTurn(); break;
-                    case "getSuspect" : sendSuspect(commandArgs); break;
+                    case "getSuspect" : sendSuspect(); break;
 
                     // Set commands
 
@@ -141,7 +141,8 @@ public class Host {
         } catch (IOException ignored) {}
     }
 
-    private static void sendSuspect(String args) {
+    private static void sendSuspect() {
+        System.out.println("SENDING PUNK!");
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
