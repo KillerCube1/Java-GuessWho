@@ -58,9 +58,12 @@ public class Client {
         } catch (IOException ignored) {}
     }
 
-    private static void pauseClient() throws IOException {
-        output.write((("pauseClient") + "\r\n").getBytes());
-        output.flush();
+    private static void pauseClient() {
+        try {
+            output.write((("pauseClient") + "\r\n").getBytes());
+            output.flush();
+            Thread.sleep(200);
+        } catch (IOException | InterruptedException ignored) {}
     }
 
     // --------------------------
@@ -120,7 +123,6 @@ public class Client {
     }
 
     private static void myTurn() {
-        System.out.println("Received! Unfreezing the frame!");
         // Start Clients Turn
         GuessWhoGUI.unFreezeFrame();
     }
@@ -129,7 +131,6 @@ public class Client {
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
-            System.out.println("sending suspect...");
         } catch (IOException ignored) {}
     }
 
@@ -164,9 +165,7 @@ public class Client {
             // get turn value
             output.write((("getSuspect") + "\r\n").getBytes());
             output.flush();
-            System.out.println("Sent, awaiting response...");
             String value = input.readLine();
-            System.out.println("Response gotten!");
 
             Suspect suspect = null;
             for(Suspect person : GuessWhoGame.getTheDeck().susDeck) {

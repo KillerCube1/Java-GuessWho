@@ -66,9 +66,12 @@ public class Host {
         } catch (IOException ignored) {}
     }
 
-    private static void pauseHost() throws IOException {
-        output.write((("pauseHost") + "\r\n").getBytes());
-        output.flush();
+    private static void pauseHost() {
+        try {
+            output.write((("pauseHost") + "\r\n").getBytes());
+            output.flush();
+            Thread.sleep(200);
+        } catch (IOException | InterruptedException ignored) {}
     }
 
     // --------------------------
@@ -145,7 +148,6 @@ public class Host {
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
-            System.out.println("sending suspect...");
         } catch (IOException ignored) {}
     }
 
