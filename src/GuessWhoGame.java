@@ -55,7 +55,6 @@ public class GuessWhoGame {
                 window = new GuessWhoGUI(true);
                 GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
-                GuessWhoGUI.unFreezeFrame();
             } catch (Exception ignored) {}
         });
     }
