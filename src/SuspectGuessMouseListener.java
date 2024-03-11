@@ -56,16 +56,21 @@ public class SuspectGuessMouseListener extends MouseAdapter {
     }
 
     public static void guessSuspect(Suspect character) throws InterruptedException {
-        if (listenerEnabled) {
-            if (character == GuessWhoGame.getGuilty()) {
-                System.out.println("CORRECT!");
+        String gameState = GuessWhoGame.getGameState();
+        boolean isTurn = switch (gameState) {
+            case "Single" -> true;
+            case "Host" -> Host.getTurn();
+            case "Client" -> !Client.getTurn();
+            default -> false;
+        };
 
+        if (listenerEnabled && isTurn) {
+            if (character == GuessWhoGame.getGuilty()) {
                 showResultFrame();
             } else {
                 guessesLeft -= 1;
                 wrongGuesses += 1;
                 guessCounterMethod();
-
                 if (wrongGuesses >= 3) {
                     showResultFrame();
                 }
@@ -76,31 +81,38 @@ public class SuspectGuessMouseListener extends MouseAdapter {
 
     private static void showResultFrame() {
         if(wrongGuesses >= 3) {
-            GuessWhoGUI.getFrame().dispose();
-            SwingUtilities.invokeLater(() -> {
-                MainMenu.muteMusic();
-                JFrame frame = new JFrame("Loser Screen");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().add(new ConfettiLoser());
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            });
+            showLoseScreen();
         } else {
-            GuessWhoGUI.getFrame().dispose();
-            SwingUtilities.invokeLater(() -> {
-                MainMenu.muteMusic();
-                JFrame frame = new JFrame("Confetti Winner");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.add(new ConfettiWinner());
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            });
+            showWinScreen();
         }
 
     }
 
+    public static void showLoseScreen() {
+        GuessWhoGUI.getFrame().dispose();
+        SwingUtilities.invokeLater(() -> {
+            MainMenu.muteMusic();
+            JFrame frame = new JFrame("Loser Screen");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(new ConfettiLoser());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
+
+    public static void showWinScreen() {
+        GuessWhoGUI.getFrame().dispose();
+        SwingUtilities.invokeLater(() -> {
+            MainMenu.muteMusic();
+            JFrame frame = new JFrame("Confetti Winner");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new ConfettiWinner());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
 
     public static void setListenerEnabled(boolean enabled) {
         listenerEnabled = enabled;
