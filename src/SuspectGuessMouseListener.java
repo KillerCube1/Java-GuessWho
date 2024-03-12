@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,6 +57,13 @@ public class SuspectGuessMouseListener extends MouseAdapter {
     }
 
     public static void guessSuspect(Suspect character) throws InterruptedException, IOException {
+        int indexSuspect = 0;
+        for (int i = 0; i < GuessWhoGame.getWindow().getDeck().getSusDeck().length; i++) {
+            if (Objects.equals(GuessWhoGame.getWindow().getDeck().getSusDeck()[i].getAttribute("name"), character.getAttribute("name"))) {
+                indexSuspect = i;
+                break;
+            }
+        }
         String gameState = GuessWhoGame.getGameState();
         boolean isTurn = switch (gameState) {
             case "Single" -> true;
@@ -79,6 +87,7 @@ public class SuspectGuessMouseListener extends MouseAdapter {
                 };
                 showResultFrame();
             } else {
+                GuessWhoGame.getWindow().flipCard(indexSuspect);
                 guessesLeft -= 1;
                 wrongGuesses += 1;
                 switch (gameState) {
