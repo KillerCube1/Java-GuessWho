@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Objects;
 
 import javax.swing.JButton;
@@ -116,7 +117,7 @@ public class SuspectGUI implements ActionListener {
             suspectBox.dispose();
             try {
                 SuspectGuessMouseListener.guessSuspect(targetSuspect);
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException | IOException ex) {
                 throw new RuntimeException(ex);
             }
         }

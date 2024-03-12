@@ -40,10 +40,18 @@ public class Client {
     }
 
     public static void endTurn() throws IOException {
-        System.out.println("Freezing Frame");
         GuessWhoGUI.freezeFrame();
-        System.out.println("Sending Turn...");
         output.write((("endTurn") + "\r\n").getBytes());
+        output.flush();
+    }
+
+    public static void wonGame() throws IOException {
+        output.write((("clientWin") + "\r\n").getBytes());
+        output.flush();
+    }
+
+    public static void lostGame() throws IOException {
+        output.write((("clientLost") + "\r\n").getBytes());
         output.flush();
     }
 
@@ -93,12 +101,11 @@ public class Client {
                     case "hostINIT" : hostFinishInit(); break;
                     case "gameStart" : startGame(); break;
                     case "endTurn" : myTurn(); break;
+                    case "hostWin" : SuspectGuessMouseListener.showLoseScreen(); break;
+                    case "hostLost" : SuspectGuessMouseListener.showWinScreen(); break;
 
                     // Get commands
                     case "getSuspect" : sendSuspect(); break;
-
-                    // Set commands
-
 
                     // Stop Host listener
                     case "pauseHost" : pauseHost(); break;

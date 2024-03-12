@@ -35,7 +35,7 @@ public class SuspectGuessMouseListener extends MouseAdapter {
             System.out.println("Clicked on suspect: " + GuessWhoGame.getTheDeck().getSuspect(index).getAttribute("name"));
             try {
                 guessSuspect(GuessWhoGame.getTheDeck().getSuspect(index));
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException | IOException ex) {
                 throw new RuntimeException(ex);
             }
             cardLabel.removeMouseListener(this);
@@ -55,7 +55,7 @@ public class SuspectGuessMouseListener extends MouseAdapter {
         guessCounter.setText("Guesses: " + guessesLeft);
     }
 
-    public static void guessSuspect(Suspect character) throws InterruptedException {
+    public static void guessSuspect(Suspect character) throws InterruptedException, IOException {
         String gameState = GuessWhoGame.getGameState();
         boolean isTurn = switch (gameState) {
             case "Single" -> true;
@@ -66,14 +66,48 @@ public class SuspectGuessMouseListener extends MouseAdapter {
 
         if (listenerEnabled && isTurn) {
             if (character == GuessWhoGame.getGuilty()) {
+                switch (gameState) {
+                    case "Single" : showResultFrame(); break;
+                    case "Host" :
+                        showResultFrame();
+                        Host.wonGame();
+                        break;
+                    case "Client" :
+                        showResultFrame();
+                        Client.wonGame();
+                        break;
+                };
                 showResultFrame();
             } else {
                 guessesLeft -= 1;
                 wrongGuesses += 1;
-                guessCounterMethod();
-                if (wrongGuesses >= 3) {
-                    showResultFrame();
-                }
+                switch (gameState) {
+                    case "Single" :
+                        if (wrongGuesses >= 3) {
+                            showResultFrame();
+                        } else {
+                            guessCounterMethod();
+                        }
+                        break;
+                    case "Host" :
+                        if (wrongGuesses >= 3) {
+                            showResultFrame();
+                            Host.lostGame();
+                        } else {
+                            Host.endTurn();
+                            guessCounterMethod();
+                        }
+                        break;
+                    case "Client" :
+                        if (wrongGuesses >= 3) {
+                            showResultFrame();
+                            Client.lostGame();
+                        } else {
+                            Client.endTurn();
+                            guessCounterMethod();
+                        }
+                        break;
+                };
             }
         }
     }
