@@ -155,6 +155,7 @@ public class Host {
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
+            System.out.println("Testing");
         } catch (IOException ignored) {}
     }
 

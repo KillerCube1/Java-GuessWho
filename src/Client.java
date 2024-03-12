@@ -138,7 +138,7 @@ public class Client {
         try {
             output.write(((GuessWhoGame.getPlayerCharacter().getAttribute("name")) + "\r\n").getBytes());
             output.flush();
-        } catch (IOException ignored) {}
+        }  catch (IOException ignored) {}
     }
 
     private static void hostFinishInit() {
@@ -152,13 +152,14 @@ public class Client {
     public static boolean getTurn() {
         try {
             pauseClient(); // pauses command listener
-
+            System.out.println("Pausing turn in get turn");
             // get turn value
             output.write((("getTurn") + "\r\n").getBytes());
             output.flush();
             boolean value = Boolean.parseBoolean(input.readLine());
 
             listenResponse(); // start command listener
+            System.out.println("Started listening in get turn");
             return value;
         } catch (IOException ex) {
             return false;

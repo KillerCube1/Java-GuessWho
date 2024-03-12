@@ -1,6 +1,6 @@
 import java.awt.*;
-import java.awt.event.*;
-
+import java.util.TimerTask;
+import java.util.Timer;
 import javax.swing.*;
 
 import ClassExtensions.CheckButton;
@@ -132,13 +132,14 @@ public class GuessWhoGUI extends JFrame {
         int cardsPerRow = 6;
         int row;
         int col;
+        int yOffset = 20;
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             row = i / cardsPerRow;
             col = i % cardsPerRow;
 
             int xPosition = 20 + col * (cardLabelWidth);
-            int yPosition = row * (cardLabelHeight);
+            int yPosition = row * (cardLabelHeight) + yOffset;
 
             JLabel cardLabel = new JLabel(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
             cardLabel.setBounds(xPosition, yPosition, cardLabelWidth, cardLabelHeight);
@@ -151,6 +152,7 @@ public class GuessWhoGUI extends JFrame {
             susGrid[i] = cardLabel;
         }
     }
+
 
 
     /**
@@ -196,14 +198,29 @@ public class GuessWhoGUI extends JFrame {
         GuessWhoGame.setPlayerCharacter(GuessWhoGame.getTheDeck().getSuspect(randomPlayerCharacter));
     }
 
-    private static void showPlayersTurnNotification() {
-        JLabel notificationLabel = new JLabel("<html><div align='center'><font size='12' color='#FFFFFF'>Opponent's Turn</font></div></html>");
-        frame.add(notificationLabel);
+    static void showPlayersTurnNotification() {
+        JPanel darkenPanel = new JPanel();
+        darkenPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+        darkenPanel.setBackground(new Color(0, 0, 0, 100));
 
+        JLabel notificationLabel = new JLabel("<html><center><font size='6' color='#FFFFFF'>Client's Turn</font></center></html>");
+        notificationLabel.setHorizontalAlignment(SwingConstants.CENTER);
         Font labelFont = notificationLabel.getFont();
         notificationLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 24));
+        darkenPanel.add(notificationLabel);
 
+        frame.add(darkenPanel);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                darkenPanel.setVisible(false);
+            }
+        }, 3000);
     }
+
+
 
 
 
