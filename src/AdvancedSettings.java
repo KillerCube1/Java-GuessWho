@@ -81,14 +81,26 @@ public class AdvancedSettings {
 
     private void runLANServer() {
         try {
-            String directoryPath = "src";
+            // Get the path to the JAR resource
+            File jarFile = Resource.getJarResource("/Execution/LanServer.jar");
 
-            String[] command = {"java", "-jar", "LanServer.jar"};
+            // Check if the JAR file exists
+            if (jarFile != null && jarFile.exists()) {
+                // Set the directory path
+                String directoryPath = "src"; // Adjust as needed
 
-            ProcessBuilder pb = new ProcessBuilder(command);
-            pb.directory(new File(directoryPath));
+                // Command to run the JAR file
+                String[] command = {"java", "-jar", jarFile.getAbsolutePath()};
 
-            pb.start();
+                // Create and configure ProcessBuilder
+                ProcessBuilder pb = new ProcessBuilder(command);
+                pb.directory(new File(directoryPath));
+
+                // Start the process
+                pb.start();
+            } else {
+                System.err.println("Error: JAR file not found.");
+            }
         } catch (IOException ignored) {}
     }
 
