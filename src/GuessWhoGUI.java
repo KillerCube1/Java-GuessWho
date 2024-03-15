@@ -47,6 +47,7 @@ public class GuessWhoGUI extends JFrame {
         double buttonWidthPercentage = 0.1041666667; // 200 / 1920
         double buttonHeightPercentage = 0.0561797753; // 50 / 890
 
+        //random comment for commit
 
         int frameWidth = frame.getWidth();
         int frameHeight = frame.getHeight();
