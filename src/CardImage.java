@@ -1,3 +1,4 @@
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import javax.imageio.ImageIO;
  * @Author: Rylan, Damien
  */
 public class CardImage extends BufferedImage {//CardImage
-	
+
 	final static int WIDTH = 96;   //The width of each card  
 	final static int HEIGHT = 140;  //The height of each card  
 	BufferedImage frontCardImage;
@@ -28,12 +29,12 @@ public class CardImage extends BufferedImage {//CardImage
 		super(WIDTH, HEIGHT, 3);
 		InputStream stream = getClass().getResourceAsStream("/Images/"+cardName);
 		InputStream stream2 = getClass().getResourceAsStream("/Images/back.png");
-		
+
 		try {//try
-            assert stream != null;
-            frontCardImage = ImageIO.read(stream);
-            assert stream2 != null;
-            backCardImage = ImageIO.read(stream2);
+			assert stream != null;
+			frontCardImage = ImageIO.read(stream);
+			assert stream2 != null;
+			backCardImage = ImageIO.read(stream2);
 		}//try 
 		catch (IOException e) {//catch
 			throw new RuntimeException(e);
@@ -49,11 +50,11 @@ public class CardImage extends BufferedImage {//CardImage
 	 * @return The front image of the card.
 	 */
 	public BufferedImage getFrontImage() {//getFrontImage()
-	
+
 
 		Graphics g = frontCardImage.createGraphics();
 		g.drawImage(frontCardImage, 0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, null);
-		
+
 		return frontCardImage;
 	}//getFrontImage()
 
@@ -66,10 +67,10 @@ public class CardImage extends BufferedImage {//CardImage
 	 * @return The back image of the card.
 	 */
 	public BufferedImage getBackImage() {//getBackImage()
-		
+
 		Graphics g = backCardImage.createGraphics();
 		g.drawImage(backCardImage, 0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, null);
-		
+
 		return backCardImage;
 	}//getBackImage()
 

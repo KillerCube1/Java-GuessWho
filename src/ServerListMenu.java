@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -8,9 +9,11 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 
 public class ServerListMenu extends JFrame {
@@ -24,7 +27,6 @@ public class ServerListMenu extends JFrame {
     private BufferedReader input;
     private BufferedOutputStream output;
 
-    private static final int SERVER_PORT = 100;
 
     /**
      * Represents a server list menu for selecting or hosting game servers.
@@ -103,70 +105,48 @@ public class ServerListMenu extends JFrame {
     /**
      * Method to host a server.
      */
-    public void hostServer() {
-        String serverName = promptForServerName();
+    private void hostServer() {
+        String serverName = JOptionPane.showInputDialog("Enter server name:");
         if (serverName != null && !serverName.isEmpty()) {
             try {
-                String ipAddress = getLocalIPv4Address();
-                if (ipAddress != null && !ipAddress.isEmpty()) {
-                    sendServerDetails(serverName, ipAddress);
-                    String response = waitForServerResponse();
-                    if (response.startsWith("FIN")) {
-                        handleServerSetupSuccess(serverName);
-                    } else {
-                        System.out.println("Server setup failed. Unexpected response from server.");
-                    }
-                } else {
-                    System.out.println("Failed to retrieve local IP address.");
-                }
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-            }
-        }
-    }
+                output.write(("SERADD" + "\r\n").getBytes());
+                output.write((serverName + "\r\n").getBytes());
 
-    private String promptForServerName() {
-        return JOptionPane.showInputDialog("Enter server name:");
-    }
-
-    private String getLocalIPv4Address() {
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = interfaces.nextElement();
-                if (!networkInterface.isLoopback() && networkInterface.isUp()) {
-                    for (InetAddress addr : Collections.list(networkInterface.getInetAddresses())) {
-                        if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
-                            return addr.getHostAddress();
+                final String[] ip = new String[1];
+                try {
+                    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+                    while (interfaces.hasMoreElements()) {
+                        NetworkInterface networkInterface = interfaces.nextElement();
+                        if (!networkInterface.isLoopback() && networkInterface.isUp()) {
+                            Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+                            while (addresses.hasMoreElements()) {
+                                InetAddress addr = addresses.nextElement();
+                                if (addr.getAddress().length == 4) { // Check for IPv4 addresses
+                                    ip[0] = addr.getHostAddress();
+                                }
+                            }
                         }
                     }
+                } catch (Exception ignored) {
                 }
+
+                output.write((ip[0] + "\r\n").getBytes());
+                output.write((100 + "\r\n").getBytes());
+                output.flush();
+
+                String command = input.readLine();
+
+                if (command.startsWith("FIN")) {
+                    frame.dispose();
+                    new Server(new ServerMenu(), serverName, socket, output);
+                } else {
+                    System.out.println("ERROR");
+                }
+            } catch (IOException ex) {
+                System.out.println("Error " + ex.getMessage());
             }
-        } catch (SocketException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-
-    private void sendServerDetails(String serverName, String ipAddress) throws IOException {
-        try (Socket socket = new Socket(ipAddress, SERVER_PORT)) {
-            socket.getOutputStream().write(("SERADD\r\n" + serverName + "\r\n" + ipAddress + "\r\n" + SERVER_PORT + "\r\n").getBytes());
-            socket.getOutputStream().flush();
         }
     }
-
-    private String waitForServerResponse() throws IOException {
-        try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
-            Socket clientSocket = serverSocket.accept();
-            return new String(clientSocket.getInputStream().readAllBytes());
-        }
-    }
-
-    private void handleServerSetupSuccess(String serverName) {
-        System.out.println("Server setup successful. Server name: " + serverName);
-    }
-
 
     /**
      * Method to join a server.

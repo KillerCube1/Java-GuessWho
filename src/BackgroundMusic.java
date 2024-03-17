@@ -1,3 +1,4 @@
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +86,7 @@ public class BackgroundMusic {
 
     /**
      * Gets the volume of the audio clip.
-     * 
+     *
      * @return The volume level (0-100).
      */
     public int getVolume() {

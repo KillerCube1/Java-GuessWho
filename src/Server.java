@@ -1,3 +1,4 @@
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.*;
@@ -23,7 +24,7 @@ public class Server {
             UI.updateUI(serverName);
 
             try (ServerSocket server = new ServerSocket(100)) {
-                
+
                 // Start host server and begin server list communication (keep the server alive)
                 System.out.println("Server started!");
                 Alive keepAlive = new Alive(output, serverName);
@@ -39,8 +40,8 @@ public class Server {
                 serverList.close();
                 UI.disposeFrame();
                 try {
-                output.write(("SERDEL" + serverName + "\r\n").getBytes());
-                output.flush();
+                    output.write(("SERDEL" + serverName + "\r\n").getBytes());
+                    output.flush();
                 } catch (IOException ignored) {}
 
                 // Start server - client direct connection
