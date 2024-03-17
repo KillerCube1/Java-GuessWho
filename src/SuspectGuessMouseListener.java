@@ -92,7 +92,6 @@ public class SuspectGuessMouseListener extends MouseAdapter {
                         Client.wonGame();
                         break;
                 };
-                showResultFrame();
             } else {
                 GuessWhoGame.getWindow().flipCard(indexSuspect);
                 guessesLeft -= 1;
