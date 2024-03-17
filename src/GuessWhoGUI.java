@@ -40,13 +40,18 @@ public class GuessWhoGUI extends JFrame {
             frame.setSize(1920, 890);
             Color bgd = new Color(40, 40, 40);
             frame.getContentPane().setBackground(bgd);
+            frame.setResizable(false);
         } catch (Exception ignored) {
         }
 
-        int FrameButtonWidth = 200;
-        int FrameButtonHeight = 50;
-        int xFramePosition = 1676;
-        int yFramePosition = 20;
+
+
+        double buttonWidthPercentage = 0.1041666667; // 200 / 1920
+        double buttonHeightPercentage = 0.0561797753; // 50 / 890
+
+        int frameWidth = frame.getWidth();
+        int frameHeight = frame.getHeight();
+
 
         buttonList = new CheckButton[]{
                 new CheckButton("Male?", "gendmale", new Color(0xFF4343)),
@@ -66,15 +71,19 @@ public class GuessWhoGUI extends JFrame {
                 new CheckButton("Brown Eyes?", "eyesbrown", new Color(0xFFB7B7)),
         };
 
-        for(int i = 0; i < 12; i++) {
-            yFramePosition += 55;
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < buttonList.length; j++) {
+                int xPosition = (int) (frameWidth * (0.875 - (i * -0.00104))); // Calculating x position
+                int yPosition = (int) (frameHeight * (0.0225 + (j * 0.0557))); // Calculating y position
 
-            for(int j=0;j<buttonList.length;j++) {
-                buttonList[j].setBounds(xFramePosition - (i * -2), yFramePosition - (i * (60 - j * 5)), FrameButtonWidth, FrameButtonHeight);
+                int buttonWidth = (int) (frameWidth * buttonWidthPercentage);
+                int buttonHeight = (int) (frameHeight * buttonHeightPercentage);
+
+                buttonList[j].setBounds(xPosition, yPosition, buttonWidth, buttonHeight);
                 frame.getContentPane().add(buttonList[j]);
             }
-
         }
+
         createSuspectGrid();
 
         for(CheckButton button : buttonList) {
@@ -128,22 +137,28 @@ public class GuessWhoGUI extends JFrame {
      * Displays the suspect cards and sets up mouse listeners for guessing.
      */
     public void createSuspectGrid() {
-        int cardLabelWidth = 180;
-        int cardLabelHeight = 200;
         int cardsPerRow = 6;
         int row;
         int col;
-        int yOffset = 20;
+
+        double cardWidthPercentage = 0.09375; // 180 / 1920
+        double cardHeightPercentage = 0.2247191011; // 200 / 890
+
+        int frameWidth = frame.getWidth();
+        int frameHeight = frame.getHeight();
 
         for (int i = 0; i < GuessWhoGame.getTheDeck().getTotalCards(); i++) {
             row = i / cardsPerRow;
             col = i % cardsPerRow;
 
-            int xPosition = 20 + col * (cardLabelWidth);
-            int yPosition = row * (cardLabelHeight) + yOffset;
+            int cardWidth = (int) (frameWidth * cardWidthPercentage);
+            int cardHeight = (int) (frameHeight * cardHeightPercentage);
+
+            int xPosition = 20 + col * cardWidth;
+            int yPosition = row * cardHeight;
 
             JLabel cardLabel = new JLabel(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
-            cardLabel.setBounds(xPosition, yPosition, cardLabelWidth, cardLabelHeight);
+            cardLabel.setBounds(xPosition, yPosition, cardWidth, cardHeight);
             cardLabel.setIcon(new ImageIcon(GuessWhoGame.getTheDeck().getSuspect(i).getCard().getFrontImage()));
 
             SuspectGuessMouseListener labelListener = new SuspectGuessMouseListener(cardLabel, i);
@@ -153,7 +168,6 @@ public class GuessWhoGUI extends JFrame {
             susGrid[i] = cardLabel;
         }
     }
-
 
 
     /**
