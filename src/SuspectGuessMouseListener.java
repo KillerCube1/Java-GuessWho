@@ -43,19 +43,25 @@ public class SuspectGuessMouseListener extends MouseAdapter {
             cardLabel.removeMouseListener(this);
         }
     }
-
     static void guessCounterMethod() {
         if (guessCounter == null) {
             guessCounter = new JLabel();
             guessCounter.setBackground(Color.WHITE);
             guessCounter.setForeground(Color.WHITE);
             guessCounter.setFont(new Font("Calibri", Font.BOLD, 25));
-            guessCounter.setBounds(1400, 50, 192, 25);
             GuessWhoGUI.getFrame().getContentPane().add(guessCounter);
         }
 
+        int frameWidth = GuessWhoGUI.getFrame().getWidth();
+        int frameHeight = GuessWhoGUI.getFrame().getHeight();
+
+        int counterXPosition = (int) (frameWidth * 0.7291666667);
+        int counterYPosition = (int) (frameHeight * 0.0561797753);
+
+        guessCounter.setBounds(counterXPosition, counterYPosition, 192, 25);
         guessCounter.setText("Guesses: " + guessesLeft);
     }
+//random comment for commit
 
     public static void guessSuspect(Suspect character) throws InterruptedException, IOException {
         int indexSuspect = 0;
@@ -157,6 +163,7 @@ public class SuspectGuessMouseListener extends MouseAdapter {
             frame.setVisible(true);
         });
     }
+
 
     public static void setListenerEnabled(boolean enabled) {
         listenerEnabled = enabled;
