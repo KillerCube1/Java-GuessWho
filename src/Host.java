@@ -9,7 +9,7 @@ public class Host {
     private static Socket socket;
     private static BufferedReader input;
     private static BufferedOutputStream output;
-    
+
     // Server Variables
     private static boolean hostTurn;
 
@@ -164,10 +164,10 @@ public class Host {
             output.write((("gameStart") + "\r\n").getBytes());
             output.flush();
         } catch (IOException ignored) {}
-        
+
         startGame();
     }
-    
+
     // --------------------------
     // Direct Getters
     // --------------------------

@@ -1,3 +1,4 @@
+
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
@@ -119,7 +120,7 @@ public class AdvancedSettings {
         ipAddressField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
-    
+
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -132,7 +133,7 @@ public class AdvancedSettings {
                     frame.setVisible(true);
                 }
             }
-    
+
             @Override
             public void keyReleased(KeyEvent e) {}
         });

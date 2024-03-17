@@ -1,3 +1,4 @@
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class Client {
     // --------------------------
     // Game Response Methods
     // --------------------------
-    
+
     private static void finishedInit() {
         try {
             output.write((("clientINIT") + "\r\n").getBytes());

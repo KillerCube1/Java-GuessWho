@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  *
  */
 public class Suspect {
-	
+
 	// Attribute map
 	private final Map<String, String> attributes;
 
@@ -34,7 +35,7 @@ public class Suspect {
 	 * @param rC    whether this Suspect has Rosy Cheeks
 	 */
 	public Suspect(String n, String hC, boolean bld, String eC, String g, boolean h, boolean gls, boolean moust,
-			boolean brd, boolean rC) {// constructor
+				   boolean brd, boolean rC) {// constructor
 
 		attributes = new HashMap<>();
 
