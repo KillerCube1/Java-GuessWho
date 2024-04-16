@@ -21,7 +21,7 @@ public class GuessWhoGame {
     public GuessWhoGame(String givenGameState) {
         gameState = givenGameState;
         switch (gameState) {
-            case "Single": initSingleplayerGame(); break;
+            case "Single": initSinglePlayerGame(); break;
             case "Host"  : startHostGame();        break;
             case "Client": startClientGame();      break;
         }
@@ -50,13 +50,13 @@ public class GuessWhoGame {
     }
 
 
-    private void initSingleplayerGame() {
+    private void initSinglePlayerGame() {
         EventQueue.invokeLater(() -> {
             try {
                 window = new GuessWhoGUI(true);
                 GuessWhoGUI.getFrame().setVisible(true);
                 suspectWindow = new SuspectGUI();
-                GuessWhoGUI.showPlayersTurnNotification();
+                CpuPlayer.RandomTurn();
             } catch (Exception ignored) {}
         });
     }

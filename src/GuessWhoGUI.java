@@ -100,15 +100,12 @@ public class GuessWhoGUI extends JFrame {
         // Freeze-frame if not turn
         if (!turn){
             freezeFrame();
-
         }
         else{
             unFreezeFrame();
         }
 
     }//constructor
-
-
 
 
 
@@ -234,9 +231,6 @@ public class GuessWhoGUI extends JFrame {
             }
         }, 3000);
     }
-
-
-
 
 
     public static void freezeFrame() {
